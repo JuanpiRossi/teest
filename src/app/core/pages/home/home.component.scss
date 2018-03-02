@@ -1,0 +1,45 @@
+.homeMenu  {
+    top: 70px;
+    padding-top: 40px;
+    right: 15%;
+    left: 15%;
+    bottom: 0%;
+    position: fixed;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.menuComponentContainer  {
+    padding: 2%;
+    height: 150px;
+    min-width: 29%;
+    max-width: 29%;
+}
+
+.menuComponent  {
+    border-style: solid;
+    border-radius: 25px;
+    border-color: #757575;
+    background-color: #a0a0a0;
+    height: inherit;
+    width: inherit;
+}
+
+.menuComponent:hover  {
+    border-color: #105010;
+    background-color: #45a045;
+}
+
+.componentTitle  {
+    font-family: "Verdana", Times, serif;
+    font-weight: bold;
+    font-size: 30px;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.componentDescription  {
+    padding-top: 10px;
+    padding-left: 25px;
+    padding-right: 10px;
+}
