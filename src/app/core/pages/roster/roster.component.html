@@ -1,5 +1,6 @@
 <div class="gridContainer">
   <ngx-datatable
+    *ngIf="renderTable"
     class='material'
     [rows]="rows"
     [columns]="columns"
@@ -8,6 +9,13 @@
     [footerHeight]="0"
     [rowHeight]="40"
     [rowClass]="getRowClass"
+    [trackByProp]="name"
+    [dragulaName]="'bag'"
+    [dragulaModel]="dataModel2"
+    [dragulaVScroll]="false"
+    [classSelector]=""
+    (directiveDrop)="onDrop($event)"
+    (directiveDrag)="onDrag($event)"
   >
   </ngx-datatable>
 </div>
