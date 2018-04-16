@@ -57,17 +57,11 @@ export class RosterComponent implements OnInit {
   // DRAG and DROP - Virtual Scroll
   onDrop(event){
     // ngx-datatable recommends you force change detection
-    console.log(event);
     let listData = event.split("\n");
     let newData = [];
     for(var i=0;i<(listData.length/3)-1;i++) {
       var saveData = {name: listData[i*3], class: listData[i*3+1], spec: listData[i*3+2]};
       newData.push(saveData);
     }
-    console.log(newData);
-  }
-  
-  onDrag(event){
-    console.log('DRAG event::', event);
   }
 }
