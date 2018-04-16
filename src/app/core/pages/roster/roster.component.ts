@@ -10,19 +10,30 @@ export class RosterComponent implements OnInit {
   rows;
   columns;
   selected;
+  
   constructor() {
     this.rows=[
-      { name: 'Aicero', class: 'Mage', spec: 'Fire' },
-      { name: 'Aiun', class: 'Shaman', spec: 'Elemental' }
+      { name: 'Aiun', class: 'Mage', spec: 'Fire' },
+      { name: 'Aidos', class: 'Shaman', spec: 'Elemental' },
+      { name: 'Aitres', class: 'Druid', spec: 'Feral' },
+      { name: 'Aicua', class: 'Death Knight', spec: 'Frost' },
+      { name: 'Aicinco', class: 'Monk', spec: 'Mistweaver' }
     ];
     this.columns= [
-                    { prop: 'name' },
-                    { name: 'class' },
-                    { name: 'spec' }
+                    { name: 'name',prop: 'name' },
+                    { name: 'class',prop: 'class' },
+                    { name: 'spec',prop: 'spec' }
                   ];
   }
 
+  dataModel2 = this.rows;
+  renderTable = true;
+
   ngOnInit() {
+    this.columns[0].width = 1;
+  }
+  ngAfterViewInit(){
+    
   }
 
 
@@ -41,5 +52,22 @@ export class RosterComponent implements OnInit {
       'row-class-warlock': row.class === "Warlock",
       'row-class-warrior': row.class === "Warrior"
     }
+  }
+  
+  // DRAG and DROP - Virtual Scroll
+  onDrop(event){
+    // ngx-datatable recommends you force change detection
+    console.log(event);
+    let listData = event.split("\n");
+    let newData = [];
+    for(var i=0;i<(listData.length/3)-1;i++) {
+      var saveData = {name: listData[i*3], class: listData[i*3+1], spec: listData[i*3+2]};
+      newData.push(saveData);
+    }
+    console.log(newData);
+  }
+  
+  onDrag(event){
+    console.log('DRAG event::', event);
   }
 }
