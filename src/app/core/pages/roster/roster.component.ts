@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy,Input } from '@angular/core';
+import { MongoService } from '../../../services/mongo.service';
+import { Http, Response } from "@angular/http"
+import 'rxjs/add/operator/map';
 
 
 @Component({
@@ -6,18 +9,13 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss']
 })
-export class RosterComponent implements OnInit {
-  rows;
+export class RosterComponent implements OnDestroy,OnInit {
+  @Input() rows = [];
   columns;
-  selected;
   
-  constructor() {
+  constructor(private mongoService:MongoService) {
     this.rows=[
-      { name: 'Aiun', class: 'Mage', spec: 'Fire' },
-      { name: 'Aidos', class: 'Shaman', spec: 'Elemental' },
-      { name: 'Aitres', class: 'Druid', spec: 'Feral' },
-      { name: 'Aicua', class: 'Death Knight', spec: 'Frost' },
-      { name: 'Aicinco', class: 'Monk', spec: 'Mistweaver' }
+      { }
     ];
     this.columns= [
                     { name: 'name',prop: 'name' },
@@ -31,9 +29,17 @@ export class RosterComponent implements OnInit {
 
   ngOnInit() {
     this.columns[0].width = 1;
+    this.mongoService.getGuild({"guildName":"Untamed"})
+      .subscribe(res => {
+        this.rows = []
+        res.json().data.Roster.forEach(element => {
+          this.rows.push({name:element["Name"],class:element["Class"],spec:element["Spec"]})
+        });
+        console.log(this.rows)
+      });
   }
-  ngAfterViewInit(){
-    
+
+  ngOnDestroy() {
   }
 
 
@@ -63,5 +69,6 @@ export class RosterComponent implements OnInit {
       var saveData = {name: listData[i*3], class: listData[i*3+1], spec: listData[i*3+2]};
       newData.push(saveData);
     }
+    console.log(newData)
   }
 }

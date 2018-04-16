@@ -4,6 +4,8 @@ import { CoreModule } from './core/core.module';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { HttpModule } from '@angular/http';
+import { MongoService } from './services/mongo.service';
 
 
 @NgModule({
@@ -13,9 +15,10 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CoreModule
+    CoreModule,
+    HttpModule
   ],
-  providers: [],
+  providers: [MongoService],
   exports: [],
   bootstrap: [AppComponent],
 })
