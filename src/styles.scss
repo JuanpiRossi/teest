@@ -41,10 +41,9 @@
     .datatable-body-row {
       &:hover,
 			&:hover .datatable-row-group {
-	      background-color: #eee;
-	      transition-property: background;
-	      transition-duration: .3s;
-	      transition-timing-function: linear;
+				.datatable-body-cell{
+					font-weight: bold;
+				}
 	    }
 
 			&:focus,
@@ -137,7 +136,7 @@
       text-align: left;
       padding: .9rem 1.2rem;
       font-weight: 400;
-      color: rgba(0,0,0,.54);
+      color: rgba(255, 255, 255, 0.648);
       vertical-align: bottom;
       font-size: 12px;
       font-weight: 500;
@@ -179,7 +178,7 @@
     }
 
     .resize-handle {
-      border-right:solid 1px #eee;
+      border-right:solid 1px #000;
     }
   }
 
@@ -208,11 +207,6 @@
 	      transition: width 0.3s ease;
         font-size: 14px;
         font-weight: 400;
-
-        // cell active class
-        // &.active {
-        //  background: #0829e0
-        // }
 			}
 	    .datatable-body-group-cell {
 	      text-align: left;
@@ -397,3 +391,14 @@
     transform: translateX(-50%) scale(0, 1); 
   } 
 }
+
+// //Override to make it work with dragula
+// .gu-unselectable .datatable-row-wrapper{
+// 	position:relative !important;
+// 	transform: none !important;
+// 	backface-visibility:visible !important;
+// }
+// .datatable-row-wrapper.gu-mirror{
+// 	position:fixed !important;
+// 	transform: none !important;
+// }
