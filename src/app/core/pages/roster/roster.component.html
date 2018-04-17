@@ -1,21 +1,99 @@
-<div class="gridContainer">
-  <ngx-datatable
-    *ngIf="renderTable"
-    class='material'
-    [rows]="rows"
-    [columns]="columns"
-    [columnMode]="'force'"
-    [headerHeight]="50"
-    [footerHeight]="0"
-    [rowHeight]="40"
-    [rowClass]="getRowClass"
-    [trackByProp]="name"
-    [dragulaName]="'bag'"
-    [dragulaModel]="dataModel2"
-    [dragulaVScroll]="false"
-    [classSelector]=""
-    (directiveDrop)="onDrop($event)"
-  >
-  </ngx-datatable>
+<div class="container">
+  <div class="gridContainer">
+    <ngx-datatable
+      *ngIf="renderTable"
+      class='material'
+      [rows]="rows"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="0"
+      [columnMode]='"force"'
+      [rowHeight]="40"
+      [rowClass]="getRowClass"
+      [trackByProp]="name"
+      [dragulaName]="'bag'"
+      [dragulaModel]="dataModel2"
+      [dragulaVScroll]="false"
+      [classSelector]=""
+      (directiveDrop)="onDrop($event)"
+      (onRowsUpdate)='updateRows()'
+    >
+    <ngx-datatable-column name="name">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <span
+            title="Double click to edit"
+            (dblclick)="editing[rowIndex+ '-name'] = true"
+            *ngIf="!editing[rowIndex+ '-name']">
+            {{value}}
+          </span>
+          <input
+            autofocus
+            (blur)="updateValue($event, 'name', rowIndex)"
+            *ngIf="editing[rowIndex+ '-name']"
+            type="text"
+            [value]="value"
+          />
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="class">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+           <span
+            title="Double click to edit"
+            (dblclick)="editing[rowIndex + '-class'] = true"
+            *ngIf="!editing[rowIndex + '-class']">
+            {{value}}
+          </span>
+          <select
+            *ngIf="editing[rowIndex + '-class']"
+            (blur)="editing[rowIndex + '-class'] = false"
+            (change)="updateValue($event, 'class', rowIndex)"
+            [value]="value">
+            <option value="Death Knight">Death Knight</option>
+            <option value="Demon Hunter">Demon Hunter</option>
+            <option value="Druid">Druid</option>
+            <option value="Hunter">Hunter</option>
+            <option value="Mage">Mage</option>
+            <option value="Monk">Monk</option>
+            <option value="Paladin">Paladin</option>
+            <option value="Priest">Priest</option>
+            <option value="Rogue">Rogue</option>
+            <option value="Shaman">Shaman</option>
+            <option value="Warlock">Warlock</option>
+            <option value="Warrior">Warrior</option>
+          </select>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="spec">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+             <span
+              title="Double click to edit"
+              (dblclick)="editing[rowIndex + '-spec'] = true"
+              *ngIf="!editing[rowIndex + '-spec']">
+              {{value}}
+            </span>
+            <select
+              *ngIf="editing[rowIndex + '-spec']"
+              (blur)="editing[rowIndex + '-spec'] = false"
+              (change)="updateValue($event, 'spec', rowIndex)"
+              [value]="value">
+              <option *ngFor="let i of specs[rowIndex]">{{i.name}}</option>
+            </select>
+          </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+  <div class="buttonsContainer">
+    <button (click)="openAddMember()" mat-raised-button>Pick one</button>
+  </div>
 </div>
-    
+
+
+
+
+
+
+
+
+
+
+

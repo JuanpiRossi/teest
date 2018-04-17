@@ -1,9 +1,21 @@
-.gridContainer  {
-    top: 70px;
-    padding-top: 40px;
+.container{
+    top: 110px;
     right: 15%;
     left: 15%;
     bottom: 0%;
+    position: fixed;
+}
+
+.gridContainer  {
+    right: 15%;
+    left: 15%;
+    bottom: auto;
+}
+
+.buttonsContainer  {
+    padding-top: 30px;
+    right: 15%;
+    left: 15%;
     position: fixed;
 }
 
