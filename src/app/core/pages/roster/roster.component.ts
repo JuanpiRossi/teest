@@ -61,8 +61,10 @@ export class RosterComponent implements OnDestroy,OnInit {
     if(event.target.value != ""){
       this.rows[rowIndex][cell] = event.target.value;
       this.rows = [...this.rows];
+      this.updateExtras();
+      this.rows[rowIndex].spec = this.specs[rowIndex][0].name;
     }
-    this.updateExtras();
+    
   }
 
   getRowClass(row) {
@@ -87,10 +89,11 @@ export class RosterComponent implements OnDestroy,OnInit {
     // ngx-datatable recommends you force change detection
     let listData = event.split("\n");
     let newData = [];
-    for(var i=0;i<(listData.length/3)-1;i++) {
-      var saveData = {name: listData[i*3], class: listData[i*3+1], spec: listData[i*3+2]};
+    for(var i=0;i<(listData.length/5)-1;i++) {
+      var saveData = {name: listData[i*5], server: listData[i*5+1], class: listData[i*5+2], spec: listData[i*5+3]};
       newData.push(saveData);
       }
+    console.log(newData)
   }
 
   updateExtras(){
@@ -110,9 +113,9 @@ export class RosterComponent implements OnDestroy,OnInit {
     }
     this.specs = [];
     this.icons = [];
+    let i=0;
     this.rows.forEach(element => {
       this.specs.push(specList[element.class])
-      console.log(element.spec)
       if(element.spec=="Blood" || element.spec=="Vengeance" || element.spec=="Guardian" || element.spec=="Brewmaster" || element.spec=="Protection" || element.spec=="Protection")
         this.icons.push("assets/tankIcon.png");
       else if(element.spec=="Restoration" || element.spec=="Mistweaver" || element.spec=="Holy" || element.spec=="Discipline")
