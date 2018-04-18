@@ -1,9 +1,9 @@
 .container{
-    top: 110px;
+    top: 0px;
     right: 15%;
     left: 15%;
     bottom: 0%;
-    position: fixed;
+    position: absolute;
 }
 
 .gridContainer  {
@@ -12,15 +12,17 @@
     bottom: auto;
 }
 
+::ng-deep .datatable-body{
+	height: 400px;
+}
+
 .buttonsContainer  {
     padding-top: 30px;
-    right: 15%;
-    left: 15%;
-    position: fixed;
+    position: absolute;
 }
 
 .button {
-    width: 50px;
+    width: 100px;
     height: 25px;
 }
 
@@ -34,50 +36,62 @@
 
 ::ng-deep .row-class-deathKnight  {
     background-color: #C41F3B;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-demonHunter  {
     background-color: #A330C9;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-druid  {
     background-color: #FF7D0A;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-hunter  {
     background-color: #ABD473;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-mage  {
     background-color: #69CCF0;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-monk  {
     background-color: #00FF96;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-paladin  {
     background-color: #F58CBA;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-priest  {
     background-color: #FFFFFF;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-rogue  {
     background-color: #FFF569;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-shaman  {
     background-color: #0070DE;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-warlock  {
     background-color: #9482C9;
+    font-family: cursive;
 }
 
 ::ng-deep .row-class-warrior  {
     background-color: #C79C6E;
+    font-family: cursive;
 }
 
 

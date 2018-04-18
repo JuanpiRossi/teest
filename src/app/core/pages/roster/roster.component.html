@@ -13,7 +13,7 @@
       [trackByProp]="name"
       [dragulaName]="'bag'"
       [dragulaModel]="dataModel2"
-      [dragulaVScroll]="false"
+      [dragulaVScroll]="true"
       [classSelector]=""
       (directiveDrop)="onDrop($event)"
       (onRowsUpdate)='updateRows()'
@@ -90,7 +90,6 @@
             </span>
             <select
               *ngIf="editing[rowIndex + '-spec']"
-              (blur)="editing[rowIndex + '-spec'] = false"
               (change)="updateValue($event, 'spec', rowIndex)"
               [value]="value">
               <option *ngFor="let i of specs[rowIndex]">{{i.name}}</option>
@@ -99,13 +98,14 @@
         </ngx-datatable-column>
         <ngx-datatable-column name="role" [width]="1">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
-              <img src={{icons[rowIndex]}} width="20px" height="20px">
+                <img src={{icons[rowIndex]}} width="20px" height="20px">
+                <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex)">
             </ng-template>
           </ngx-datatable-column>
     </ngx-datatable>
   </div>
   <div class="buttonsContainer">
-    <button class="button" (click)="openAddMember()" mat-raised-button>Pick one</button>
+      <button class="button" (click)="openAddMember($event)" mat-raised-button>Add member</button>
   </div>
 </div>
 

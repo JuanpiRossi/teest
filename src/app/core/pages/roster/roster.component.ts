@@ -18,9 +18,7 @@ export class RosterComponent implements OnDestroy,OnInit {
   icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png",]
 
   constructor(private mongoService:MongoService) {
-    this.rows=[
-      { }
-    ];
+    this.rows=[{}];
     this.columns= [
                     { name: 'name',prop: 'name' },
                     { name: 'server',prop: 'server' },
@@ -40,15 +38,25 @@ export class RosterComponent implements OnDestroy,OnInit {
         res.json().data.Roster.forEach(element => {
           this.rows.push({name:element["Name"],server:element["Server"],class:element["Class"],spec:element["Spec"]})
         });
-        this.updateExtras();   
+        this.updateExtras();
       });
   }
 
   ngOnDestroy() {
   }
 
-  openAddMember(){
-    console.log("addMember");
+  openAddMember(event){
+    this.rows.push({name:"",server:"",class:"Priest",spec:"Holy"})
+    this.editing[this.rows.length-1+"-name"] = true
+    this.editing[this.rows.length-1+"-server"] = true
+    this.editing[this.rows.length-1+"-class"] = true
+    this.updateExtras();
+    this.rows = [...this.rows];
+  }
+
+  deleteRow(rowIndex){
+    this.rows.splice(rowIndex,1)
+    this.rows = [...this.rows];
   }
   
   updateRows(){
@@ -56,13 +64,13 @@ export class RosterComponent implements OnDestroy,OnInit {
   }
 
   updateValue(event, cell, rowIndex){
-    console.log(event.target.value)
-    this.editing[rowIndex + '-' + cell] = false;
     if(event.target.value != ""){
+      this.editing[rowIndex + '-' + cell] = false;
       this.rows[rowIndex][cell] = event.target.value;
       this.rows = [...this.rows];
       this.updateExtras();
-      this.rows[rowIndex].spec = this.specs[rowIndex][0].name;
+      if(cell=="class")
+        this.rows[rowIndex].spec = this.specs[rowIndex][0].name;
     }
     
   }
@@ -86,6 +94,7 @@ export class RosterComponent implements OnDestroy,OnInit {
   
   // DRAG and DROP - Virtual Scroll
   onDrop(event){
+    console.log("asd");
     // ngx-datatable recommends you force change detection
     let listData = event.split("\n");
     let newData = [];
