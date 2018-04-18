@@ -15,6 +15,7 @@ export class RosterComponent implements OnDestroy,OnInit {
   columns;
   editing = {};
   specs = []
+  icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png",]
 
   constructor(private mongoService:MongoService) {
     this.rows=[
@@ -22,8 +23,10 @@ export class RosterComponent implements OnDestroy,OnInit {
     ];
     this.columns= [
                     { name: 'name',prop: 'name' },
+                    { name: 'server',prop: 'server' },
                     { name: 'class',prop: 'class' },
-                    { name: 'spec',prop: 'spec' }
+                    { name: 'spec',prop: 'spec' },
+                    { name: 'role',prop: 'role' }
                   ];        
   }
   
@@ -35,10 +38,9 @@ export class RosterComponent implements OnDestroy,OnInit {
       .subscribe(res => {
         this.rows = []
         res.json().data.Roster.forEach(element => {
-          this.rows.push({name:element["Name"],class:element["Class"],spec:element["Spec"]})
+          this.rows.push({name:element["Name"],server:element["Server"],class:element["Class"],spec:element["Spec"]})
         });
-        console.log(this.rows)
-        this.updateSpecs();   
+        this.updateExtras();   
       });
   }
 
@@ -54,12 +56,13 @@ export class RosterComponent implements OnDestroy,OnInit {
   }
 
   updateValue(event, cell, rowIndex){
-    console.log('inline editing rowIndex', rowIndex)
+    console.log(event.target.value)
     this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex][cell] = event.target.value;
-    this.rows = [...this.rows];
-    console.log('UPDATED!', this.rows[rowIndex][cell]);
-    this.updateSpecs();
+    if(event.target.value != ""){
+      this.rows[rowIndex][cell] = event.target.value;
+      this.rows = [...this.rows];
+    }
+    this.updateExtras();
   }
 
   getRowClass(row) {
@@ -87,11 +90,10 @@ export class RosterComponent implements OnDestroy,OnInit {
     for(var i=0;i<(listData.length/3)-1;i++) {
       var saveData = {name: listData[i*3], class: listData[i*3+1], spec: listData[i*3+2]};
       newData.push(saveData);
-    }
-    console.log(newData)
+      }
   }
 
-  updateSpecs(){
+  updateExtras(){
     var specList= {
       "Death Knight":[{"name":"Frost"},{"name":"Unholy"},{"name":"Blood"}],
       "Demon Hunter":[{"name":"Havoc"},{"name":"Vengeance"}],
@@ -107,9 +109,18 @@ export class RosterComponent implements OnDestroy,OnInit {
       "Warrior":[{"name":"Arms"},{"name":"Fury"},{"name":"Protection"}]
     }
     this.specs = [];
+    this.icons = [];
     this.rows.forEach(element => {
       this.specs.push(specList[element.class])
+      console.log(element.spec)
+      if(element.spec=="Blood" || element.spec=="Vengeance" || element.spec=="Guardian" || element.spec=="Brewmaster" || element.spec=="Protection" || element.spec=="Protection")
+        this.icons.push("assets/tankIcon.png");
+      else if(element.spec=="Restoration" || element.spec=="Mistweaver" || element.spec=="Holy" || element.spec=="Discipline")
+        this.icons.push("assets/healerIcon.png");
+      else if(element.spec=="Frost" || element.spec=="Unholy" || element.spec=="Havoc" || element.spec=="Balance" || element.spec=="Feral" || element.spec=="Marksmanship" || element.spec=="Beast Mastery" || element.spec=="Survival" || element.spec=="Frost" || element.spec=="Fire" || element.spec=="Arcane" || element.spec=="Windwalker" || element.spec=="Retribution" || element.spec=="Shadow" || element.spec=="Assassination" || element.spec=="Outlaw" || element.spec=="Subtlety" || element.spec=="Elemental" || element.spec=="Enhancement" || element.spec=="Destruction" || element.spec=="Affliction" || element.spec=="Demonology" || element.spec=="Arms" || element.spec=="Fury")
+        this.icons.push("assets/dpsIcon.png");
+      else
+        this.icons.push("");
     });
-    console.log(this.specs)
   }
 }
