@@ -96,7 +96,7 @@
             </select>
           </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="role" [width]="1">
+        <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
                 <img src={{icons[rowIndex]}} width="20px" height="20px">
                 <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex)">

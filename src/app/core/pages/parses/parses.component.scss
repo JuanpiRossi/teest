@@ -1,0 +1,92 @@
+.container{
+    top: 0px;
+    right: 10%;
+    left: 10%;
+    position: absolute;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.ngx-datatable{
+    background-color: #303030;
+}
+
+::ng-deep .datatable-body{
+	height: 400px;
+}
+
+::ng-deep .fixed-header{
+    color: #303030;
+}
+
+::ng-deep .row-class-deathKnight  {
+    background-color: #C41F3B;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-demonHunter  {
+    background-color: #A330C9;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-druid  {
+    background-color: #FF7D0A;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-hunter  {
+    background-color: #ABD473;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-mage  {
+    background-color: #69CCF0;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-monk  {
+    background-color: #00FF96;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-paladin  {
+    background-color: #F58CBA;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-priest  {
+    background-color: #FFFFFF;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-rogue  {
+    background-color: #FFF569;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-shaman  {
+    background-color: #0070DE;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-warlock  {
+    background-color: #9482C9;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-warrior  {
+    background-color: #C79C6E;
+    font-family: cursive;
+}
