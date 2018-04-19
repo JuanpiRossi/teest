@@ -15,7 +15,9 @@ export class RosterComponent implements OnDestroy,OnInit {
   columns;
   editing = {};
   specs = []
-  icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png",]
+  icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
+  mongoData;
+  newData;
 
   constructor(private mongoService:MongoService) {
     this.rows=[{}];
@@ -35,8 +37,10 @@ export class RosterComponent implements OnDestroy,OnInit {
     this.mongoService.getGuild({"guildName":"Untamed"})
       .subscribe(res => {
         this.rows = []
+        this.mongoData = res.json().data;
+        delete this.mongoData._id
         res.json().data.Roster.forEach(element => {
-          this.rows.push({name:element["Name"],server:element["Server"],class:element["Class"],spec:element["Spec"]})
+          this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
         });
         this.updateExtras();
       });
@@ -45,13 +49,21 @@ export class RosterComponent implements OnDestroy,OnInit {
   ngOnDestroy() {
   }
 
-  openAddMember(event){
+  addMember(event){
     this.rows.push({name:"",server:"",class:"Priest",spec:"Holy"})
     this.editing[this.rows.length-1+"-name"] = true
     this.editing[this.rows.length-1+"-server"] = true
     this.editing[this.rows.length-1+"-class"] = true
     this.updateExtras();
     this.rows = [...this.rows];
+  }
+
+  saveRoster($event){
+    this.mongoData.Roster = this.newData;
+    this.mongoService.updateGuild({data:this.mongoData,query:{guildName:"Untamed"}})
+      .subscribe(res => {
+        console.log(res)
+      })
   }
 
   deleteRow(rowIndex){
@@ -88,21 +100,22 @@ export class RosterComponent implements OnDestroy,OnInit {
       'row-class-rogue': row.class === "Rogue",
       'row-class-shaman': row.class === "Shaman",
       'row-class-warlock': row.class === "Warlock",
-      'row-class-warrior': row.class === "Warrior"
+        'row-class-warrior': row.class === "Warrior"
     }
   }
   
   // DRAG and DROP - Virtual Scroll
   onDrop(event){
-    console.log("asd");
     // ngx-datatable recommends you force change detection
     let listData = event.split("\n");
-    let newData = [];
+    this.newData = [];
     for(var i=0;i<(listData.length/5)-1;i++) {
       var saveData = {name: listData[i*5], server: listData[i*5+1], class: listData[i*5+2], spec: listData[i*5+3]};
-      newData.push(saveData);
+      this.newData.push(saveData);
       }
-    console.log(newData)
+  }
+  ShowDebuger($event){
+    console.log(this.rows);
   }
 
   updateExtras(){

@@ -398,13 +398,6 @@ html	{
   } 
 }
 
-// //Override to make it work with dragula
-// .gu-unselectable .datatable-row-wrapper{
-// 	position:relative !important;
-// 	transform: none !important;
-// 	backface-visibility:visible !important;
-// }
-// .datatable-row-wrapper.gu-mirror{
-// 	position:fixed !important;
-// 	transform: none !important;
-// }
+.datatable-row-wrapper.gu-mirror{
+	visibility: hidden;
+}

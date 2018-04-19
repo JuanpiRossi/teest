@@ -22,4 +22,8 @@ export class MongoService {
 	getGuild(query){
 		return this.http.post('http://localhost:3000/api/getGuild',query)
 	}
+
+	updateGuild(guildData){
+		return this.http.post('http://localhost:3000/api/updateGuild',guildData)
+	}
 }

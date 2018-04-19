@@ -1,10 +1,9 @@
 .homeMenu  {
-    top: 70px;
-    padding-top: 40px;
-    right: 15%;
-    left: 15%;
+    top: 0px;
+    right: 10%;
+    left: 10%;
     bottom: 0%;
-    position: fixed;
+    position: absolute;
     display: flex;
     flex-wrap: wrap;
 }
@@ -16,6 +15,7 @@
     max-width: 29%;
 }
 
+                                
 .menuComponent  {
     border-style: solid;
     border-radius: 25px;

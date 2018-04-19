@@ -1,15 +1,14 @@
 .container{
     top: 0px;
-    right: 15%;
-    left: 15%;
-    bottom: 0%;
+    right: 10%;
+    left: 10%;
     position: absolute;
 }
 
 .gridContainer  {
-    right: 15%;
-    left: 15%;
-    bottom: auto;
+    right: 10%;
+    left: 10%;
+    bottom: 0%;
 }
 
 ::ng-deep .datatable-body{
@@ -19,9 +18,17 @@
 .buttonsContainer  {
     padding-top: 30px;
     position: absolute;
+    right: 0px;
+    margin-bottom: 150px;
 }
 
-.button {
+.addButton {
+    width: 100px;
+    height: 25px;
+    margin-right: 25px;
+}
+
+.saveButton {
     width: 100px;
     height: 25px;
 }
