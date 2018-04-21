@@ -39,9 +39,14 @@ export class RosterComponent implements OnDestroy,OnInit {
         this.rows = []
         this.mongoData = res.json().data;
         delete this.mongoData._id
-        res.json().data.Roster.forEach(element => {
-          this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
-        });
+        if(res.json().data.Roster!= undefined) {
+          res.json().data.Roster.forEach(element => {
+            this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+          });
+        } else  {
+          this.rows = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+        }
+        this.newData = this.rows;
         this.updateExtras();
       });
   }
@@ -56,10 +61,13 @@ export class RosterComponent implements OnDestroy,OnInit {
     this.editing[this.rows.length-1+"-class"] = true
     this.updateExtras();
     this.rows = [...this.rows];
+    this.newData = this.rows;
   }
 
   saveRoster($event){
-    this.mongoData.Roster = this.newData;
+    console.log(this.newData)
+    this.mongoData["Roster"] = this.newData;
+    console.log(this.mongoData.Roster)
     this.mongoService.updateGuild({data:this.mongoData,query:{guildName:"Untamed"}})
       .subscribe(res => {
         console.log(res)
@@ -100,7 +108,7 @@ export class RosterComponent implements OnDestroy,OnInit {
       'row-class-rogue': row.class === "Rogue",
       'row-class-shaman': row.class === "Shaman",
       'row-class-warlock': row.class === "Warlock",
-        'row-class-warrior': row.class === "Warrior"
+      'row-class-warrior': row.class === "Warrior"
     }
   }
   
@@ -120,29 +128,65 @@ export class RosterComponent implements OnDestroy,OnInit {
 
   updateExtras(){
     var specList= {
-      "Death Knight":[{"name":"Frost"},{"name":"Unholy"},{"name":"Blood"}],
+      "Death Knight":[{"name":"Melee"},{"name":"Frost"},{"name":"Unholy"},{"name":"Blood"}],
       "Demon Hunter":[{"name":"Havoc"},{"name":"Vengeance"}],
       "Druid":[{"name":"Balance"},{"name":"Restoration"},{"name":"Feral"},{"name":"Guardian"}],
-      "Hunter":[{"name":"Marksmanship"},{"name":"Beast Mastery"},{"name":"Survival"}],
-      "Mage":[{"name":"Frost"},{"name":"Fire"},{"name":"Arcane"}],
+      "Hunter":[{"name":"Ranged"},{"name":"Marksmanship"},{"name":"BeastMastery"},{"name":"Survival"}],
+      "Mage":[{"name":"Ranged"},{"name":"Frost"},{"name":"Fire"},{"name":"Arcane"}],
       "Monk":[{"name":"Brewmaster"},{"name":"Mistweaver"},{"name":"Windwalker"}],
       "Paladin":[{"name":"Retribution"},{"name":"Holy"},{"name":"Protection"}],
       "Priest":[{"name":"Holy"},{"name":"Shadow"},{"name":"Discipline"}],
-      "Rogue":[{"name":"Assassination"},{"name":"Outlaw"},{"name":"Subtlety"}],
+      "Rogue":[{"name":"Melee"},{"name":"Assassination"},{"name":"Outlaw"},{"name":"Subtlety"}],
       "Shaman":[{"name":"Elemental"},{"name":"Restoration"},{"name":"Enhancement"}],
-      "Warlock":[{"name":"Destruction"},{"name":"Affliction"},{"name":"Demonology"}],
-      "Warrior":[{"name":"Arms"},{"name":"Fury"},{"name":"Protection"}]
+      "Warlock":[{"name":"Ranged"},{"name":"Destruction"},{"name":"Affliction"},{"name":"Demonology"}],
+      "Warrior":[{"name":"Melee"},{"name":"Arms"},{"name":"Fury"},{"name":"Protection"}]
+    }
+    const roleCheck = {
+      "Frost":"dps",
+      "Unholy":"dps",
+      "Havoc":"dps",
+      "Balance":"dps",
+      "Feral":"dps",
+      "Marksmanship":"dps",
+      "BeastMastery":"dps",
+      "Survival":"dps",
+      "Fire":"dps",
+      "Arcane":"dps",
+      "Windwalker":"dps",
+      "Retribution":"dps",
+      "Shadow":"dps",
+      "Assassination":"dps",
+      "Outlaw":"dps",
+      "Subtlety":"dps",
+      "Elemental":"dps",
+      "Enhancement":"dps",
+      "Destruction":"dps",
+      "Affliction":"dps",
+      "Demonology":"dps",
+      "Arms":"dps",
+      "Fury":"dps",
+      "Melee":"dps",
+      "Ranged":"dps",
+      "Blood":"tank",
+      "Vengeance":"tank",
+      "Guardian":"tank",
+      "Brewmaster":"tank",
+      "Protection":"tank",
+      "Restoration":"healer",
+      "Mistweaver":"healer",
+      "Holy":"healer",
+      "Discipline":"healer"
     }
     this.specs = [];
     this.icons = [];
     let i=0;
     this.rows.forEach(element => {
       this.specs.push(specList[element.class])
-      if(element.spec=="Blood" || element.spec=="Vengeance" || element.spec=="Guardian" || element.spec=="Brewmaster" || element.spec=="Protection" || element.spec=="Protection")
+      if(roleCheck[element.spec] == "tank")
         this.icons.push("assets/tankIcon.png");
-      else if(element.spec=="Restoration" || element.spec=="Mistweaver" || element.spec=="Holy" || element.spec=="Discipline")
+      else if(roleCheck[element.spec] == "healer")
         this.icons.push("assets/healerIcon.png");
-      else if(element.spec=="Frost" || element.spec=="Unholy" || element.spec=="Havoc" || element.spec=="Balance" || element.spec=="Feral" || element.spec=="Marksmanship" || element.spec=="Beast Mastery" || element.spec=="Survival" || element.spec=="Frost" || element.spec=="Fire" || element.spec=="Arcane" || element.spec=="Windwalker" || element.spec=="Retribution" || element.spec=="Shadow" || element.spec=="Assassination" || element.spec=="Outlaw" || element.spec=="Subtlety" || element.spec=="Elemental" || element.spec=="Enhancement" || element.spec=="Destruction" || element.spec=="Affliction" || element.spec=="Demonology" || element.spec=="Arms" || element.spec=="Fury")
+      else if(roleCheck[element.spec] == "dps")
         this.icons.push("assets/dpsIcon.png");
       else
         this.icons.push("");
