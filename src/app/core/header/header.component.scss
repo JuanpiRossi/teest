@@ -27,9 +27,13 @@
     font-family: "Lucida Console", Times, serif;
     font-weight: bold;
     font-size: 40px;  
-    padding-top: 15px;
-    display: inline-block;
+    padding: 15px;
+    display: flex;
     color: goldenrod;
+}
+
+.icon {
+    padding-top: 15px;
 }
 
 .title:hover  {
