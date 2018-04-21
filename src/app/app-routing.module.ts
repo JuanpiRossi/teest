@@ -5,6 +5,7 @@ import { PagesComponent } from './core/pages/pages.component'
 import { HomeComponent } from './core/pages/home/home.component'
 import { ParsesComponent } from './core/pages/parses/parses.component'
 import { RosterComponent } from './core/pages/roster/roster.component'
+import { ParsesIlvlComponent } from './core/pages/parses-ilvl/parses-ilvl.component'
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'roster',
         component: RosterComponent,
+      },
+      {
+        path: 'parsesIlvl',
+        component: ParsesIlvlComponent,
       }
       //{ path: 'error-500', component: Error500Component },
       //{ path: '**', component: NotFoundComponent }

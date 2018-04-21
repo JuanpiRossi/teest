@@ -24,6 +24,14 @@ export class WarcraftLogsService {
 		return this.http.get('https://www.warcraftlogs.com/v1/parses/character/'+character+'/'+server+'/us?metric=hps&api_key='+this.api_key);
 	}
 
+	searchCharacterDpsIlvl(character,server){
+		return this.http.get('https://www.warcraftlogs.com/v1/parses/character/'+character+'/'+server+'/us?metric=dps&bracket=-1&api_key='+this.api_key);
+	}
+
+	searchCharacterHealIlvl(character,server){
+		return this.http.get('https://www.warcraftlogs.com/v1/parses/character/'+character+'/'+server+'/us?metric=hps&bracket=-1&api_key='+this.api_key);
+	}
+
 	getBosses(){
 		return this.http.get('https://www.warcraftlogs.com/v1/zones?api_key='+this.api_key);
 	}

@@ -6,7 +6,8 @@ import { ParsesComponent } from './parses/parses.component';
 import { RouterModule } from '@angular/router';
 import { RosterComponent } from './roster/roster.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { RosterModule } from './roster/roster.module'
+import { RosterModule } from './roster/roster.module';
+import { ParsesIlvlComponent } from './parses-ilvl/parses-ilvl.component'
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { RosterModule } from './roster/roster.module'
     NgxDatatableModule,
     RosterModule
   ],
-  declarations: [PagesComponent, HomeComponent, ParsesComponent],
+  declarations: [PagesComponent, HomeComponent, ParsesComponent, ParsesIlvlComponent],
   exports: [PagesComponent, HomeComponent, ParsesComponent]
 })
 export class PagesModule { }

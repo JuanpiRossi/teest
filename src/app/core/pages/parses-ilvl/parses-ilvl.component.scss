@@ -1,0 +1,140 @@
+.container{
+    top: 0px;
+    right: 10%;
+    left: 10%;
+    margin-bottom: 150px;
+    position: absolute;
+}
+
+.loadingDiv {
+    color:#ffffff;
+    position: fixed;
+    left: 10%;
+    top: 90px;
+}
+
+.tableContainer {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.ngx-datatable{
+    background-color: #303030;
+}
+
+::ng-deep .datatable-row-detail {
+    background: #303030;
+    color: #ffffff;
+}
+
+::ng-deep .fixed-header{
+    color: #303030;
+}
+
+::ng-deep .bossName  {
+    background-color: #a0a0a0;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .grayParse  {
+    background-color: #666;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .greenParse  {
+    background-color: rgb(30, 255, 0);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .blueParse  {
+    background-color: rgb(0, 112, 255);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .PurpleParse  {
+    background-color: rgb(163, 53, 238);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .LegendaryParse  {
+    background-color: rgb(255, 128, 0);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .topParse  {
+    background-color: rgb(229, 204, 128);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .row-class-deathKnight  {
+    background-color: #C41F3B;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-demonHunter  {
+    background-color: #A330C9;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-druid  {
+    background-color: #FF7D0A;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-hunter  {
+    background-color: #ABD473;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-mage  {
+    background-color: #69CCF0;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-monk  {
+    background-color: #00FF96;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-paladin  {
+    background-color: #F58CBA;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-priest  {
+    background-color: #FFFFFF;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-rogue  {
+    background-color: #FFF569;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-shaman  {
+    background-color: #0070DE;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-warlock  {
+    background-color: #9482C9;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-warrior  {
+    background-color: #C79C6E;
+    font-family: cursive;
+}
