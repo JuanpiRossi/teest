@@ -33,7 +33,7 @@ export class ParsesComponent implements OnInit {
         this.mongoData = res.json().data;
         delete this.mongoData._id
         res.json().data.Roster.forEach(element => {
-          this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter})
+          this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter,role:'assets/'+element["role"]+'Icon.png'})
           counter++;
         });
         this.totalToLoad = this.rows.length;
@@ -49,7 +49,13 @@ export class ParsesComponent implements OnInit {
           element.mythicParse = {};
           element.heroicParse = {};
           element.normalParse = {};
-          this.warcraftService.searchCharacterDps(element.name,element.server)
+          if(element.role=="assets/healerIcon.png"){
+            var serviceResponse = this.warcraftService.searchCharacterHeal(element.name,element.server);
+          }
+          else  {
+            var serviceResponse = this.warcraftService.searchCharacterDps(element.name,element.server);
+          }
+          serviceResponse
             .subscribe(response =>  {
               response.json().forEach(report => {
                 this.getBossesParses(element,report);

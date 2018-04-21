@@ -91,6 +91,11 @@
                 </span>
             </ng-template>
         </ngx-datatable-column>
+        <ngx-datatable-column name="role" [width]="1">
+            <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
+                <img src={{value}} width="20px" height="20px">
+            </ng-template>
+        </ngx-datatable-column>
         <ngx-datatable-column name="normal" *ngIf="loaded" [width]="5" [cellClass]="getCellClass">
             <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
                 <span>

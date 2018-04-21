@@ -46,8 +46,8 @@ export class RosterComponent implements OnDestroy,OnInit {
         } else  {
           this.rows = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
         }
-        this.newData = this.rows;
         this.updateExtras();
+        this.newData = this.rows;
       });
   }
 
@@ -182,12 +182,18 @@ export class RosterComponent implements OnDestroy,OnInit {
     let i=0;
     this.rows.forEach(element => {
       this.specs.push(specList[element.class])
-      if(roleCheck[element.spec] == "tank")
+      if(roleCheck[element.spec] == "tank") {
+        element["role"] = "tank";
         this.icons.push("assets/tankIcon.png");
-      else if(roleCheck[element.spec] == "healer")
+      }
+      else if(roleCheck[element.spec] == "healer")  {
+        element["role"] = "healer";
         this.icons.push("assets/healerIcon.png");
-      else if(roleCheck[element.spec] == "dps")
+      }
+      else if(roleCheck[element.spec] == "dps") {
+        element["role"] = "dps";
         this.icons.push("assets/dpsIcon.png");
+      }
       else
         this.icons.push("");
     });
