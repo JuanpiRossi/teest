@@ -1,0 +1,11 @@
+<div class="panelContainer">
+  <div class="panel">
+    <div class="menuContainer" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
+    </div>
+  </div>
+  <div class="panelMenuTabBorder">
+    <div class="panelMenuTab">
+      Menu
+    </div>
+  </div> 
+</div>

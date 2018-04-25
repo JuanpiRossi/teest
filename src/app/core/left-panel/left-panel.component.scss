@@ -1,0 +1,79 @@
+.panelContainer {
+    left: -306px;
+    position: fixed;
+    transition-property: left;
+    transition-duration: .5s;
+    transition-timing-function: linear;
+    &:hover{
+        transition-property: left;
+        transition-duration: .5s;
+        transition-timing-function: linear;
+        left: 0px;
+    }
+}
+
+.panel  {
+    background-color: #a0a0a0;
+    top: 70px;
+    bottom: 40px;
+    width: 306px;
+    position: fixed;
+}
+
+.panelMenuTabBorder    {
+    left: 271px;
+    top: 150px;
+    background-color: #757575;
+    clip-path: circle(75.0% at 50% -30%);
+    width: 100px;
+    height: 30px;
+    position: relative;
+    transform: rotate(-90deg);
+}
+
+.panelMenuTab    {
+    left: 2px;
+    top: 0px;
+    background-color: #a0a0a0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 20px;
+    clip-path: circle(75.0% at 50% -30%);
+    width: 96px;
+    height: 28px;
+    position: relative;
+    text-align: center;
+}
+
+.menuContainer  {
+    margin-top: 50px;
+    width: 200px;
+}
+                                
+.menuPanelComponent  {
+    border-style: solid;
+    border-color: #757575;
+    background-color: #a0a0a0;
+    height: 45px;
+    width: 250px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.menuPanelComponent:hover  {
+    border-color: #757575;
+    background-color: #707070;
+}
+
+.componentPanelTitle  {
+    font-family: "Verdana", Times, serif;
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 10px;
+}
+
+.componentPanelDescription  {
+    padding-left: 25px;
+}

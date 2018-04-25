@@ -1,16 +1,12 @@
-import { Component, OnInit, OnDestroy,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MongoService } from '../../../services/mongo.service';
-import { Http, Response } from "@angular/http"
-import { TableColumn,ColumnMode } from '@swimlane/ngx-datatable';
-import 'rxjs/add/operator/map';
-
 
 @Component({
   selector: 'app-roster',
   templateUrl: './roster.component.html',
   styleUrls: ['./roster.component.scss']
 })
-export class RosterComponent implements OnDestroy,OnInit {
+export class RosterComponent implements OnInit {
   @Input() rows = [];
   columns;
   editing = {};
@@ -49,9 +45,6 @@ export class RosterComponent implements OnDestroy,OnInit {
         this.updateExtras();
         this.newData = this.rows;
       });
-  }
-
-  ngOnDestroy() {
   }
 
   addMember(event){
