@@ -18,6 +18,15 @@ export class LeftPanelComponent implements OnInit {
         // this.htmlOut = this.htmlOut + '<div class="menuPanelComponent" onmousedown="console.log(\'test\')"><div class="componentPanelTitle">'+element.title+'</div><div class="componentPanelDescription">'+element.description+'</div></div>'
       }
     });
+    router.events.subscribe((val) => {
+      this.htmlOut = "";
+      pageList.forEach(element => {
+        if("/"+element.route != router.url){
+          this.htmlOut = this.htmlOut + '<div class="menuPanelComponent" onmousedown="window.location=\'/#/'+element.route+'\';"><div class="componentPanelTitle">'+element.title+'</div><div class="componentPanelDescription">'+element.description+'</div></div>'
+          // this.htmlOut = this.htmlOut + '<div class="menuPanelComponent" onmousedown="console.log(\'test\')"><div class="componentPanelTitle">'+element.title+'</div><div class="componentPanelDescription">'+element.description+'</div></div>'
+        }
+      });
+    });
   }
 
   ngOnInit() {

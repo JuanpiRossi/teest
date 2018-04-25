@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { RosterComponent } from './roster/roster.component';
 import { NgxDatatableModule,DatatableComponent } from '@swimlane/ngx-datatable';
 import { ParsesIlvlComponent } from './parses-ilvl/parses-ilvl.component'
-import { LeftPanelComponent } from '../left-panel/left-panel.component';
 import {DragulaExtendedDirective} from '../../directives/dragula/dragula-extended.directive';
 import {DragulaModule, DragulaService} from 'ng2-dragula';
 
@@ -20,7 +19,7 @@ import {DragulaModule, DragulaService} from 'ng2-dragula';
     DragulaModule
   ],
   providers:[DragulaService],
-  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, ParsesIlvlComponent,LeftPanelComponent,DragulaExtendedDirective],
-  exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, LeftPanelComponent, DragulaExtendedDirective]
+  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, ParsesIlvlComponent,DragulaExtendedDirective],
+  exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, DragulaExtendedDirective]
 })
 export class PagesModule { }
