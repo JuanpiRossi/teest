@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { wowApiService } from '../../services/wowApi.services';
 
 @Component({
   selector: 'app-header',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-
-  constructor() { }
+  serverStatus;
+  constructor(private wowApi:wowApiService) { }
 
   ngOnInit() {
+    this.wowApi.realmStatus()
+      .subscribe(response =>  {
+        response.json().realms.forEach(element => {
+          if(element.slug == "zuljin"){
+            this.serverStatus = element.status;
+          }
+        });
+    })
   }
 
 }

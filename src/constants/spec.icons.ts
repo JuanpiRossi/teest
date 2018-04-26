@@ -1,0 +1,63 @@
+export const specIcons = {
+    "Death Knight":{
+        "Frost":"spell_deathknight_frostpresence",
+        "Unholy":"spell_deathknight_unholypresence",
+        "Blood":"spell_deathknight_bloodpresence"
+    },
+    "Demon Hunter":{
+        "Havoc":"ability_demonhunter_specdps",
+        "Vengeance":"ability_demonhunter_spectank"
+    },
+    "Druid":{
+        "Balance":"spell_nature_starfall",
+        "Restoration":"spell_nature_healingtouch",
+        "Feral":"ability_druid_catform",
+        "Guardian":"ability_racial_bearform"
+    },
+    "Hunter":{
+        "Marksmanship":"ability_hunter_focusedaim",
+        "BeastMastery":"ability_hunter_bestialdiscipline",
+        "Survival":"ability_hunter_camouflage"
+    },
+    "Mage":{
+        "Frost":"spell_frost_frostbolt02",
+        "Fire":"spell_fire_firebolt02",
+        "Arcane":"spell_holy_magicalsentry"
+    },
+    "Monk":{
+        "Brewmaster":"spell_monk_brewmaster_spec",
+        "Mistweaver":"spell_monk_mistweaver_spec",
+        "Windwalker":"spell_monk_windwalker_spec"
+    },
+    "Paladin":{
+        "Retribution":"spell_holy_auraoflight",
+        "Holy":"spell_holy_holybolt",
+        "Protection":"ability_paladin_shieldofthetemplar"
+    },
+    "Priest":{
+        "Holy":"spell_holy_guardianspirit",
+        "Shadow":"spell_shadow_shadowwordpain",
+        "Discipline":"spell_holy_powerwordshield"
+    },
+    "Rogue":{
+        "Assassination":"ability_rogue_deadlybrew",
+        "Outlaw":"inv_sword_30",
+        "Subtlety":"ability_stealth"
+    },
+    "Shaman":{
+        "Elemental":"spell_nature_lightning",
+        "Restoration":"spell_nature_magicimmunity",
+        "Enhancement":"spell_shaman_improvedstormstrike"
+    },
+    "Warlock":{
+        "Destruction":"spell_shadow_rainoffire",
+        "Affliction":"spell_shadow_deathcoil",
+        "Demonology":"spell_shadow_metamorphosis"
+    },
+    "Warrior":{
+        "Arms":"ability_warrior_savageblow",
+        "Fury":"ability_warrior_innerrage",
+        "Protection":"ability_warrior_defensivestance"
+    }
+};
+  

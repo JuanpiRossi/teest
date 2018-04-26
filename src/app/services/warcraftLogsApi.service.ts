@@ -12,10 +12,6 @@ export class WarcraftLogsService {
         this.guildData = {}
 	}
 
-	alive(){
-		return this.http.get('http://localhost:3000/api/alive')
-	}
-
 	searchCharacterDps(character,server){
 		return this.http.get('https://www.warcraftlogs.com/v1/parses/character/'+character+'/'+server+'/us?metric=dps&api_key='+this.api_key);
 	}

@@ -14,5 +14,10 @@ export const pageList =[
         title:"Parses by ilvl",
         description:"Guild parses list by item level"
     },
+    {
+        route:"charSearcher",
+        title:"Character searcher",
+        description:"You can stalk those fuckers here"
+    }
 ];
   

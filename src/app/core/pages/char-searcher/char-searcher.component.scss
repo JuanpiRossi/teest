@@ -1,0 +1,135 @@
+.containerSearchInfo{
+    top: 0px;
+    right: 15%;
+    left: 15%;
+    margin-bottom: 150px;
+    position: absolute;
+}
+
+.searchContainer{
+    padding-left: 25px;
+}
+
+.nameContainer  {
+    top: 0px;
+    position: absolute;
+}
+
+.serverContainer    {
+    top: 0px;
+    left: 225px;
+    position: absolute;
+}
+
+.searchButtonContainer  {
+    top: 50px;
+    left: 425px;
+    position: absolute;
+}
+
+.altCodesButton  {
+    position: absolute;
+    width: 50px;
+    font-size: 9px;
+    top:72px;
+    left: 123px;
+}
+
+.specialCharKeyboard    {
+    padding-bottom: 5px;
+}
+
+.specialCharButton  {
+    width: 25px;
+    height: 25px;
+}
+
+.infoContainer  {
+    top: 40px;
+    left: 500px;
+    position: absolute;
+}
+
+.altCodesWindow  {
+    left: 625px;
+    position: absolute;
+}
+
+.textInput  {
+    color: #fff;
+}
+
+.textError  {
+    color: #f00;
+    font-size: 13px;
+}
+
+.loadingIcon    {
+    position: absolute;
+    width:20px;
+    height:20px;
+    top:10px;
+}
+
+.characterInfoContainer {
+    top: 125px;
+    right: 15%;
+    left: 15%;
+    margin-bottom: 150px;
+    position: absolute;
+    background-color: #000;
+}
+
+.characterPrincipalData {
+    color:#fff;
+    display: inline;
+}
+
+.nameServer {
+    position: absolute;
+    top:10px;
+    left:250px;
+    font-size: 40px;
+}
+
+.class {
+    position: absolute;
+    top:75px;
+    left:300px;
+    font-size: 20px;
+}
+
+.classIcon {
+    position: absolute;
+    top:70px;
+    left:265px;
+    font-size: 20px;
+}
+
+.spec {
+    position: absolute;
+    top:75px;
+    left:450px;
+    font-size: 20px;
+}
+
+.specIcon {
+    position: absolute;
+    top:70px;
+    left:415px;
+    font-size: 20px;
+}
+
+.ilvl {
+    position: absolute;
+    top:75px;
+    left:600px;
+    font-size: 20px;
+}
+
+.ilvlEquiped {
+    position: absolute;
+    top:75px;
+    left:800px;
+    font-size: 20px;
+}

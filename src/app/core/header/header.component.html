@@ -10,7 +10,12 @@
     </div>
     <div class="space">
     </div>
-    <div class="login">
+    <div class="statusContainer">
+      <div class="serverStatus">
+        Zuljin status: 
+        <img *ngIf="serverStatus==true" class="serverStatusIcon" src="assets/onlineIcon.png">
+        <img *ngIf="serverStatus==false" class="serverStatusIcon" src="assets/oflineIcon.png">
+      </div>
     </div>
   </div>
 </div>
