@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild,  Input } from '@angular/core';
 import { MongoService } from '../../../services/mongo.service';
 import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
+import { roleCheck } from '../../../../constants/specs.roles';
+import { specList } from '../../../../constants/class.specs';
 
 @Component({
   selector: 'app-parses-ilvl',
@@ -12,6 +14,8 @@ export class ParsesIlvlComponent implements OnInit {
   @Input() rows = [];
   @Input() detailedRows = [];
   detailsHeight;
+  editing = {};
+  specs = []
   mongoData;
   expanded: any = {};
   timeout: any;
@@ -19,6 +23,7 @@ export class ParsesIlvlComponent implements OnInit {
   zoneId = 17;
   loadedCounter = 0;
   totalToLoad=0;
+  loadSpec = [];
   loaded = false;
 
   @ViewChild('myTable') table: any;
@@ -36,10 +41,10 @@ export class ParsesIlvlComponent implements OnInit {
           this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter,role:'assets/'+element["role"]+'Icon.png'})
           counter++;
         });
+        this.updateExtras();
         this.totalToLoad = this.rows.length;
         this.warcraftService.getBosses()
           .subscribe(response =>  {
-            console.log(response.json());
             response.json().forEach(zone => {
               if(zone.id == this.zoneId) {
                 this.bosses = zone.encounters;
@@ -108,14 +113,10 @@ export class ParsesIlvlComponent implements OnInit {
   }
 
   toggleExpandRow(row) {
-    console.log('Toggled Expand Row!', row);
     this.table.rowDetail.toggleExpandRow(row);
-    console.log(this.rows)
-    console.log(this.loaded)
   }
 
   onDetailToggle(event) {
-    console.log('Detail Toggled', event);
   }
 
   getDetail() {
@@ -128,7 +129,6 @@ export class ParsesIlvlComponent implements OnInit {
       });
       this.detailedRows.push(tmp);
     });
-    console.log(this.detailedRows)
     this.detailsHeight = 50 + this.bosses.length * 40;
   }
 
@@ -181,5 +181,68 @@ export class ParsesIlvlComponent implements OnInit {
     this.getDetail();
     this.loaded = true
     this.rows = [...this.rows];
+  }
+
+  updateExtras(){
+    this.specs = [];
+    this.rows.forEach(element => {
+      this.specs.push(specList[element.class])
+    });
+  }
+
+  updateValue(event, cell, rowIndex){
+    this.loadSpec[rowIndex] = true;
+    this.editing[rowIndex + '-' + cell] = false;
+    this.rows[rowIndex].spec = event.target.value;
+    this.rows[rowIndex].role = "assets/"+roleCheck[event.target.value]+"Icon.png";
+    if(this.rows[rowIndex].role.role=="assets/healerIcon.png"){
+      var serviceResponse = this.warcraftService.searchCharacterHealIlvl(this.rows[rowIndex].name,this.rows[rowIndex].server);
+    }
+    else  {
+      var serviceResponse = this.warcraftService.searchCharacterDpsIlvl(this.rows[rowIndex].name,this.rows[rowIndex].server);
+      }
+    serviceResponse
+      .subscribe(response =>  {
+        this.rows[rowIndex].mythicParse = {};
+        this.rows[rowIndex].heroicParse = {};
+        this.rows[rowIndex].normalParse = {};
+        this.rows[rowIndex].mythic = 0;
+        this.rows[rowIndex].heroic = 0;
+        this.rows[rowIndex].normal = 0;
+        response.json().forEach(report => {
+          this.getBossesParses(this.rows[rowIndex],report);
+        })
+        // this.loadedCounter++;
+        // if(this.loadedCounter==this.totalToLoad){
+        //   this.getOverallParses();
+        // }
+        this.detailedRows[rowIndex].forEach(detailedRow => {
+          detailedRow.normal = this.rows[rowIndex].normalParse[detailedRow.boss];
+          if(detailedRow.normal == undefined){
+            detailedRow.normal = 0;
+          }
+          detailedRow.heroic = this.rows[rowIndex].heroicParse[detailedRow.boss];
+          if(detailedRow.heroic == undefined){
+            detailedRow.heroic = 0;
+          }
+          detailedRow.mythic = this.rows[rowIndex].mythicParse[detailedRow.boss];
+          if(detailedRow.mythic == undefined){
+            detailedRow.mythic = 0;
+          }
+          this.rows[rowIndex].mythic = this.rows[rowIndex].mythic + detailedRow.mythic;
+          this.rows[rowIndex].heroic = this.rows[rowIndex].heroic + detailedRow.heroic;
+          this.rows[rowIndex].normal = this.rows[rowIndex].normal + detailedRow.normal;
+        });
+        this.rows[rowIndex].mythic = this.rows[rowIndex].mythic / Object.keys(this.rows[rowIndex].mythicParse).length;
+        this.rows[rowIndex].heroic = this.rows[rowIndex].heroic / Object.keys(this.rows[rowIndex].heroicParse).length;
+        this.rows[rowIndex].normal = this.rows[rowIndex].normal / Object.keys(this.rows[rowIndex].normalParse).length;
+        this.rows[rowIndex].mythic = parseInt(this.rows[rowIndex].mythic) | 0;
+        this.rows[rowIndex].heroic = parseInt(this.rows[rowIndex].heroic) | 0;
+        this.rows[rowIndex].normal = parseInt(this.rows[rowIndex].normal) | 0;
+        this.rows = [...this.rows];
+        this.detailedRows = [...this.detailedRows];
+        this.loadSpec[rowIndex] = false;
+      }
+    )
   }
 }

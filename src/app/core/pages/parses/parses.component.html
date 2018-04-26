@@ -84,18 +84,36 @@
                 </span>
             </ng-template>
         </ngx-datatable-column>
-        <ngx-datatable-column name="spec">
-            <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
-                <span>
-                    {{value}}
-                </span>
+        <ngx-datatable-column name="spec" *ngIf="loaded">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+               <span
+                title="Double click to edit"
+                (dblclick)="editing[rowIndex + '-spec'] = true"
+                *ngIf="!editing[rowIndex + '-spec']">
+                {{value}}
+              </span>
+              <img src="assets/loadingGif.gif" *ngIf="loadSpec[rowIndex]" width="20px" height="20px">
+              <select
+                *ngIf="editing[rowIndex + '-spec']"
+                (change)="updateValue($event, 'spec', rowIndex)"
+                [value]="value">
+                <option *ngFor="let i of specs[rowIndex]">{{i.name}}</option>
+              </select>
             </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="role" [width]="1">
-            <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
-                <img src={{value}} width="20px" height="20px">
-            </ng-template>
-        </ngx-datatable-column>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="spec" *ngIf="!loaded">
+              <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
+                  <span>
+                      {{value}}
+                  </span>
+                  <img src="assets/loadingGif.gif" *ngIf="loadSpec[rowIndex]" width="20px" height="20px">
+              </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="role" [width]="1">
+              <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
+                  <img src={{value}} width="20px" height="20px">
+              </ng-template>
+          </ngx-datatable-column>
         <ngx-datatable-column name="normal" *ngIf="loaded" [width]="5" [cellClass]="getCellClass">
             <ng-template let-row="row" let-expanded="expanded" let-value="value" ngx-datatable-cell-template>
                 <span>
