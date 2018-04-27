@@ -1,8 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { wowApiService } from '../../../services/wowApi.services';
 import { classIcons } from '../../../../constants/class.icons';
 import { specIcons } from '../../../../constants/spec.icons';
 import { profIcons } from '../../../../constants/professions.icons';
+import { roleCheck } from '../../../../constants/specs.roles';
+import { specList } from '../../../../constants/class.specs';
+import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
 
 @Component({
   selector: 'app-char-searcher',
@@ -18,13 +21,22 @@ export class CharSearcherComponent implements OnInit {
   searchLoad = false;
   races;
   classes;
-  character = {class:"",race:"",level:"",name:"",realm:"",avatar:"",faction:"",guild:{},pvp:{},spec:"",professions:[],averageIlvl:"",averageIlvlEquiped:"",specIcon:"",classIcon:""};
+  character = {class:"",race:"",level:"",name:"",realm:"",avatar:"",faction:"",guild:{},pvp:{},spec:"",professions:[{name:"",level:"",icon:""},{name:"",level:"",icon:""}],averageIlvl:"",averageIlvlEquiped:"",specIcon:"",classIcon:""};
   innerHTML = "";
+  expanded;
+  detailsHeight;
   @Input() rows = [];
   @Input() items = [];
   @Input() stats = [];
+  @Input() overallParse = [];
+  @Input() overallParseDetails = {};
+  @Input() ilvlParse = [];
+  @Input() ilvlParseDetails = {};
+
+  @ViewChild('myTable') table: any;
+  @ViewChild('myTable2') table2: any;
   
-  constructor(private wowApi:wowApiService) { }
+  constructor(private wowApi:wowApiService, private warcraftService:WarcraftLogsService) { }
 
   ngOnInit() {
     this.searchLoad = false;
@@ -40,14 +52,6 @@ export class CharSearcherComponent implements OnInit {
       }
     )
   }
-
-  CharacterInfo() {
-    console.log("CharacterInfo");
-    this.wowApi.characterInformation("aicero","zuljin")
-      .subscribe(response =>  {
-        console.log(response.json())
-    })
-  };
 
   nameChange($event)  {
     this.charName = event.target["value"];
@@ -73,12 +77,18 @@ export class CharSearcherComponent implements OnInit {
     this.charName = this.charName + event.target["value"];
   };
 
+  toggleExpandRow(row) {
+    this.table.rowDetail.toggleExpandRow(row);
+  }
+
+  toggleExpandRow2(row) {
+    this.table2.rowDetail.toggleExpandRow(row);
+  }
+
   searchCharacter($event) {
     this.loader = true;
     this.error.webService.error = false;
     this.error.webService.text = "";
-    console.log("charName",this.charName);
-    console.log("serverName",this.serverName);
     if(this.charName=="") {
       this.error.name.error = true;
       this.error.name.text = "*Name required";
@@ -95,7 +105,6 @@ export class CharSearcherComponent implements OnInit {
         },  error => {
           this.error.webService.error = true;
           this.error.webService.text = error.json().reason;
-          console.log(this.error.webService)
           this.loader = false;
         }
       )
@@ -105,8 +114,7 @@ export class CharSearcherComponent implements OnInit {
   };
 
   processCharacterInfo(response){
-    console.log(response)
-    this.character = {class:"",race:"",level:"",name:"",realm:"",avatar:"",faction:"",guild:{},pvp:{},spec:"",professions:[],averageIlvl:"",averageIlvlEquiped:"",specIcon:"",classIcon:""};
+    this.character = {class:"",race:"",level:"",name:"",realm:"",avatar:"",faction:"",guild:{},pvp:{},spec:"",professions:[{name:"",level:"",icon:""},{name:"",level:"",icon:""}],averageIlvl:"",averageIlvlEquiped:"",specIcon:"",classIcon:""};;
     this.classes.classes.forEach(element => {
       if(element.id == response.class){
         this.character["class"] = element.name;
@@ -134,7 +142,6 @@ export class CharSearcherComponent implements OnInit {
     Object.keys(response.stats).forEach(key => {
       this.stats.push({stat:key,value:response.stats[key]})
     });
-    console.log(this.stats)
     this.stats = [...this.stats];
     this.character["pvp"] = {arena2v2:response.pvp.brackets.ARENA_BRACKET_2v2.rating,arena3v3:response.pvp.brackets.ARENA_BRACKET_3v3.rating,rbg:response.pvp.brackets.ARENA_BRACKET_RBG.rating,honorKill:response.totalHonorableKills}
     this.character["talents"] = {};
@@ -178,8 +185,24 @@ export class CharSearcherComponent implements OnInit {
       this.items.push({slot:item,icon:this.wowApi.retrieveIcon(response.items[item].icon),ilvl:response.items[item].itemLevel,name:response.items[item].name})
     });
     this.items = [...this.items];
+    this.ilvlParse = [];
+    this.overallParse = [];
+    this.getOveralParses();
+    this.getIlvlParses();
     this.searchLoad = true
-    console.log(this.character);
+  }
+  
+
+  getCellClass({ row, column, value }): any {
+    return {
+      'grayParse': value < 25,
+      'greenParse': value >= 25 && value < 50,
+      'blueParse': value >= 50 && value < 75,
+      'PurpleParse': value >= 75 && value < 95,
+      'LegendaryParse': value >= 95 && value < 100,
+      'topParse': value == 100,
+      'bossName': true
+    };
   }
 
   getRowClass() {
@@ -202,6 +225,254 @@ export class CharSearcherComponent implements OnInit {
       //FIN DE EXCEPCIONES
       element["bossIcon"] = this.wowApi.retrieveBossImage(element["bossIcon"]);
     });
-    console.log(this.rows)
+  }
+
+  getOveralParses() {
+    var specs = specList[this.character.class];
+    var bosses = [];
+    //overallParse
+    this.rows.forEach(element => {
+      bosses.push(element.boss);
+    });
+    this.detailsHeight = 50 + bosses.length * 40;
+    this.overallParseDetails =  {};
+    specs.forEach(spec => {
+      if(spec.name!="Ranged"&&spec.name!="Melee"&&spec.name!="Healing") {
+        this.overallParseDetails[spec.name] = [];
+        bosses.forEach(boss => {
+          this.overallParseDetails[spec.name].push({boss:boss,normal:0,heroic:0,mythic:0})
+        });
+      }
+    });
+    this.warcraftService.searchCharacterDps(this.character.name,this.serverName)
+      .subscribe(response =>  {
+        response.json().forEach(report => {
+          report.specs.forEach(specReport => {
+            if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]!="healer") {
+              this.overallParseDetails[specReport.spec].forEach(boss => {
+                if(boss.boss == report.name){
+                  if(specReport.best_historical_percent == ""){
+                    specReport.best_historical_percent = 0;
+                  }
+                  if(report.difficulty==5)  {
+                    boss.mythic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==4)  {
+                    boss.heroic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==3)  {
+                    boss.normal = parseInt(specReport.best_historical_percent) | 0;
+                  }
+                }
+              });
+            }
+          });
+        });
+        Object.keys(this.overallParseDetails).forEach(spec => {
+          if(roleCheck[spec]!="healer"){
+            var contN = 0;
+            var contH = 0;
+            var contM = 0;
+            var normal = 0;
+            var heroic = 0;
+            var mythic = 0;
+            this.overallParseDetails[spec].forEach(parses => {
+              if(parses.normal != 0 && parses.normal != ""){
+                contN++;
+                normal = normal + parses.normal;
+              }
+              if(parses.heroic != 0 && parses.heroic != ""){
+                contH++;
+                heroic = heroic + parses.heroic;
+              }
+              if(parses.mythic != 0 && parses.mythic != ""){
+                contM++;
+                mythic = mythic + parses.mythic;
+              }
+            });
+            normal = Math.round(normal/contN);
+            heroic = Math.round(heroic/contH);
+            mythic = Math.round(mythic/contM);
+            this.overallParse.push({spec:spec,normal:normal|0,heroic:heroic|0,mythic:mythic|0,specIcon:this.wowApi.retrieveIcon(specIcons[this.character.class][spec])})
+          }
+        });
+        this.overallParse = [...this.overallParse]
+      }
+    )
+    this.warcraftService.searchCharacterHeal(this.character.name,this.serverName)
+      .subscribe(response =>  {
+        response.json().forEach(report => {
+          report.specs.forEach(specReport => {
+            if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]=="healer") {
+              this.overallParseDetails[specReport.spec].forEach(boss => {
+                if(boss.boss == report.name){
+                  if(specReport.best_historical_percent == ""){
+                    specReport.best_historical_percent = 0;
+                  }
+                  if(report.difficulty==5)  {
+                    boss.mythic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==4)  {
+                    boss.heroic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==3)  {
+                    boss.normal = parseInt(specReport.best_historical_percent) | 0;
+                  }
+                }
+              });
+            }
+          });
+        });
+        Object.keys(this.overallParseDetails).forEach(spec => {
+          if(roleCheck[spec]=="healer"){
+            var contN = 0;
+            var contH = 0;
+            var contM = 0;
+            var normal = 0;
+            var heroic = 0;
+            var mythic = 0;
+            this.overallParseDetails[spec].forEach(parses => {
+              if(parses.normal != 0 && parses.normal != ""){
+                contN++;
+                normal = normal + parses.normal;
+              }
+              if(parses.heroic != 0 && parses.heroic != ""){
+                contH++;
+                heroic = heroic + parses.heroic;
+              }
+              if(parses.mythic != 0 && parses.mythic != ""){
+                contM++;
+                mythic = mythic + parses.mythic;
+              }
+            });
+            normal = Math.round(normal/contN);
+            heroic = Math.round(heroic/contH);
+            mythic = Math.round(mythic/contM);
+            this.overallParse.push({spec:spec,normal:normal|0,heroic:heroic|0,mythic:mythic|0,specIcon:this.wowApi.retrieveIcon(specIcons[this.character.class][spec])})
+          }
+        });
+        this.overallParse = [...this.overallParse]
+      }
+    )
+  }
+
+  getIlvlParses() {
+    var specs = specList[this.character.class];
+    var bosses = [];
+    //overallParse
+    this.rows.forEach(element => {
+      bosses.push(element.boss);
+    });
+    this.ilvlParseDetails =  {};
+    specs.forEach(spec => {
+      if(spec.name!="Ranged"&&spec.name!="Melee"&&spec.name!="Healing") {
+        this.ilvlParseDetails[spec.name] = [];
+        bosses.forEach(boss => {
+          this.ilvlParseDetails[spec.name].push({boss:boss,normal:0,heroic:0,mythic:0})
+        });
+      }
+    });
+    this.warcraftService.searchCharacterDpsIlvl(this.character.name,this.serverName)
+      .subscribe(response =>  {
+        response.json().forEach(report => {
+          report.specs.forEach(specReport => {
+            if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]!="healer") {
+              this.ilvlParseDetails[specReport.spec].forEach(boss => {
+                if(boss.boss == report.name){
+                  if(specReport.best_historical_percent == ""){
+                    specReport.best_historical_percent = 0;
+                  }
+                  if(report.difficulty==5)  {
+                    boss.mythic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==4)  {
+                    boss.heroic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==3)  {
+                    boss.normal = parseInt(specReport.best_historical_percent) | 0;
+                  }
+                }
+              });
+            }
+          });
+        });
+        Object.keys(this.ilvlParseDetails).forEach(spec => {
+          if(roleCheck[spec]!="healer"){
+            var contN = 0;
+            var contH = 0;
+            var contM = 0;
+            var normal = 0;
+            var heroic = 0;
+            var mythic = 0;
+            this.ilvlParseDetails[spec].forEach(parses => {
+              if(parses.normal != 0 && parses.normal != ""){
+                contN++;
+                normal = normal + parses.normal;
+              }
+              if(parses.heroic != 0 && parses.heroic != ""){
+                contH++;
+                heroic = heroic + parses.heroic;
+              }
+              if(parses.mythic != 0 && parses.mythic != ""){
+                contM++;
+                mythic = mythic + parses.mythic;
+              }
+            });
+            normal = Math.round(normal/contN);
+            heroic = Math.round(heroic/contH);
+            mythic = Math.round(mythic/contM);
+            this.ilvlParse.push({spec:spec,normal:normal|0,heroic:heroic|0,mythic:mythic|0,specIcon:this.wowApi.retrieveIcon(specIcons[this.character.class][spec])})
+          }
+        });
+        this.ilvlParse = [...this.ilvlParse]
+      }
+    )
+    this.warcraftService.searchCharacterHealIlvl(this.character.name,this.serverName)
+      .subscribe(response =>  {
+        response.json().forEach(report => {
+          report.specs.forEach(specReport => {
+            if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]=="healer") {
+              this.ilvlParseDetails[specReport.spec].forEach(boss => {
+                if(boss.boss == report.name){
+                  if(specReport.best_historical_percent == ""){
+                    specReport.best_historical_percent = 0;
+                  }
+                  if(report.difficulty==5)  {
+                    boss.mythic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==4)  {
+                    boss.heroic = parseInt(specReport.best_historical_percent) | 0;
+                  } else if(report.difficulty==3)  {
+                    boss.normal = parseInt(specReport.best_historical_percent) | 0;
+                  }
+                }
+              });
+            }
+          });
+        });
+        Object.keys(this.ilvlParseDetails).forEach(spec => {
+          if(roleCheck[spec]=="healer"){
+            var contN = 0;
+            var contH = 0;
+            var contM = 0;
+            var normal = 0;
+            var heroic = 0;
+            var mythic = 0;
+            this.ilvlParseDetails[spec].forEach(parses => {
+              if(parses.normal != 0 && parses.normal != ""){
+                contN++;
+                normal = normal + parses.normal;
+              }
+              if(parses.heroic != 0 && parses.heroic != ""){
+                contH++;
+                heroic = heroic + parses.heroic;
+              }
+              if(parses.mythic != 0 && parses.mythic != ""){
+                contM++;
+                mythic = mythic + parses.mythic;
+              }
+            });
+            normal = Math.round(normal/contN);
+            heroic = Math.round(heroic/contH);
+            mythic = Math.round(mythic/contM);
+            this.ilvlParse.push({spec:spec,normal:normal|0,heroic:heroic|0,mythic:mythic|0,specIcon:this.wowApi.retrieveIcon(specIcons[this.character.class][spec])})
+          }
+        });
+        this.ilvlParse = [...this.ilvlParse]
+      }
+    )
   }
 }

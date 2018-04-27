@@ -154,7 +154,7 @@
             [rowHeight]="55"
             [scrollbarV]="true"
             [scrollbarH]="false">
-            <ngx-datatable-column name="boss" [cellClass]="getCellClass" [sortable]=false>
+            <ngx-datatable-column name="boss" [sortable]=false>
               <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                 <img src={{rows[rowIndex].bossIcon}} width="64px" height="32px">
                 <span style="bottom:10px; position:relative;color:#d0d0d0;">
@@ -162,21 +162,21 @@
                 </span>
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="normal" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ngx-datatable-column name="normal" [sortable]=false [width]="1">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span style="left:15px; position:relative;color:#d0d0d0;">
                   {{value}}
                 </span>
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="heroic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ngx-datatable-column name="heroic" [sortable]=false [width]="1">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span style="left:15px; position:relative;color:#d0d0d0;">
                   {{value}}
                 </span>
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="mythic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ngx-datatable-column name="mythic" [sortable]=false [width]="1">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span style="left:15px; position:relative;color:#d0d0d0;">
                   {{value}}
@@ -202,14 +202,14 @@
             [rowHeight]="55"
             [scrollbarV]="true"
             [scrollbarH]="false">
-            <ngx-datatable-column name="slot" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ngx-datatable-column name="slot" [sortable]=false [width]="1">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span style="left:15px; position:relative;color:#d0d0d0;">
                   {{value}}
                 </span>
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="name" [cellClass]="getCellClass" [sortable]=false>
+            <ngx-datatable-column name="name" [sortable]=false>
               <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
                 <img src={{items[rowIndex].icon}} width="20px" height="20px">
                 <span style="position:relative;color:#d0d0d0;">
@@ -217,7 +217,7 @@
                 </span>
               </ng-template>
             </ngx-datatable-column>
-            <ngx-datatable-column name="ilvl" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ngx-datatable-column name="ilvl" [sortable]=false [width]="1">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span style="left:15px; position:relative;color:#d0d0d0;">
                   {{value}}
@@ -291,15 +291,15 @@
           [rowClass]="getRowClass"
           [rowHeight]="30"
           [scrollbarV]="true"
-          [scrollbarH]="false">
-          <ngx-datatable-column name="stat" [cellClass]="getCellClass" [sortable]=false [width]="1">
+          [scrollbarH]="true">
+          <ngx-datatable-column name="stat" [sortable]=false [width]="1">
             <ng-template let-value="value" ngx-datatable-cell-template>
               <span style="left:15px; position:relative;color:#d0d0d0;bottom:10px;">
                 {{value}}
               </span>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="value" [cellClass]="getCellClass" [sortable]=false [width]="1">
+          <ngx-datatable-column name="value" [sortable]=false [width]="1">
             <ng-template let-value="value" ngx-datatable-cell-template>
               <span style="left:15px; position:relative;color:#d0d0d0;bottom:10px;">
                 {{value}}
@@ -307,6 +307,214 @@
             </ng-template>
           </ngx-datatable-column>
         </ngx-datatable>
+      </div>
+    </div>
+    <div class="logsContainer">
+      <div class="overallContainer">
+        <div class="overallTitleText">
+          Overall logs
+        </div>
+        <div class="padding15px">
+          <ngx-datatable
+            #myTable
+            class='material expandable'
+            [rows]='overallParse'
+            [columnMode]="'force'"
+            [headerHeight]="40"
+            [rowClass]="getRowClass"
+            [rowHeight]="55">
+            <ngx-datatable-row-detail [rowHeight]="detailsHeight" #myDetailRow>
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                <div class="tableContainer">
+                    <ngx-datatable
+                        class='material'
+                        [rows]='overallParseDetails[row.spec]'
+                        [columnMode]="'force'"
+                        [headerHeight]="30"
+                        [rowHeight]="40">
+                        <ngx-datatable-column name="boss" [cellClass]="getCellClass">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span>
+                                    {{value}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="normal" [cellClass]="getCellClass" [width]="1">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span>
+                                    {{value}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="heroic" [cellClass]="getCellClass" [width]="1">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span>
+                                    {{value}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="mythic" [cellClass]="getCellClass" [width]="1">
+                            <ng-template let-value="value" ngx-datatable-cell-template>
+                                <span>
+                                    {{value}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+                </ng-template>
+            </ngx-datatable-row-detail>
+            <ngx-datatable-column
+                [width]="1"
+                [resizeable]="false"
+                [sortable]="false"
+                [draggable]="false"
+                [canAutoResize]="false">
+                <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                    <a
+                        href="javascript:void(0)"
+                        title="Expand/Collapse Row"
+                        (click)="toggleExpandRow(row)">
+                        <img src="assets/arrow_right.png" width="20px" height="20px" *ngIf="!expanded">
+                        <img src="assets/arrow_down.png" width="20px" height="20px" *ngIf="expanded">
+                    </a>
+                </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="spec" [cellClass]="getCellClass" [sortable]=false>
+              <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                <img src={{overallParse[rowIndex].specIcon}} width="20px" height="20px">
+                <span style="left:15px; bottom:5px; position:relative;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="normal" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                <span style="position:relative;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="heroic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="mythic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+      <div class="filler">
+      </div>
+      <div class="ilvlContainer">
+        <div class="ilvlTitleText">
+          Item level logs:
+        </div>
+        <div class="padding15px">
+            <ngx-datatable
+              #myTable2
+              class='material expandable'
+              [rows]='ilvlParse'
+              [columnMode]="'force'"
+              [headerHeight]="40"
+              [rowClass]="getRowClass"
+              [rowHeight]="55">
+              <ngx-datatable-row-detail [rowHeight]="detailsHeight" #myDetailRow>
+                  <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                  <div class="tableContainer">
+                      <ngx-datatable
+                          class='material'
+                          [rows]='ilvlParseDetails[row.spec]'
+                          [columnMode]="'force'"
+                          [headerHeight]="30"
+                          [rowHeight]="40">
+                          <ngx-datatable-column name="boss" [cellClass]="getCellClass">
+                              <ng-template let-value="value" ngx-datatable-cell-template>
+                                  <span>
+                                      {{value}}
+                                  </span>
+                              </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column name="normal" [cellClass]="getCellClass" [width]="1">
+                              <ng-template let-value="value" ngx-datatable-cell-template>
+                                  <span>
+                                      {{value}}
+                                  </span>
+                              </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column name="heroic" [cellClass]="getCellClass" [width]="1">
+                              <ng-template let-value="value" ngx-datatable-cell-template>
+                                  <span>
+                                      {{value}}
+                                  </span>
+                              </ng-template>
+                          </ngx-datatable-column>
+                          <ngx-datatable-column name="mythic" [cellClass]="getCellClass" [width]="1">
+                              <ng-template let-value="value" ngx-datatable-cell-template>
+                                  <span>
+                                      {{value}}
+                                  </span>
+                              </ng-template>
+                          </ngx-datatable-column>
+                      </ngx-datatable>
+                  </div>
+                  </ng-template>
+              </ngx-datatable-row-detail>
+              <ngx-datatable-column
+                  [width]="1"
+                  [resizeable]="false"
+                  [sortable]="false"
+                  [draggable]="false"
+                  [canAutoResize]="false">
+                  <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                      <a
+                          href="javascript:void(0)"
+                          title="Expand/Collapse Row"
+                          (click)="toggleExpandRow2(row)">
+                          <img src="assets/arrow_right.png" width="20px" height="20px" *ngIf="!expanded">
+                          <img src="assets/arrow_down.png" width="20px" height="20px" *ngIf="expanded">
+                      </a>
+                  </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="spec" [cellClass]="getCellClass" [sortable]=false>
+                <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                  <img src={{ilvlParse[rowIndex].specIcon}} width="20px" height="20px">
+                  <span style="left:15px; bottom:5px; position:relative;">
+                    {{value}}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="normal" [cellClass]="getCellClass" [sortable]=false [width]="1">
+                <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                  <span style="position:relative;">
+                    {{value}}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="heroic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span style="left:15px; position:relative;">
+                    {{value}}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column name="mythic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+                <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span style="left:15px; position:relative;">
+                    {{value}}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+            </ngx-datatable>
+          </div>
       </div>
     </div>
   </div>

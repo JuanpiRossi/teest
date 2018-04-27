@@ -37,8 +37,8 @@
 }
 .infoContainer  {
     position: relative;
-    max-width: 175px;
-    min-width: 175px;
+    max-width: 150px;
+    min-width: 150px;
     flex: 1;
     height: 120px;
 }
@@ -407,9 +407,90 @@
     margin: 0 auto;
 }
 
+.logsContainer  {
+    padding-top: 20px;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.ilvlContainer  {
+    background-color: #000;
+    width: 49%;
+    min-width: 400px;
+}
+
+.overallContainer  {
+    background-color: #000;
+    width: 49%;
+    min-width: 400px;
+}
+
+.ilvlTitleText {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.overallTitleText {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+    padding-top: 15px;
+    padding-left: 15px;
+}
 
 
 
+::ng-deep .bossName  {
+    background-color: #a0a0a0;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .grayParse  {
+    background-color: #666;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .greenParse  {
+    background-color: rgb(30, 255, 0);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .blueParse  {
+    background-color: rgb(0, 112, 255);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .PurpleParse  {
+    background-color: rgb(163, 53, 238);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .LegendaryParse  {
+    background-color: rgb(255, 128, 0);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
+
+::ng-deep .topParse  {
+    background-color: rgb(229, 204, 128);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: solid;
+    border-left: solid;
+}
 
 
 
