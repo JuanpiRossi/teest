@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 })
 export class LeftPanelComponent implements OnInit {
   htmlOut="";
-  constructor(private sanitizer: DomSanitizer,private router: Router) {
+  constructor(public sanitizer: DomSanitizer,private router: Router) {
     pageList.forEach(element => {
       if("/"+element.route != router.url){
         this.htmlOut = this.htmlOut + '<div class="menuPanelComponent" onmousedown="window.location=\'/#/'+element.route+'\';"><div class="componentPanelTitle">'+element.title+'</div><div class="componentPanelDescription">'+element.description+'</div></div>'

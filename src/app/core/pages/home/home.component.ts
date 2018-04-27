@@ -10,7 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class HomeComponent implements OnInit {
   htmlOut="";
-  constructor(private sanitizer: DomSanitizer) { 
+  constructor(public sanitizer: DomSanitizer) { 
     pageList.forEach(element => {
       this.htmlOut = this.htmlOut+'<div class="menuComponentContainer"><div class="menuComponent" onclick="window.location=\'/#/'+element.route+'\';"><div class="componentTitle">'+element.title+'</div><div class="componentDescription">'+element.description+'</div></div></div>'
     });
