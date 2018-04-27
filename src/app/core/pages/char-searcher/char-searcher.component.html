@@ -1,110 +1,313 @@
-<div class="containerSearchInfo">
-  <div class="searchContainer">
+<div class="container">
+  <div class="containerSearchInfo">
     <div class="nameContainer">
       <p class="textInput">Name:</p>
-      <input type="text" (change)="nameChange($event)" value={{charName}} (keyup.enter)="searchCharacter($event)">
+      <input class="nameInput" type="text" (change)="nameChange($event)" value={{charName}} (keyup.enter)="searchCharacter($event)">
       <input tabindex="-1" class="altCodesButton" (click)="altCodes($event)" type="button" value="altCodes">
-      <p class="textError" *ngIf="error.name.error">{{error.name.text}}</p>
+      <p class="nameError" *ngIf="error.name.error">{{error.name.text}}</p>
     </div>
     <div class="serverContainer">
       <p class="textInput">Server:</p>
-      <input type="text" (change)="serverChange($event)" value={{serverName}} (keyup.enter)="searchCharacter($event)">
-      <p class="textError" *ngIf="error.server.error">{{error.server.text}}</p>
+      <input class="serverInput" type="text" (change)="serverChange($event)" value={{serverName}} (keyup.enter)="searchCharacter($event)">
+      <p class="serverError" *ngIf="error.server.error">{{error.server.text}}</p>
     </div>
     <div class="searchButtonContainer">
-      <button (click)="searchCharacter($event)" mat-raised-button>Search</button>
+      <button class="searchButton" (click)="searchCharacter($event)" mat-raised-button>Search</button>
     </div>
     <div class="infoContainer">
-        <img class="loadingIcon" src="assets/loadingGif.gif" *ngIf="loader">
-        <p class="textError" *ngIf="error.webService.error">{{error.webService.text}}</p>
+      <img class="loadingIcon" src="assets/loadingGif.gif" *ngIf="loader">
+      <p class="textErrorSearch" *ngIf="error.webService.error">{{error.webService.text}}</p>
     </div>
     <div class="altCodesWindow" *ngIf="altCode">
       <div class="specialCharKeyboard">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="á">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="à">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="â">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ä">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="å">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ª">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="æ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ç">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="œ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="é">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="è">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ê">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ë">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ý">
-        </div>
-        <div class="specialCharKeyboard">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Á">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="À">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Â">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ä">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Å">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ƒ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Æ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ç">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Œ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="É">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="È">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ê">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ë">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ý">
-        </div>
-        <div class="specialCharKeyboard">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="í">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ì">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="î">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ï">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ñ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ó">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ò">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ô">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ö">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="º">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ú">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ù">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="û">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ÿ">
-        </div>
-        <div class="specialCharKeyboard">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Í">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ì">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Î">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ï">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ñ">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ó">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ò">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ô">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ö">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ü">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ú">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ù">
-          <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Û">
-          <input (click)="closeAltCode($event)" type="button" value="CLOSE" style="width:75px;height: 25px;">
-        </div>
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="á">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="à">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="â">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ä">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="å">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ª">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="æ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ç">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="œ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="é">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="è">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ê">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ë">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ý">
+      </div>
+      <div class="specialCharKeyboard">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Á">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="À">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Â">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ä">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Å">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ƒ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Æ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ç">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Œ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="É">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="È">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ê">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ë">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ý">
+      </div>
+      <div class="specialCharKeyboard">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="í">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ì">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="î">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ï">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ñ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ó">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ò">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ô">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ö">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="º">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ú">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ù">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="û">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ÿ">
+      </div>
+      <div class="specialCharKeyboard">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Í">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ì">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Î">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ï">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ñ">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ó">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ò">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ô">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ö">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ü">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ú">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ù">
+        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Û">
+        <input (click)="closeAltCode($event)" type="button" value="CLOSE" style="width:75px;height: 25px;">
+      </div>
     </div>
   </div>
-</div>
-<div class="characterInfoContainer">
-  <img src="http://render-us.worldofwarcraft.com/character/zuljin/147/188313491-inset.jpg" width="230px" height="116px">
-  <div class="characterPrincipalData">
-    <div class="nameServer">
-      Aiun@Zul'jin
+  <div *ngIf="searchLoad">
+    <div class="characterInfoContainer">
+      <div class="avatarImage">
+        <img src={{character.avatar}} width="230px" height="116px">
+        <div class="charLvl">
+          {{character.level}}
+        </div>
+        <div class="charRace">
+          {{character.race}}
+        </div>
+      </div>
+      <div class="characterInfoRightContainer">
+        <div class="nameServerContainer">
+          <div class="nameServer">
+            {{character.name}}@{{character.realm}}
+          </div>
+        </div>
+        <div class="guildNameContainer">
+          <div class="guildName">
+            Guild: {{character.guild.name}}
+          </div>
+        </div>
+        <div class="classSpecContainer">
+            <div class="filler">
+            </div>
+          <img class="classIcon" src={{character.classIcon}} width="30px" height="30px">
+          <div class="class">
+            {{character.class}}
+          </div>
+          <div class="filler">
+          </div>
+          <img class="specIcon" src={{character.specIcon}} width="30px" height="30px">
+          <div class="spec">
+            {{character.spec}}
+          </div>
+          <div class="filler">
+          </div>
+        </div>
+        <div class="ilvlInformationContainer">
+          <div class="filler">
+          </div>
+          <div class="equipedIlvl">
+            Equiped: {{character.averageIlvlEquiped}}
+          </div>
+          <div class="filler">
+          </div>
+          <div class="bagIlvl">
+            Bags: {{character.averageIlvl}}
+          </div>
+          <div class="filler">
+          </div>
+        </div>
+      </div>
     </div>
-    <img class="classIcon" src="https://wow.zamimg.com/images/wow/icons/large/class_mage.jpg" width="30px" height="30px">
-    <div class="class">
-      Mage
+    <div class="moreInfoContainer">
+      <div class="progressContainer">
+        <div class="padding15px">
+          <div class="progressTitleText">
+            Progress (kills):
+          </div>
+          <ngx-datatable
+            class='material height400px'
+            [rows]='rows'
+            [columnMode]="'force'"
+            [headerHeight]="40"
+            [rowClass]="getRowClass"
+            [rowHeight]="55"
+            [scrollbarV]="true"
+            [scrollbarH]="false">
+            <ngx-datatable-column name="boss" [cellClass]="getCellClass" [sortable]=false>
+              <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                <img src={{rows[rowIndex].bossIcon}} width="64px" height="32px">
+                <span style="bottom:10px; position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="normal" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="heroic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="mythic" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+      <div class="filler">
+      </div>
+      <div class="itemsContainer">
+        <div class="padding15px">
+          <div class="itemsTitleText">
+            Items:
+          </div>
+          <ngx-datatable
+            class='material height400px'
+            [rows]='items'
+            [columnMode]="'force'"
+            [headerHeight]="40"
+            [rowClass]="getRowClass"
+            [rowHeight]="55"
+            [scrollbarV]="true"
+            [scrollbarH]="false">
+            <ngx-datatable-column name="slot" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="name" [cellClass]="getCellClass" [sortable]=false>
+              <ng-template let-value="value" ngx-datatable-cell-template let-rowIndex="rowIndex">
+                <img src={{items[rowIndex].icon}} width="20px" height="20px">
+                <span style="position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="ilvl" [cellClass]="getCellClass" [sortable]=false [width]="1">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span style="left:15px; position:relative;color:#d0d0d0;">
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
     </div>
-    <img class="specIcon" src="https://wow.zamimg.com/images/wow/icons/large/spell_holy_magicalsentry.jpg" width="30px" height="30px">
-    <div class="spec">
-      Fire
-    </div>
-    <div class="ilvl">
-      Bags ilvl: 999
-    </div>
-    <div class="ilvlEquiped">
-      Equiped ilvl: 999
+    <div class="evenMoreInfoContainer">
+      <div class="profContainer">
+        <div class="profTitleText">
+          Professions:
+        </div>
+        <div class="profession">
+          <img class="profIcon" src="{{character.professions[0].icon}}" width="30px" height="30px">
+          {{character.professions[0].name}} - {{character.professions[0].level}}
+        </div>
+        <div class="profession">
+          <img class="profIcon" src="{{character.professions[1].icon}}" width="30px" height="30px">
+          {{character.professions[1].name}} - {{character.professions[1].level}}
+        </div>
+      </div>
+      <div class="filler">
+      </div>
+      <div class="pvpContainer">
+        <div class="pvpTitleText">
+          PvP:
+        </div>
+        <div class="displayFlex">
+          <div class="filler">
+          </div>
+          <div class="honorableKills">
+            HK: {{character.pvp.honorKill}}
+          </div>
+          <div class="filler">
+          </div>
+          <div class="arena2v2">
+            2v2: {{character.pvp.arena2v2}}
+          </div>
+          <div class="filler">
+          </div>
+        </div>
+        <div class="displayFlex">
+          <div class="filler">
+          </div>
+          <div class="arena3v3">
+            3v3: {{character.pvp.arena3v3}}
+          </div>
+          <div class="filler">
+          </div>
+          <div class="rbg">
+            RBG: {{character.pvp.rbg}}
+          </div>
+          <div class="filler">
+          </div>
+        </div>
+      </div>
+      <div class="filler">
+      </div>
+      <div class="statsContainer">
+        <div class="statsTitleText">
+          Stats:
+        </div>
+        <ngx-datatable
+          class='material statsTable'
+          [rows]='stats'
+          [columnMode]="'force'"
+          [headerHeight]="30"
+          [rowClass]="getRowClass"
+          [rowHeight]="30"
+          [scrollbarV]="true"
+          [scrollbarH]="false">
+          <ngx-datatable-column name="stat" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <span style="left:15px; position:relative;color:#d0d0d0;bottom:10px;">
+                {{value}}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="value" [cellClass]="getCellClass" [sortable]=false [width]="1">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <span style="left:15px; position:relative;color:#d0d0d0;bottom:10px;">
+                {{value}}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
     </div>
   </div>
 </div>

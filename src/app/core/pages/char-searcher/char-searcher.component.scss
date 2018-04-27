@@ -1,38 +1,123 @@
-.containerSearchInfo{
+.container{
     top: 0px;
     right: 15%;
     left: 15%;
-    margin-bottom: 150px;
     position: absolute;
+    margin-bottom: 150px;  
 }
 
-.searchContainer{
-    padding-left: 25px;
+.containerSearchInfo    {
+    padding: 15px;
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
 }
 
 .nameContainer  {
-    top: 0px;
-    position: absolute;
+    max-width: 180px;
+    min-width: 180px;
+    position: relative;
+    flex: 1;
+    height: 120px;
 }
-
 .serverContainer    {
-    top: 0px;
-    left: 225px;
-    position: absolute;
+    max-width: 180px;
+    min-width: 180px;
+    position: relative;
+    flex: 1;
+    height: 120px;
 }
-
 .searchButtonContainer  {
-    top: 50px;
-    left: 425px;
-    position: absolute;
+    position: relative;
+    max-width: 100px;
+    min-width: 100px;
+    flex: 1;
+    height: 120px;
+}
+.infoContainer  {
+    position: relative;
+    max-width: 175px;
+    min-width: 175px;
+    flex: 1;
+    height: 120px;
+}
+.altCodesWindow {
+    position: relative;
+    flex: 1;
+    min-width: 460px;
+    height: 120px;
 }
 
-.altCodesButton  {
-    position: absolute;
+.textInput  {
+    color: #fff;
+    top: -5px;
+    left: 15px;
+    position: relative;
+}
+
+.nameInput  {
+    top: -15px;
+    left: 15px;
+    height: 20px;
+    width: 150px;
+    position: relative;
+}
+
+.serverInput  {
+    top: -15px;
+    left: 15px;
+    height: 20px;
+    width: 150px;
+    position: relative;
+}
+
+.altCodesButton {
+    bottom: 17px;
+    left: 119px;
     width: 50px;
+    height: 20px;
     font-size: 9px;
-    top:72px;
-    left: 123px;
+    position: relative;
+}
+
+.serverError  {
+    color: #f00;
+    font-size: 13px;
+    position: relative;
+    bottom: 25px;
+    left: 20px;
+}
+
+.nameError  {
+    color: #f00;
+    font-size: 13px;
+    position: relative;
+    bottom: 46px;
+    left: 20px;
+}
+
+.searchButton   {
+    position: relative;
+    top: 38px;
+    left: 13px;
+    height: 20px;
+    width: 74px;
+}
+
+.loadingIcon    {
+    position: absolute;
+    width:20px;
+    height:20px;
+    top:37px;
+}
+
+.textErrorSearch  {
+    color: #f00;
+    font-size: 13px;
+    position: relative;
+    top: 27px;
+    left: 20px;
 }
 
 .specialCharKeyboard    {
@@ -44,92 +129,308 @@
     height: 25px;
 }
 
-.infoContainer  {
-    top: 40px;
-    left: 500px;
-    position: absolute;
-}
-
-.altCodesWindow  {
-    left: 625px;
-    position: absolute;
-}
-
-.textInput  {
-    color: #fff;
-}
-
-.textError  {
-    color: #f00;
-    font-size: 13px;
-}
-
-.loadingIcon    {
-    position: absolute;
-    width:20px;
-    height:20px;
-    top:10px;
-}
-
 .characterInfoContainer {
-    top: 125px;
-    right: 15%;
-    left: 15%;
-    margin-bottom: 150px;
-    position: absolute;
     background-color: #000;
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
 }
 
-.characterPrincipalData {
+.avatarImage    {
+    width:230px;
+    height:116px;
+}
+
+.charLvl    {
+    position: relative;
     color:#fff;
-    display: inline;
+    background-color:#000;
+    width: fit-content;
+    font-size: 25px;
+    bottom:32px;
+    left:194px;
+}
+
+.charRace   {
+    position: relative;
+    color:#fff;
+    background-color:#000;
+    width: fit-content;
+    font-size: 25px;
+    bottom:60px;
+}
+
+
+.characterInfoRightContainer    {
+    background-color: #000;
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.nameServerContainer {
+    width: 50%;
+    height: 58px;
+    min-width: 350px;
+}
+
+.guildNameContainer  {
+    width: 50%;
+    height: 58px;
+    min-width: 350px;
+}
+
+.classSpecContainer  {
+    width: 50%;
+    display: flex;
+    height: 58px;
+    min-width: 350px;
+}
+
+.ilvlInformationContainer    {
+    width: 50%;
+    display: flex;
+    height: 58px;
+    min-width: 350px;
 }
 
 .nameServer {
-    position: absolute;
-    top:10px;
-    left:250px;
-    font-size: 40px;
+    color: #fff;
+    position: relative;
+    top:15px;
+    display: table;
+    margin: 0 auto;
+    font-size: 25px;
 }
 
-.class {
-    position: absolute;
-    top:75px;
-    left:300px;
-    font-size: 20px;
+.guildName  {
+    color: #fff;
+    position: relative;
+    top:15px;
+    display: table;
+    margin: 0 auto;
+    font-size: 25px;
 }
 
-.classIcon {
-    position: absolute;
-    top:70px;
-    left:265px;
-    font-size: 20px;
+.filler  {
+    flex-grow: 1;
 }
 
-.spec {
-    position: absolute;
-    top:75px;
-    left:450px;
-    font-size: 20px;
+.classIcon  {
+    top:15px;
+    position: relative;
 }
 
-.specIcon {
-    position: absolute;
-    top:70px;
-    left:415px;
-    font-size: 20px;
+.class  {
+    color: #fff;
+    padding-left: 5px;
+    font-size: 20px; 
+    top:17px;
+    position: relative;
 }
 
-.ilvl {
-    position: absolute;
-    top:75px;
-    left:600px;
-    font-size: 20px;
+.specIcon   {
+    top:15px;
+    position: relative;
 }
 
-.ilvlEquiped {
-    position: absolute;
-    top:75px;
-    left:800px;
+.spec   {
+    color: #fff;
+    padding-left: 5px;
     font-size: 20px;
+    top:17px;
+    position: relative;
 }
+
+.equipedIlvl{
+    color: #fff;
+    padding-left: 5px;
+    font-size: 20px; 
+    top:17px;
+    position: relative;
+}
+
+.bagIlvl{
+    color: #fff;
+    padding-left: 5px;
+    font-size: 20px; 
+    top:17px;
+    position: relative;
+}
+
+.moreInfoContainer  {
+    padding-top: 20px;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.progressContainer  {
+    background-color: #000;
+    width: 49%;
+    min-width: 400px;
+}
+
+.progressTitleText  {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+}
+
+.itemsTitleText  {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+}
+
+.ngx-datatable{
+    background-color: #303030;
+}
+
+::ng-deep .row-boss  {
+    font-family: cursive;
+}
+
+.itemsContainer {
+    background-color: #000;
+    width: 49%;  
+    min-width: 400px;
+}
+
+.padding15px    {
+    padding: 15px;
+}
+
+.height400px    {
+    height: 400px;
+}
+
+.evenMoreInfoContainer  {
+    padding-top: 20px;
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    height: 200px;
+}
+
+.profContainer  {
+    background-color: #000;
+    width: 20%;
+    min-width: 100px;
+}
+
+.profTitleText  {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-bottom: 10px;
+}
+
+.pvpContainer  {
+    background-color: #000;
+    width: 25%;  
+    min-width: 125px;
+}
+
+.pvpTitleText   {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.statsContainer  {
+    background-color: #000;
+    width: 50%;  
+    min-width: 220px;
+}
+
+.statsTitleText {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color:#fff;
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.displayFlex    {
+    display: flex;
+}
+
+.profession{
+    color: #fff;
+    display: table;
+    margin: 0 auto;
+    position: relative;
+    bottom:20px;
+}
+
+.profIcon   {
+    padding: 10px;
+    top:20px;
+    position: relative;
+}
+
+.honorableKills {
+    color: #fff;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.arena2v2    {
+    color: #fff;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.arena3v3    {
+    color: #fff;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.rbg    {
+    color: #fff;
+    padding-top:20px;
+    padding-bottom: 20px;
+}
+
+.statsTable    {
+    height: 140px;
+    width: 90%;
+    display: table;
+    margin: 0 auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

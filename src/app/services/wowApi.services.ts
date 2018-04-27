@@ -40,6 +40,10 @@ export class wowApiService {
 		return "http://render-us.worldofwarcraft.com/character/"+image+"-profilemain.jpg";
 	}
 
+	retrieveBossImage(boss){
+		return "http://wow.zamimg.com/images/wow/journal/ui-ej-boss-"+boss+".png";
+	}
+
 	retrieveIcon(image){
 		return "https://wow.zamimg.com/images/wow/icons/large/"+image+".jpg";
 	}
