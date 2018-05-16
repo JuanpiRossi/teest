@@ -29,6 +29,7 @@
     "ag-grid-angular": "^16.0.0",
     "ag-grid-enterprise": "^16.0.1",
     "angular-ui-grid": "^4.2.4",
+    "angular2-cookie": "^1.2.6",
     "core-js": "^2.4.1",
     "grid-list": "^0.4.1",
     "handsontable": "^0.36.0",

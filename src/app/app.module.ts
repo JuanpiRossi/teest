@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { MongoService } from './services/mongo.service';
 import { WarcraftLogsService } from './services/warcraftLogsApi.service';
 import { wowApiService } from './services/wowApi.services';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { wowApiService } from './services/wowApi.services';
     CoreModule,
     HttpModule
   ],
-  providers: [MongoService,WarcraftLogsService,wowApiService],
+  providers: [MongoService,WarcraftLogsService,wowApiService,CookieService],
   exports: [],
   bootstrap: [AppComponent],
 })

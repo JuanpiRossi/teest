@@ -1,10 +1,15 @@
 <div class="footer">
-    <div class="menu">
-      <div class="logo">
-      </div>
+  <div class="menu">
+    <div class="logo">
+    </div>
     <div class="space">
     </div>
     <div class="login">
+      <div class="serverStatus">
+        Zuljin status: 
+        <img *ngIf="serverStatus==true" class="serverStatusIcon" src="assets/onlineIcon.png">
+        <img *ngIf="serverStatus==false" class="serverStatusIcon" src="assets/oflineIcon.png">
+      </div>
     </div>
   </div>
 </div>

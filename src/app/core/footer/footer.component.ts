@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { wowApiService } from '../../services/wowApi.services';
 
 @Component({
   selector: 'app-footer',
@@ -6,10 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
+  serverStatus;
 
-  constructor() { }
+  constructor(private wowApi:wowApiService) { }
 
   ngOnInit() {
+    this.wowApi.realmStatus()
+      .subscribe(response =>  {
+        response.json().realms.forEach(element => {
+          if(element.slug == "zuljin"){
+            this.serverStatus = element.status;
+          }
+        });
+    })
   }
 
 }

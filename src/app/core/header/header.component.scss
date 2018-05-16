@@ -49,25 +49,43 @@
     flex: 1;
 }
 
-.statusContainer {
+.login {
     background-color: #000000;
     height: inherit;
     text-align: center;
 }
 
-.serverStatus {
-    font-family: "Lucida Console", Times, serif;
-    font-weight: bold;
-    padding: 25px;
-    padding-right: 125px;
-    display: flex;
-    color: #FFF;
+.loginInfo  {
+    padding: 20px;
 }
 
-.serverStatusIcon {
-    width: 25px;
-    height: 25px;
-    top:-5px;
-    left:5px;
-    position: relative;
+.loginText  {
+    color: #ff0;
+    font-size: 20px;  
+}
+
+.subrayado  {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.loginKeyInputContainer  {
+    padding: 18px;
+}
+
+.loginKeyText   {
+    color: #fff;
+    float:left;
+    padding: 5px;
+}
+
+.loginKeyInput  {
+    float:left;
+    padding: 5px;
+}
+
+.loginKeySubmit {
+    float:left;
+    padding: 5px;
+
 }

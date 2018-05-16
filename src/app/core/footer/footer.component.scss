@@ -17,14 +17,14 @@
     display: flex;
 }
 
-.firstDiv {
+.logo {
     background-color: #000000;
     height: inherit;
     text-align: center;
 }
 
 
-.secondDiv {
+.space {
     background-color: #000000;
     height: inherit;
     display: flex;
@@ -33,7 +33,29 @@
     flex: 1;
 }
 
-.thirdDiv {
+.login {
     background-color: #000000;
     height: inherit;
+}
+
+.statusContainer {
+    background-color: #000000;
+    height: inherit;
+    text-align: center;
+}
+
+.serverStatus {
+    font-family: "Lucida Console", Times, serif;
+    font-weight: bold;
+    padding: 15px;
+    display: flex;
+    color: #FFF;
+}
+
+.serverStatusIcon {
+    width: 25px;
+    height: 25px;
+    top:-5px;
+    left:5px;
+    position: relative;
 }

@@ -10,11 +10,32 @@
     </div>
     <div class="space">
     </div>
-    <div class="statusContainer">
-      <div class="serverStatus">
-        Zuljin status: 
-        <img *ngIf="serverStatus==true" class="serverStatusIcon" src="assets/onlineIcon.png">
-        <img *ngIf="serverStatus==false" class="serverStatusIcon" src="assets/oflineIcon.png">
+    <div *ngIf="loginKeyInput==true" class="loginKeyInputContainer">
+      <div class="loginKeyText">
+        Insert key:
+      </div>
+      <div class="loginKeyInput">
+        <input type="text" value="" (change)="onChangeLoginInput($event)">
+      </div>
+      <div class="loginKeySubmit">
+        <input (click)="submitKey()" type="submit" value="Submit">
+      </div>
+    </div>
+    <div class="login">
+      <div *ngIf="loginInfo==1" class="loginInfo">
+        <div (click)="loginKeyInput=!loginKeyInput" class="loginText subrayado">
+          Log in
+        </div>
+    </div>
+      <div *ngIf="loginInfo==2" class="loginInfo">
+        <div class="loginText">
+          Role: Guild member
+        </div>
+      </div>
+      <div *ngIf="loginInfo==3" class="loginInfo">
+        <div class="loginText">
+          Role: Officer
+        </div>
       </div>
     </div>
   </div>
