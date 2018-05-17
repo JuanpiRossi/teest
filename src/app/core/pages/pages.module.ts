@@ -10,6 +10,7 @@ import { ParsesIlvlComponent } from './parses-ilvl/parses-ilvl.component'
 import { DragulaExtendedDirective } from '../../directives/dragula/dragula-extended.directive';
 import { DragulaModule, DragulaService } from 'ng2-dragula';
 import { CharSearcherComponent } from './char-searcher/char-searcher.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { CharSearcherComponent } from './char-searcher/char-searcher.component';
     DragulaModule
   ],
   providers:[DragulaService],
-  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, ParsesIlvlComponent,DragulaExtendedDirective, CharSearcherComponent],
+  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, ParsesIlvlComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent],
   exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, DragulaExtendedDirective]
 })
 export class PagesModule { }

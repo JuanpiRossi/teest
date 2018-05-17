@@ -6,6 +6,9 @@ import { profIcons } from '../../../../constants/professions.icons';
 import { roleCheck } from '../../../../constants/specs.roles';
 import { specList } from '../../../../constants/class.specs';
 import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
+import { userData } from '../../../services/userData.service';
+import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-char-searcher',
@@ -32,25 +35,55 @@ export class CharSearcherComponent implements OnInit {
   @Input() overallParseDetails = {};
   @Input() ilvlParse = [];
   @Input() ilvlParseDetails = {};
+  userLevelBool=false;
 
   @ViewChild('myTable') table: any;
   @ViewChild('myTable2') table2: any;
   
-  constructor(private wowApi:wowApiService, private warcraftService:WarcraftLogsService) { }
+  constructor(private wowApi:wowApiService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router) { }
 
   ngOnInit() {
-    this.searchLoad = false;
-    this.getBossesIcons()
-    this.wowApi.getClasses()
-      .subscribe(response=>{
-        this.classes = response.json();
+      this._userData.userLevel.subscribe(UL=>{
+        const componentRoute = "charSearcher";
+        this.userLevelBool=false;
+        if(UL==3) {
+          officerPageList.forEach(element => {
+            if(element.route==componentRoute) {
+              this.userLevelBool=true;
+            }
+          });
+        } else if(UL==2)  {
+          memberPageList.forEach(element => {
+            if(element.route==componentRoute) {
+              this.userLevelBool=true;
+            }
+          });
+        } else {
+          noMemberPageList.forEach(element => {
+            if(element.route==componentRoute) {
+              this.userLevelBool=true;
+            }
+          });
+        }
+        if(!this.userLevelBool)  {
+          this.router.navigate(["/unauthorized"]);
+        }
       }
     )
-    this.wowApi.getRaces()
-      .subscribe(response=>{
-        this.races = response.json();
-      }
-    )
+    if(this.userLevelBool)  {
+      this.searchLoad = false;
+      this.getBossesIcons()
+      this.wowApi.getClasses()
+        .subscribe(response=>{
+          this.classes = response.json();
+        }
+      )
+      this.wowApi.getRaces()
+        .subscribe(response=>{
+          this.races = response.json();
+        }
+      )
+    }
   }
 
   nameChange($event)  {

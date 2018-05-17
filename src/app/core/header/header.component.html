@@ -28,13 +28,19 @@
         </div>
     </div>
       <div *ngIf="loginInfo==2" class="loginInfo">
-        <div class="loginText">
+        <div class="loginText inline">
           Role: Guild member
+        </div>
+        <div (click)="logoutRole()" class="logoffText inline subrayado padLeft">
+          Log off
         </div>
       </div>
       <div *ngIf="loginInfo==3" class="loginInfo">
-        <div class="loginText">
+        <div class="loginText inline">
           Role: Officer
+        </div>
+        <div (click)="logoutRole()" class="logoffText inline subrayado padLeft">
+          Log off
         </div>
       </div>
     </div>

@@ -3,6 +3,9 @@ import { MongoService } from '../../../services/mongo.service';
 import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
 import { roleCheck } from '../../../../constants/specs.roles';
 import { specList } from '../../../../constants/class.specs';
+import { userData } from '../../../services/userData.service';
+import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-parses-ilvl',
@@ -25,55 +28,85 @@ export class ParsesIlvlComponent implements OnInit {
   totalToLoad=0;
   loadSpec = [];
   loaded = false;
+  userLevelBool;
 
   @ViewChild('myTable') table: any;
 
-  constructor(private mongoService:MongoService, private warcraftService:WarcraftLogsService) { }
+  constructor(private mongoService:MongoService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router) { }
 
   ngOnInit() {
+    this._userData.userLevel.subscribe(UL=>{
+      const componentRoute = "parsesIlvl";
+      this.userLevelBool=false;
+      if(UL==3) {
+        officerPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      } else if(UL==2)  {
+        memberPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      } else {
+        noMemberPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      }
+      if(!this.userLevelBool)  {
+        this.router.navigate(["/unauthorized"]);
+      }
+    }
+  )
+  if(this.userLevelBool)  {
     this.mongoService.getGuild({"guildName":"Untamed"})
       .subscribe(res => {
-        var counter = 0;
-        this.rows = []
-        this.mongoData = res.json().data;
-        delete this.mongoData._id
-        res.json().data.Roster.forEach(element => {
-          this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter,role:'assets/'+element["role"]+'Icon.png'})
-          counter++;
-        });
-        this.updateExtras();
-        this.totalToLoad = this.rows.length;
-        this.warcraftService.getBosses()
-          .subscribe(response =>  {
-            response.json().forEach(zone => {
-              if(zone.id == this.zoneId) {
-                this.bosses = zone.encounters;
-              }
-            });
-        this.rows.forEach(element => {
-          element.mythicParse = {};
-          element.heroicParse = {};
-          element.normalParse = {};
-          if(element.role=="assets/healerIcon.png"){
-            var serviceResponse = this.warcraftService.searchCharacterHealIlvl(element.name,element.server);
-          }
-          else  {
-            var serviceResponse = this.warcraftService.searchCharacterDpsIlvl(element.name,element.server);
-          }
-          serviceResponse
+          var counter = 0;
+          this.rows = []
+          this.mongoData = res.json().data;
+          delete this.mongoData._id
+          res.json().data.Roster.forEach(element => {
+            this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter,role:'assets/'+element["role"]+'Icon.png'})
+            counter++;
+          });
+          this.updateExtras();
+          this.totalToLoad = this.rows.length;
+          this.warcraftService.getBosses()
             .subscribe(response =>  {
-              response.json().forEach(report => {
-                this.getBossesParses(element,report);
-              })
-              this.loadedCounter++;
-              if(this.loadedCounter==this.totalToLoad){
-                this.getOverallParses();
-              }
+              response.json().forEach(zone => {
+                if(zone.id == this.zoneId) {
+                  this.bosses = zone.encounters;
+                }
+              });
+          this.rows.forEach(element => {
+            element.mythicParse = {};
+            element.heroicParse = {};
+            element.normalParse = {};
+            if(element.role=="assets/healerIcon.png"){
+              var serviceResponse = this.warcraftService.searchCharacterHealIlvl(element.name,element.server);
             }
-          )
-        });
-      })
-    });
+            else  {
+              var serviceResponse = this.warcraftService.searchCharacterDpsIlvl(element.name,element.server);
+            }
+            serviceResponse
+              .subscribe(response =>  {
+                response.json().forEach(report => {
+                  this.getBossesParses(element,report);
+                })
+                this.loadedCounter++;
+                if(this.loadedCounter==this.totalToLoad){
+                  this.getOverallParses();
+                }
+              }
+            )
+          });
+        })
+      });
+    }
   }
 
   getRowClass(row) {

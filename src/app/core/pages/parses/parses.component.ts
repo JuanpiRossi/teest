@@ -3,6 +3,9 @@ import { MongoService } from '../../../services/mongo.service';
 import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
 import { roleCheck } from '../../../../constants/specs.roles';
 import { specList } from '../../../../constants/class.specs';
+import { userData } from '../../../services/userData.service';
+import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-parses',
@@ -25,12 +28,42 @@ export class ParsesComponent implements OnInit {
   totalToLoad=0;
   loadSpec = [];
   loaded = false;
+  userLevelBool;
 
   @ViewChild('myTable') table: any;
 
-  constructor(private mongoService:MongoService, private warcraftService:WarcraftLogsService) { }
+  constructor(private mongoService:MongoService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router) { }
 
   ngOnInit() {
+    this._userData.userLevel.subscribe(UL=>{
+      const componentRoute = "parses";
+      this.userLevelBool=false;
+      if(UL==3) {
+        officerPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      } else if(UL==2)  {
+        memberPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      } else {
+        noMemberPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      }
+      if(!this.userLevelBool)  {
+        this.router.navigate(["/unauthorized"]);
+      }
+    }
+  )
+
+  if(this.userLevelBool)  {
     this.mongoService.getGuild({"guildName":"Untamed"})
       .subscribe(res => {
         var counter = 0;
@@ -74,6 +107,7 @@ export class ParsesComponent implements OnInit {
         });
       })
     });
+    }
   }
 
   getRowClass(row) {

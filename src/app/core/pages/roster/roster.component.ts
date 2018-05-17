@@ -2,6 +2,9 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MongoService } from '../../../services/mongo.service';
 import { specList } from '../../../../constants/class.specs';
 import { roleCheck } from '../../../../constants/specs.roles';
+import { userData } from '../../../services/userData.service';
+import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-roster',
@@ -16,8 +19,9 @@ export class RosterComponent implements OnInit {
   icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
   mongoData;
   newData;
+  userLevelBool;
 
-  constructor(private mongoService:MongoService) {
+  constructor(private mongoService:MongoService, public _userData:userData,private router: Router) {
     this.rows=[{}];
     this.columns= [
                     { name: 'name',prop: 'name' },
@@ -32,21 +36,51 @@ export class RosterComponent implements OnInit {
   renderTable = true;
 
   ngOnInit() {
-    this.mongoService.getGuild({"guildName":"Untamed"})
-      .subscribe(res => {
-        this.rows = []
-        this.mongoData = res.json().data;
-        delete this.mongoData._id
-        if(res.json().data.Roster!= undefined) {
-          res.json().data.Roster.forEach(element => {
-            this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+    this._userData.userLevel.subscribe(UL=>{
+        const componentRoute = "roster";
+        this.userLevelBool=false;
+        if(UL==3) {
+          officerPageList.forEach(element => {
+            if(element.route==componentRoute) {
+              this.userLevelBool=true;
+            }
           });
-        } else  {
-          this.rows = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+        } else if(UL==2)  {
+          memberPageList.forEach(element => {
+            if(element.route==componentRoute) {
+              this.userLevelBool=true;
+            }
+          });
+        } else {
+          noMemberPageList.forEach(element => {
+            if(element.route==componentRoute) {
+              this.userLevelBool=true;
+            }
+          });
         }
-        this.updateExtras();
-        this.newData = this.rows;
-      });
+        if(!this.userLevelBool)  {
+          this.router.navigate(["/unauthorized"]);
+        }
+      }
+    )
+
+    if(this.userLevelBool)  {
+      this.mongoService.getGuild({"guildName":"Untamed"})
+        .subscribe(res => {
+          this.rows = []
+          this.mongoData = res.json().data;
+          delete this.mongoData._id
+          if(res.json().data.Roster!= undefined) {
+            res.json().data.Roster.forEach(element => {
+              this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+            });
+          } else  {
+            this.rows = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+          }
+          this.updateExtras();
+          this.newData = this.rows;
+        });
+    }
   }
 
   addMember(event){

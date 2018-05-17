@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import {CookieService} from 'angular2-cookie/core';
+import {Router,NavigationEnd} from '@angular/router';
+import { userData } from '../../services/userData.service';
 
 @Component({
   selector: 'app-header',
@@ -7,23 +9,19 @@ import {CookieService} from 'angular2-cookie/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  loginInfo;
+  loginInfo = 1;
   loginKeyInput = false;
   loginKeyInputValue="";
-  constructor(private _cookieService:CookieService) {
-    if(this.getCookie('bG9nZ2luZyBpbiBzdGF0dXM')=='Z3VpbGRtYXN0ZXJhbHRvcXVl')  {//guildmasteraltoque
-      this.loginInfo = 3;
-    } else if(this.getCookie('bG9nZ2luZyBpbiBzdGF0dXM')=='Z3VpbGRtZW1iZXJyZXR1cnJv')  {//guildmemberreturro
-      this.loginInfo = 2;
-    } else if(this.getCookie('bG9nZ2luZyBpbiBzdGF0dXM')=='bm9lc2RlbGd1aWxkZWxnYXRvZXN0ZQ==')  {//noesdelguildelgatoeste
-      this.loginInfo = 1;
-    } else  {
-      this._cookieService.put('bG9nZ2luZyBpbiBzdGF0dXM', 'bm9lc2RlbGd1aWxkZWxnYXRvZXN0ZQ==');
-      this.loginInfo = 1;
-    }
+  
+  constructor(private _cookieService:CookieService,private router: Router, public _userData:userData) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this._userData.userLevel.subscribe(userLevel=>{
+        this.loginInfo=userLevel
+      }
+    )
+  }
 
   getCookie(key){
     return this._cookieService.get(key);
@@ -37,13 +35,26 @@ export class HeaderComponent implements OnInit {
     } else if(this.loginKeyInputValue == "Tm9Tb1lUYU5wRW9MYUNvTW9FbEdtUGVSb0lnVWFMZVN0T3lFblVuVGFNZURSZVR1UlJvIXJrZXFvag==")  {//MEMBER ROLE
       this.loginInfo = 2;
       this._cookieService.put('bG9nZ2luZyBpbiBzdGF0dXM', 'Z3VpbGRtZW1iZXJyZXR1cnJv');
-    } else  {//OFFICER ROLE
-    this.loginInfo = 1;
-    this._cookieService.put('bG9nZ2luZyBpbiBzdGF0dXM', 'bm9lc2RlbGd1aWxkZWxnYXRvZXN0ZQ==');
-  }
+    } else  {
+      this.loginInfo = 1;
+      this._cookieService.put('bG9nZ2luZyBpbiBzdGF0dXM', 'bm9lc2RlbGd1aWxkZWxnYXRvZXN0ZQ==');
+    }
+    this.loginKeyInputValue="";
+    this._userData.setValue(this.loginInfo);
   }
 
   onChangeLoginInput($event) {
     this.loginKeyInputValue = $event.target.value;
   }
+
+  logoutRole()  {
+    this._cookieService.put('bG9nZ2luZyBpbiBzdGF0dXM', 'bm9lc2RlbGd1aWxkZWxnYXRvZXN0ZQ==');
+    this.loginInfo = 1;
+    this._userData.setValue(this.loginInfo);
+  }
+
+  refresh(){
+    window.location.reload();
+  }
+  
 }

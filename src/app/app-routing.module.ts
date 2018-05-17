@@ -7,6 +7,7 @@ import { ParsesComponent } from './core/pages/parses/parses.component'
 import { RosterComponent } from './core/pages/roster/roster.component'
 import { ParsesIlvlComponent } from './core/pages/parses-ilvl/parses-ilvl.component'
 import { CharSearcherComponent } from './core/pages/char-searcher/char-searcher.component'
+import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.component'
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: '',
         component: HomeComponent,
+      },
+      {
+        path: 'unauthorized',
+        component: UnauthorizedComponent,
       },
       {
         path: 'home',
