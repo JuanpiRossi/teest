@@ -24,9 +24,14 @@ export const officerPageList =[
 
 export const memberPageList =[
     {
-        route:"roster",
+        route:"rosterM",
         title:"Roster",
         description:"Guild roster list"
+    },
+    {
+        route:"parses",
+        title:"Parses Overall",
+        description:"Guild parses list overall"
     },
     {
         route:"parsesIlvl",

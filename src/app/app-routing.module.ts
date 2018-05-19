@@ -8,6 +8,7 @@ import { RosterComponent } from './core/pages/roster/roster.component'
 import { ParsesIlvlComponent } from './core/pages/parses-ilvl/parses-ilvl.component'
 import { CharSearcherComponent } from './core/pages/char-searcher/char-searcher.component'
 import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.component'
+import { RosterMembersComponent } from './core/pages/roster-members/roster-members.component'
 
 
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'charSearcher',
         component: CharSearcherComponent,
+      },
+      {
+        path: 'rosterM',
+        component: RosterMembersComponent,
       }
       //{ path: 'error-500', component: Error500Component },
       //{ path: '**', component: NotFoundComponent }
