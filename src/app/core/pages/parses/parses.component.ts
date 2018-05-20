@@ -3,6 +3,7 @@ import { MongoService } from '../../../services/mongo.service';
 import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
 import { roleCheck } from '../../../../constants/specs.roles';
 import { specList } from '../../../../constants/class.specs';
+import { zoneId } from '../../../../constants/config';
 import { userData } from '../../../services/userData.service';
 import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
@@ -25,7 +26,6 @@ export class ParsesComponent implements OnInit {
   expanded: any = {};
   timeout: any;
   bosses;
-  zoneId = 17;
   loadedCounter = 0;
   totalToLoad=0;
   loadSpec = [];
@@ -83,7 +83,7 @@ export class ParsesComponent implements OnInit {
         this.warcraftService.getBosses()
           .subscribe(response =>  {
             response.forEach(zone => {
-              if(zone.id == this.zoneId) {
+              if(zone.id == zoneId) {
                 this.bosses = zone.encounters;
               }
             })

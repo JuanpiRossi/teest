@@ -14,6 +14,7 @@ import { RosterMembersComponent } from './roster-members/roster-members.componen
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { GuidesComponent } from './guides/guides.component';
+import { SpecificGuideComponent } from './specific-guide/specific-guide.component';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { GuidesComponent } from './guides/guides.component';
     FormsModule
   ],
   providers:[DragulaService],
-  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent],
+  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent, SpecificGuideComponent],
   exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, DragulaExtendedDirective]
 })
 export class PagesModule { }

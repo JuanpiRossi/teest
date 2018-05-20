@@ -33,4 +33,12 @@ export class MongoService {
 	updateGuild(guildData){
 		return this.http.post(environment.apiUrl + '/api/updateGuild',guildData)
 	}
+
+	getGuidesReduced(){
+		return this.http.get(environment.apiUrl + '/api/getGuidesReduced')
+	}
+
+	getGuide(guildData){
+		return this.http.post(environment.apiUrl + '/api/getGuide',guildData)
+	}
 }

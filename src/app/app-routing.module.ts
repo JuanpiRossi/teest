@@ -9,6 +9,7 @@ import { CharSearcherComponent } from './core/pages/char-searcher/char-searcher.
 import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.component'
 import { RosterMembersComponent } from './core/pages/roster-members/roster-members.component'
 import { GuidesComponent } from './core/pages/guides/guides.component'
+import { SpecificGuideComponent } from './core/pages/specific-guide/specific-guide.component'
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path: 'guides',
         component: GuidesComponent,
+      },
+      {
+        path: 'guide',
+        component: SpecificGuideComponent,
       }
       //{ path: 'error-500', component: Error500Component },
       //{ path: '**', component: NotFoundComponent }

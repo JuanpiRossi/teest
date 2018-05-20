@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="headerTitle">
+        {{bossName}}
+    </div>
+    <div class="comboContainer">
+        Select role:
+        <div class="combo inline">
+            <select
+            [(ngModel)]="roleSelect"
+            (change)="updateValue($event)">
+            <option *ngFor="let i of role" value={{i}}>{{i}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="guidesContainer" *ngIf="loaded">
+      <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='melee dps'" [innerHTML]="sanitizer.bypassSecurityTrustHtml(res['data']['html-melee'])">
+      </div>
+      <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='range dps'" [innerHTML]="sanitizer.bypassSecurityTrustHtml(res['data']['html-range'])">
+      </div>
+      <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='healer'" [innerHTML]="sanitizer.bypassSecurityTrustHtml(res['data']['html-healer'])">
+      </div>
+      <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='tank'" [innerHTML]="sanitizer.bypassSecurityTrustHtml(res['data']['html-tank'])">
+      </div>
+    </div>
+</div>
