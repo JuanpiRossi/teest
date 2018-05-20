@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { MongoService } from './services/mongo.service';
 import { WarcraftLogsService } from './services/warcraftLogsApi.service';
 import { wowApiService } from './services/wowApi.services';
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { userData } from './services/userData.service';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http'
@@ -22,7 +22,7 @@ import { HttpClientModule } from '@angular/common/http'
     CoreModule,
     HttpClientModule
   ],
-  providers: [MongoService,WarcraftLogsService,wowApiService,CookieService,userData],
+  providers: [{ provide: CookieOptions, useValue: {} },MongoService,WarcraftLogsService,wowApiService,CookieService,userData],
   exports: [],
   bootstrap: [AppComponent],
 })

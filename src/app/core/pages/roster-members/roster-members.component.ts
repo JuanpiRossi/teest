@@ -72,8 +72,8 @@ export class RosterMembersComponent implements OnInit {
           this.rows = []
           this.mongoData = res["data"];
           delete this.mongoData._id
-          if(this.mongoData.data.Roster!= undefined) {
-            this.mongoData.data.Roster.forEach(element => {
+          if(this.mongoData.Roster!= undefined) {
+            this.mongoData.Roster.forEach(element => {
               this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
             });
           } else  {
