@@ -9,6 +9,8 @@ import { WarcraftLogsService } from '../../../services/warcraftLogsApi.service';
 import { userData } from '../../../services/userData.service';
 import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-char-searcher',
@@ -75,12 +77,12 @@ export class CharSearcherComponent implements OnInit {
       this.getBossesIcons()
       this.wowApi.getClasses()
         .subscribe(response=>{
-          this.classes = response.json();
+          this.classes = response;
         }
       )
       this.wowApi.getRaces()
         .subscribe(response=>{
-          this.races = response.json();
+          this.races = response;
         }
       )
     }
@@ -133,7 +135,7 @@ export class CharSearcherComponent implements OnInit {
     if(this.serverName!="" && this.charName!="")  {
       this.wowApi.characterInformation(this.charName,this.serverName)
         .subscribe(response =>  {
-          this.processCharacterInfo(response.json());
+          this.processCharacterInfo(response);
           this.loader = false;
         },  error => {
           this.error.webService.error = true;
@@ -279,7 +281,7 @@ export class CharSearcherComponent implements OnInit {
     });
     this.warcraftService.searchCharacterDps(this.character.name,this.serverName)
       .subscribe(response =>  {
-        response.json().forEach(report => {
+        response.forEach(report => {
           report.specs.forEach(specReport => {
             if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]!="healer") {
               this.overallParseDetails[specReport.spec].forEach(boss => {
@@ -332,7 +334,7 @@ export class CharSearcherComponent implements OnInit {
     )
     this.warcraftService.searchCharacterHeal(this.character.name,this.serverName)
       .subscribe(response =>  {
-        response.json().forEach(report => {
+        response.forEach(report => {
           report.specs.forEach(specReport => {
             if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]=="healer") {
               this.overallParseDetails[specReport.spec].forEach(boss => {
@@ -403,7 +405,7 @@ export class CharSearcherComponent implements OnInit {
     });
     this.warcraftService.searchCharacterDpsIlvl(this.character.name,this.serverName)
       .subscribe(response =>  {
-        response.json().forEach(report => {
+        response.forEach(report => {
           report.specs.forEach(specReport => {
             if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]!="healer") {
               this.ilvlParseDetails[specReport.spec].forEach(boss => {
@@ -456,7 +458,7 @@ export class CharSearcherComponent implements OnInit {
     )
     this.warcraftService.searchCharacterHealIlvl(this.character.name,this.serverName)
       .subscribe(response =>  {
-        response.json().forEach(report => {
+        response.forEach(report => {
           report.specs.forEach(specReport => {
             if(specReport.spec!="Ranged"&&specReport.spec!="Melee"&&specReport.spec!="Healing"&&roleCheck[specReport.spec]=="healer") {
               this.ilvlParseDetails[specReport.spec].forEach(boss => {

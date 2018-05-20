@@ -3,6 +3,8 @@ import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import { DomSanitizer } from '@angular/platform-browser';
 import {CookieService} from 'angular2-cookie/core';
 import { userData } from '../../../services/userData.service';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-home',

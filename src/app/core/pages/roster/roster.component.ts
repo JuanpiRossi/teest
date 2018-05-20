@@ -5,6 +5,8 @@ import { roleCheck } from '../../../../constants/specs.roles';
 import { userData } from '../../../services/userData.service';
 import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-roster',
@@ -68,10 +70,10 @@ export class RosterComponent implements OnInit {
       this.mongoService.getGuild({"guildName":"Untamed"})
         .subscribe(res => {
           this.rows = []
-          this.mongoData = res.json().data;
+          this.mongoData = res["data"];
           delete this.mongoData._id
-          if(res.json().data.Roster!= undefined) {
-            res.json().data.Roster.forEach(element => {
+          if(this.mongoData.Roster!= undefined) {
+            this.mongoData.Roster.forEach(element => {
               this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
             });
           } else  {

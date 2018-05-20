@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Http } from '@angular/http';
 import {Observable} from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { HttpClient } from '@angular/common/http'
 
 @Injectable()
 export class wowApiService {
     public guildData;
     api_key = "2jtxhexd5rkbctb54s7g5djfdasxwhfc";
 
-	constructor(private http : Http){
+	constructor(private http : HttpClient){
         this.guildData = {}
 	}
 

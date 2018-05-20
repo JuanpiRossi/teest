@@ -14,7 +14,7 @@ export class FooterComponent implements OnInit {
   ngOnInit() {
     this.wowApi.realmStatus()
       .subscribe(response =>  {
-        response.json().realms.forEach(element => {
+        response["realms"].forEach(element => {
           if(element.slug == "zuljin"){
             this.serverStatus = element.status;
           }

@@ -6,6 +6,8 @@ import { specList } from '../../../../constants/class.specs';
 import { userData } from '../../../services/userData.service';
 import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Component({
   selector: 'app-parses',
@@ -71,16 +73,16 @@ export class ParsesComponent implements OnInit {
       .subscribe(res => {
         var counter = 0;
         this.rows = []
-        this.mongoData = res.json().data;
+        this.mongoData = res["data"];
         delete this.mongoData._id
-        res.json().data.Roster.forEach(element => {
+        this.mongoData.Roster.forEach(element => {
           this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter,role:'assets/'+element["role"]+'Icon.png'})
           counter++;
         });
         this.totalToLoad = this.rows.length;
         this.warcraftService.getBosses()
           .subscribe(response =>  {
-            response.json().forEach(zone => {
+            response.forEach(zone => {
               if(zone.id == this.zoneId) {
                 this.bosses = zone.encounters;
               }
@@ -88,14 +90,14 @@ export class ParsesComponent implements OnInit {
             this.rows.forEach(row => {
               this.mongoService.getPlayer({name:row.name,server:row.server})
                 .subscribe(playerData =>  {
-                  this.playersInfo[row.name] = playerData.json().data
-                  row.normal = playerData.json().data["parse"][row.spec]["overall"]["normal"]
-                  row.heroic = playerData.json().data["parse"][row.spec]["overall"]["heroic"]
-                  row.mythic = playerData.json().data["parse"][row.spec]["overall"]["mythic"]
-                  this.specs[row.name] = Object.keys(playerData.json().data["parse"])
+                  this.playersInfo[row.name] = playerData["data"]
+                  row.normal = playerData["data"]["parse"][row.spec]["overall"]["normal"]
+                  row.heroic = playerData["data"]["parse"][row.spec]["overall"]["heroic"]
+                  row.mythic = playerData["data"]["parse"][row.spec]["overall"]["mythic"]
+                  this.specs[row.name] = Object.keys(playerData["data"]["parse"])
                   let tmp=[]
                   this.bosses.forEach(boss => {
-                    tmp.push({boss:boss.name, normal:playerData.json().data["parse"][row.spec][boss.name]["normal"], heroic:playerData.json().data["parse"][row.spec][boss.name]["heroic"], mythic:playerData.json().data["parse"][row.spec][boss.name]["mythic"]})
+                    tmp.push({boss:boss.name, normal:playerData["data"]["parse"][row.spec][boss.name]["normal"], heroic:playerData["data"]["parse"][row.spec][boss.name]["heroic"], mythic:playerData["data"]["parse"][row.spec][boss.name]["mythic"]})
                   });
                   this.detailedRows[row.name] = tmp
 

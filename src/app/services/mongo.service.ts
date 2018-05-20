@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { Http } from '@angular/http';
 import {Observable} from 'rxjs';
 import { environment } from '../../environments/environment';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+import { HttpClient } from '@angular/common/http'
 
 @Injectable()
 export class MongoService {
 	public guildData;
 	
-	constructor(private http : Http){
+	constructor(private http : HttpClient){
         this.guildData = {}
 	}
 
