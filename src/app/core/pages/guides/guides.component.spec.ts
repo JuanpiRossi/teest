@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ParsesIlvlComponent } from './parses-ilvl.component';
+import { GuidesComponent } from './guides.component';
 
-describe('ParsesIlvlComponent', () => {
-  let component: ParsesIlvlComponent;
-  let fixture: ComponentFixture<ParsesIlvlComponent>;
+describe('GuidesComponent', () => {
+  let component: GuidesComponent;
+  let fixture: ComponentFixture<GuidesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ParsesIlvlComponent ]
+      declarations: [ GuidesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ParsesIlvlComponent);
+    fixture = TestBed.createComponent(GuidesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

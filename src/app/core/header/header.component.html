@@ -23,8 +23,11 @@
     </div>
     <div class="login">
       <div *ngIf="loginInfo==1" class="loginInfo">
-        <div (click)="loginKeyInput=!loginKeyInput" class="loginText subrayado">
-          Log in
+        <div class="loginText inline">
+          Untamed member?
+        </div>
+        <div (click)="loginKeyInput=!loginKeyInput" class="loginText subrayado inline">
+          Log in!
         </div>
     </div>
       <div *ngIf="loginInfo==2" class="loginInfo">

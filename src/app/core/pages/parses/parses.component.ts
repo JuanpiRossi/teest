@@ -15,10 +15,10 @@ import {Router} from '@angular/router';
 export class ParsesComponent implements OnInit {
 
   @Input() rows = [];
-  @Input() detailedRows = [];
+  @Input() detailedRows = {};
   detailsHeight;
   editing = {};
-  specs = []
+  specs = {};
   mongoData;
   expanded: any = {};
   timeout: any;
@@ -29,6 +29,9 @@ export class ParsesComponent implements OnInit {
   loadSpec = [];
   loaded = false;
   userLevelBool;
+  playersInfo = {};
+  tableTypes = ["overall parse","item level parse"];
+  tableTypesSelection = "overall parse";
 
   @ViewChild('myTable') table: any;
 
@@ -74,7 +77,6 @@ export class ParsesComponent implements OnInit {
           this.rows.push({name:element["name"],class:element["class"],spec:element["spec"],server:element["server"],normal:0,heroic:0,mythic:0,rowIndex:counter,role:'assets/'+element["role"]+'Icon.png'})
           counter++;
         });
-        this.updateExtras();
         this.totalToLoad = this.rows.length;
         this.warcraftService.getBosses()
           .subscribe(response =>  {
@@ -82,31 +84,34 @@ export class ParsesComponent implements OnInit {
               if(zone.id == this.zoneId) {
                 this.bosses = zone.encounters;
               }
-            });
-        this.rows.forEach(element => {
-          element.mythicParse = {};
-          element.heroicParse = {};
-          element.normalParse = {};
-          if(element.role=="assets/healerIcon.png"){
-            var serviceResponse = this.warcraftService.searchCharacterHeal(element.name,element.server);
-          }
-          else  {
-            var serviceResponse = this.warcraftService.searchCharacterDps(element.name,element.server);
-          }
-          serviceResponse
-            .subscribe(response =>  {
-              response.json().forEach(report => {
-                this.getBossesParses(element,report);
-              })
-              this.loadedCounter++;
-              if(this.loadedCounter==this.totalToLoad){
-                this.getOverallParses();
+            })
+            this.rows.forEach(row => {
+              this.mongoService.getPlayer({name:row.name,server:row.server})
+                .subscribe(playerData =>  {
+                  this.playersInfo[row.name] = playerData.json().data
+                  row.normal = playerData.json().data["parse"][row.spec]["overall"]["normal"]
+                  row.heroic = playerData.json().data["parse"][row.spec]["overall"]["heroic"]
+                  row.mythic = playerData.json().data["parse"][row.spec]["overall"]["mythic"]
+                  this.specs[row.name] = Object.keys(playerData.json().data["parse"])
+                  let tmp=[]
+                  this.bosses.forEach(boss => {
+                    tmp.push({boss:boss.name, normal:playerData.json().data["parse"][row.spec][boss.name]["normal"], heroic:playerData.json().data["parse"][row.spec][boss.name]["heroic"], mythic:playerData.json().data["parse"][row.spec][boss.name]["mythic"]})
+                  });
+                  this.detailedRows[row.name] = tmp
+
+                  this.loadedCounter++;
+                  if(this.loadedCounter==this.totalToLoad)  {
+                    this.loaded = true;
+                  }
+                }
+                )
               }
-            }
-          )
-        });
-      })
-    });
+            );
+            this.detailsHeight = 50 + this.bosses.length * 40;
+          }
+        )
+      }
+    );
     }
   }
 
@@ -153,130 +158,35 @@ export class ParsesComponent implements OnInit {
   onDetailToggle(event) {
   }
 
-  getDetail() {
-    let tmp = [];
-    this.detailedRows = [];
-    this.rows.forEach(element => {
-      tmp = [];
+  radioChange($event) {
+    var target = {"mat-radio-2-input":"parse","mat-radio-3-input":"parseIlvl"}[event.target["id"]]
+    this.rows.forEach(row => {
+      row.normal = this.playersInfo[row.name][target][row.spec]["overall"]["normal"];
+      row.heroic = this.playersInfo[row.name][target][row.spec]["overall"]["heroic"];
+      row.mythic = this.playersInfo[row.name][target][row.spec]["overall"]["mythic"];
+      let tmp=[]
       this.bosses.forEach(boss => {
-        tmp.push({boss:boss.name, normal:element.normalParse[boss.name] | 0, heroic:element.heroicParse[boss.name] | 0, mythic:element.mythicParse[boss.name] | 0});
+        tmp.push({boss:boss.name, normal:this.playersInfo[row.name][target][row.spec][boss.name]["normal"], heroic:this.playersInfo[row.name][target][row.spec][boss.name]["heroic"], mythic:this.playersInfo[row.name][target][row.spec][boss.name]["mythic"]})
       });
-      this.detailedRows.push(tmp);
+      this.detailedRows[row.name] = tmp;
     });
-    this.detailsHeight = 50 + this.bosses.length * 40;
+    this.rows = [...this.rows]
   }
 
-  getBossesParses(element,report) {
-    if(report.difficulty == 5){//Mythic
-      report.specs.forEach(specs => {
-        if(specs.spec == element.spec)  {
-          element.mythicParse[report.name] = parseInt(specs.best_historical_percent);
-        }
-      });
-    } else if(report.difficulty == 4) {//Heroic
-      report.specs.forEach(specs => {
-        if(specs.spec == element.spec)  {
-          element.heroicParse[report.name] = parseInt(specs.best_historical_percent);
-        }
-      });
-    } else if(report.difficulty == 3) {//Normal
-      report.specs.forEach(specs => {
-        if(specs.spec == element.spec)  {
-          element.normalParse[report.name] = parseInt(specs.best_historical_percent);
-        }
-      });
-    }
-  }
-
-  getOverallParses(){
-    this.rows.forEach(element => {
-      element.mythic = 0;
-      Object.keys(element.mythicParse).forEach(mythicBoss => {
-        element.mythic = element.mythic + element.mythicParse[mythicBoss];
-      });
-      element.mythic = element.mythic / Object.keys(element.mythicParse).length;
-      element.mythic = parseInt(element.mythic);
-      element.mythic = element.mythic | 0;
-      element.heroic = 0;
-      Object.keys(element.heroicParse).forEach(heroicBoss => {
-        element.heroic = element.heroic + element.heroicParse[heroicBoss];
-      });
-      element.heroic = element.heroic / Object.keys(element.heroicParse).length;
-      element.heroic = parseInt(element.heroic);
-      element.heroic = element.heroic | 0;
-      element.normal = 0;
-      Object.keys(element.normalParse).forEach(normalBoss => {
-        element.normal = element.normal + element.normalParse[normalBoss];
-      });
-      element.normal = element.normal / Object.keys(element.normalParse).length;
-      element.normal = parseInt(element.normal);
-      element.normal = element.normal | 0;
+  updateValue($event, rowIndex) {
+    var newSpec = event.target["value"];
+    var target = {"overall parse":"parse","item level parse":"parseIlvl"}[this.tableTypesSelection]
+    let tmp=[]
+    this.rows[rowIndex].spec = newSpec;
+    this.rows[rowIndex].normal = this.playersInfo[this.rows[rowIndex].name][target][newSpec]["overall"]["normal"];
+    this.rows[rowIndex].heroic = this.playersInfo[this.rows[rowIndex].name][target][newSpec]["overall"]["heroic"];
+    this.rows[rowIndex].mythic = this.playersInfo[this.rows[rowIndex].name][target][newSpec]["overall"]["mythic"];
+    this.bosses.forEach(boss => {
+      tmp.push({boss:boss.name, normal:this.playersInfo[this.rows[rowIndex].name][target][newSpec][boss.name]["normal"], heroic:this.playersInfo[this.rows[rowIndex].name][target][newSpec][boss.name]["heroic"], mythic:this.playersInfo[this.rows[rowIndex].name][target][newSpec][boss.name]["mythic"]})
     });
-    this.getDetail();
-    this.loaded = true
-    this.rows = [...this.rows];
-  }
-
-  updateExtras(){
-    this.specs = [];
-    this.rows.forEach(element => {
-      this.specs.push(specList[element.class])
-    });
-  }
-
-  updateValue(event, cell, rowIndex){
-    this.loadSpec[rowIndex] = true;
-    this.editing[rowIndex + '-' + cell] = false;
-    this.rows[rowIndex].spec = event.target.value;
-    this.rows[rowIndex].role = "assets/"+roleCheck[event.target.value]+"Icon.png";
-    if(this.rows[rowIndex].role.role=="assets/healerIcon.png"){
-      var serviceResponse = this.warcraftService.searchCharacterHeal(this.rows[rowIndex].name,this.rows[rowIndex].server);
-    }
-    else  {
-      var serviceResponse = this.warcraftService.searchCharacterDps(this.rows[rowIndex].name,this.rows[rowIndex].server);
-      }
-    serviceResponse
-      .subscribe(response =>  {
-        this.rows[rowIndex].mythicParse = {};
-        this.rows[rowIndex].heroicParse = {};
-        this.rows[rowIndex].normalParse = {};
-        this.rows[rowIndex].mythic = 0;
-        this.rows[rowIndex].heroic = 0;
-        this.rows[rowIndex].normal = 0;
-        response.json().forEach(report => {
-          this.getBossesParses(this.rows[rowIndex],report);
-        })
-        // this.loadedCounter++;
-        // if(this.loadedCounter==this.totalToLoad){
-        //   this.getOverallParses();
-        // }
-        this.detailedRows[rowIndex].forEach(detailedRow => {
-          detailedRow.normal = this.rows[rowIndex].normalParse[detailedRow.boss];
-          if(detailedRow.normal == undefined){
-            detailedRow.normal = 0;
-          }
-          detailedRow.heroic = this.rows[rowIndex].heroicParse[detailedRow.boss];
-          if(detailedRow.heroic == undefined){
-            detailedRow.heroic = 0;
-          }
-          detailedRow.mythic = this.rows[rowIndex].mythicParse[detailedRow.boss];
-          if(detailedRow.mythic == undefined){
-            detailedRow.mythic = 0;
-          }
-          this.rows[rowIndex].mythic = this.rows[rowIndex].mythic + detailedRow.mythic;
-          this.rows[rowIndex].heroic = this.rows[rowIndex].heroic + detailedRow.heroic;
-          this.rows[rowIndex].normal = this.rows[rowIndex].normal + detailedRow.normal;
-        });
-        this.rows[rowIndex].mythic = this.rows[rowIndex].mythic / Object.keys(this.rows[rowIndex].mythicParse).length;
-        this.rows[rowIndex].heroic = this.rows[rowIndex].heroic / Object.keys(this.rows[rowIndex].heroicParse).length;
-        this.rows[rowIndex].normal = this.rows[rowIndex].normal / Object.keys(this.rows[rowIndex].normalParse).length;
-        this.rows[rowIndex].mythic = parseInt(this.rows[rowIndex].mythic) | 0;
-        this.rows[rowIndex].heroic = parseInt(this.rows[rowIndex].heroic) | 0;
-        this.rows[rowIndex].normal = parseInt(this.rows[rowIndex].normal) | 0;
-        this.rows = [...this.rows];
-        this.detailedRows = [...this.detailedRows];
-        this.loadSpec[rowIndex] = false;
-      }
-    )
+    this.detailedRows[this.rows[rowIndex].name] = tmp;
+    this.rows = [...this.rows]
   }
 }
+
+

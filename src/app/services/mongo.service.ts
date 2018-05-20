@@ -24,6 +24,10 @@ export class MongoService {
 		return this.http.post(environment.apiUrl + '/api/getGuild',query)
 	}
 
+	getPlayer(query){
+		return this.http.post(environment.apiUrl + '/api/getPlayer',query)
+	}
+
 	updateGuild(guildData){
 		return this.http.post(environment.apiUrl + '/api/updateGuild',guildData)
 	}

@@ -7,17 +7,17 @@ export const officerPageList =[
     {
         route:"parses",
         title:"Parses Overall",
-        description:"Guild parses list overall"
-    },
-    {
-        route:"parsesIlvl",
-        title:"Parses by ilvl",
-        description:"Guild parses list by item level"
+        description:"Guild parses list"
     },
     {
         route:"charSearcher",
         title:"Character searcher",
         description:"You can stalk those fuckers here"
+    },
+    {
+        route:"guides",
+        title:"Raid guides",
+        description:"Learn how to raid"
     }
 ];
   
@@ -31,25 +31,40 @@ export const memberPageList =[
     {
         route:"parses",
         title:"Parses Overall",
-        description:"Guild parses list overall"
-    },
-    {
-        route:"parsesIlvl",
-        title:"Parses by ilvl",
-        description:"Guild parses list by item level"
+        description:"Guild parses list"
     },
     {
         route:"charSearcher",
         title:"Character searcher",
         description:"You can stalk those fuckers here"
+    },
+    {
+        route:"guides",
+        title:"Raid guides",
+        description:"Learn how to raid"
     }
 ];
 
 
 export const noMemberPageList =[
     {
-        route:"1",
-        title:"1",
-        description:"1"
+        route:"roster",
+        title:"Roster",
+        description:"Guild roster list"
+    },
+    {
+        route:"parses",
+        title:"Parses Overall",
+        description:"Guild parses list"
+    },
+    {
+        route:"charSearcher",
+        title:"Character searcher",
+        description:"You can stalk those fuckers here"
+    },
+    {
+        route:"guides",
+        title:"Raid guides",
+        description:"Learn how to raid"
     }
 ];

@@ -11,7 +11,6 @@ import { wowApiService } from './services/wowApi.services';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
 import { userData } from './services/userData.service';
 
-
 @NgModule({
   declarations: [
     AppComponent

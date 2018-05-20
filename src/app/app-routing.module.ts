@@ -5,11 +5,10 @@ import { PagesComponent } from './core/pages/pages.component'
 import { HomeComponent } from './core/pages/home/home.component'
 import { ParsesComponent } from './core/pages/parses/parses.component'
 import { RosterComponent } from './core/pages/roster/roster.component'
-import { ParsesIlvlComponent } from './core/pages/parses-ilvl/parses-ilvl.component'
 import { CharSearcherComponent } from './core/pages/char-searcher/char-searcher.component'
 import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.component'
 import { RosterMembersComponent } from './core/pages/roster-members/roster-members.component'
-
+import { GuidesComponent } from './core/pages/guides/guides.component'
 
 const routes: Routes = [
   {
@@ -37,16 +36,16 @@ const routes: Routes = [
         component: RosterComponent,
       },
       {
-        path: 'parsesIlvl',
-        component: ParsesIlvlComponent,
-      },
-      {
         path: 'charSearcher',
         component: CharSearcherComponent,
       },
       {
         path: 'rosterM',
         component: RosterMembersComponent,
+      },
+      {
+        path: 'guides',
+        component: GuidesComponent,
       }
       //{ path: 'error-500', component: Error500Component },
       //{ path: '**', component: NotFoundComponent }
