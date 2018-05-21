@@ -10,6 +10,8 @@ import { UnauthorizedComponent } from './core/pages/unauthorized/unauthorized.co
 import { RosterMembersComponent } from './core/pages/roster-members/roster-members.component'
 import { GuidesComponent } from './core/pages/guides/guides.component'
 import { SpecificGuideComponent } from './core/pages/specific-guide/specific-guide.component'
+import { GuidesAdminComponent } from './core/pages/guides-admin/guides-admin.component'
+import { SpecificGuideAdminComponent } from './core/pages/specific-guide-admin/specific-guide-admin.component'
 
 const routes: Routes = [
   {
@@ -51,6 +53,14 @@ const routes: Routes = [
       {
         path: 'guide',
         component: SpecificGuideComponent,
+      },
+      {
+        path: 'guidesAdmin',
+        component: GuidesAdminComponent,
+      },
+      {
+        path: 'guideAdmin',
+        component: SpecificGuideAdminComponent,
       }
       //{ path: 'error-500', component: Error500Component },
       //{ path: '**', component: NotFoundComponent }

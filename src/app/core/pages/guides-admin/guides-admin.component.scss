@@ -14,18 +14,6 @@
     font-size:50px;
 }
 
-.comboContainer {
-    position: relative;
-    float: right;
-    right: 10%;
-    top: -40px;
-    color:#fff;
-}
-
-.combo  {
-
-}
-
 .guidesContainer{
 }
 
@@ -77,6 +65,11 @@
     padding-left: 15px;
     float: left;
     position: relative;
+}
+
+.buttonContainer    {
+    margin: 50px;
+    float: right;
 }
 
 .inline {

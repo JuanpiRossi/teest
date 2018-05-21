@@ -10,7 +10,7 @@ import { wowApiService } from './services/wowApi.services';
 import { CookieService, CookieOptions } from 'angular2-cookie/core';
 import { userData } from './services/userData.service';
 import { environment } from '../environments/environment';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [

@@ -1,0 +1,14 @@
+<div class="container" *ngIf="userLevelBool">
+    <div class="headerTitle">
+        Guides administrator
+    </div>
+    <div class="guidesContainer">
+        <div class="guideGrids" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
+        </div>
+    </div>
+    <div class="buttonContainer">
+      <button mat-raised-button class="newGuideButton" (click)="newGuide($event)">
+        New Guide
+      </button>
+    </div>
+</div>
