@@ -1,4 +1,30 @@
 import requests
+from pymongo import MongoClient, DESCENDING
+import threading
+import time
+import logging
+
+
+def startMongo():
+    client = MongoClient('mongodb://aiun:9980054a@144.202.60.128:27017/',)# /GuildInfo?authSource=admin
+    return client.GuildInfo
+
+def insertOne(db,collection,data):
+    db[collection].insert_one(data)
+    return data
+
+def findOne(db,collection,query):
+    doc = db[collection].find_one(query)
+    return doc
+
+def findMany(db,collection,query):
+    doc = db[collection].find(query).sort("secuence", DESCENDING)
+    return doc
+
+def removeByQuery(db,collection,query):
+    doc = db[collection].remove(query)
+    return doc
+
 
 def post(url,data):
     try:
@@ -48,7 +74,7 @@ def getSpecs(clase):
 
 
 def getParses(player,specs,bosses):
-    print "Getting parses"
+    logging.debug("Getting parses - " + player["name"])
     playerResponse = get("https://www.warcraftlogs.com/v1/parses/character/"+player["name"]+"/"+player["server"]+"/us?metric=dps&api_key=16653d65bcc270d94cf72848be6a1cdc")
     parse = {}
     difficultys = {"5":"mythic","4":"heroic","3":"normal"}
@@ -74,12 +100,12 @@ def getParses(player,specs,bosses):
         for dif in ["mythic","heroic","normal"]:
             if parse[spec]["overall"][dif] != 0:
                 parse[spec]["overall"][dif] = int(parse[spec]["overall"][dif]/counts[spec][dif])
-    print "Parses OK!"
+    logging.debug("Parses OK! - " + player["name"])
     return parse
 
 
 def getParsesIlvl(player,specs,bosses):
-    print "Getting parses Ilvl"
+    logging.debug("Getting parses Ilvl - " + player["name"])
     playerResponse = get("https://www.warcraftlogs.com/v1/parses/character/"+player["name"]+"/"+player["server"]+"/us?metric=dps&bracket=-1&api_key=16653d65bcc270d94cf72848be6a1cdc")
     parse = {}
     difficultys = {"5":"mythic","4":"heroic","3":"normal"}
@@ -105,30 +131,36 @@ def getParsesIlvl(player,specs,bosses):
         for dif in ["mythic","heroic","normal"]:
             if parse[spec]["overall"][dif] != 0:
                 parse[spec]["overall"][dif] = int(parse[spec]["overall"][dif]/counts[spec][dif])
-    print "Parses Ilvl OK!"
+    logging.debug("Parses Ilvl OK! - " + player["name"])
     return parse
+
+def worker(player,db,bosses):
+    logging.debug(player['name'])
+    secuence = findMany(db,"players",{"name":player['name']})[0]["secuence"]
+    toSaveData = {"name":player['name'],"server":player['server'],"class":player['class'],"secuence":secuence+1}
+    specs = getSpecs(player['class'])
+    toSaveData["parse"] = getParses(player,specs,bosses)
+    toSaveData["parseIlvl"] = getParsesIlvl(player,specs,bosses)
+    logging.debug('Adding ' + player['name'])
+    insertOne(db,"players",toSaveData)
+    logging.debug('Removing ' + player['name'])
+    removeByQuery(db,"players",{"secuence": {"$lte":secuence},"name":player['name']})
+    logging.debug('Finish ' + player['name'])
+
+
 
 ##########################################################################################################################################################################################################
 ##########################################################################################################################################################################################################
 ##########################################################################################################################################################################################################
 
 print "Beging of process"
+db = startMongo()
+roster = findOne(db,"Guild",{"guildName":"Untamed"})["Roster"]
 bosses = getBosses()
-guildRoster = post("http://localhost:3000/api/getGuild",{"guildName": "Untamed"})['data']['Roster']
-try:
-    secuence = get("http://localhost:3000/api/getPlayerSorted")["data"]["secuence"]
-except:
-    secuence = 0
 
-for index,player in enumerate(guildRoster):
-    print "Player: " + str(index+1) + " of " + str(len(guildRoster)) + " - " + player['name']
-    toSaveData = {"name":player['name'],"server":player['server'],"class":player['class'],"secuence":secuence+1}
-    specs = getSpecs(player['class'])
-    toSaveData["parse"] = getParses(player,specs,bosses)
-    toSaveData["parseIlvl"] = getParsesIlvl(player,specs,bosses)
-    print "Adding player"
-    response  = post("http://localhost:3000/api/addPlayer",toSaveData)
-
-print "Deleting old data"
-response  = post("http://localhost:3000/api/removePlayer/f48y3g48fcg24f823ybfc8792f2b842",{"secuence":{"$lte":secuence}})
-print "End of process"
+logging.basicConfig( level=logging.DEBUG,format='[%(levelname)s] - %(threadName)-10s : %(message)s')
+threads = list()
+for player in roster:
+    t = threading.Thread(target=worker, args=(player,db,bosses,))
+    threads.append(t)
+    t.start()

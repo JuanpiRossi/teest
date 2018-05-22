@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewEncapsulation,Inject } from '@angular/core';
+import { Component,OnInit,ViewEncapsulation,Inject } from '@angular/core';
 import { userData } from '../../../services/userData.service';
 import {Router} from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -22,7 +22,6 @@ export class GuidesAdminComponent implements OnInit {
   htmlOut = "";
   role = ["any","melee dps","range dps","healer","tank"];
   roleSelect = "any"
-  responseSave;
 
   constructor(private wowApi:wowApiService, public sanitizer: DomSanitizer,public _userData:userData,private router: Router, private mongoService:MongoService,public dialog: MatDialog) { }
 
@@ -57,7 +56,6 @@ export class GuidesAdminComponent implements OnInit {
 
     this.mongoService.getGuidesReduced()
     .subscribe(response =>  {
-      this.responseSave = response;
       this.htmlOut = ""
       response["data"].forEach(guide =>{
         delete guide["_id"];
@@ -68,26 +66,30 @@ export class GuidesAdminComponent implements OnInit {
     })
   }
 
-  updateValue($event) {
-    console.log(event)
-    this.roleSelect = event.target["value"]
+  newGuide($event)  {
+    let modal = this.dialog.open(guideAdminModal, {});
 
-    this.htmlOut = ""
-    this.responseSave["data"].forEach(guide =>{
-      delete guide["_id"];
-      if(guide["show"]) {
-        this.htmlOut = this.htmlOut+'<div class="guideComponentContainer"><div class="guideComponent" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImage" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitle">'+guide.name+'</div></div></div>';
+    modal.afterClosed()
+      .subscribe(result => {
+        if(result)  {
+          this.mongoService.getGuidesReduced()
+            .subscribe(response =>  {
+              this.htmlOut = ""
+              response["data"].forEach(guide =>{
+                delete guide["_id"];
+                if(guide["show"]) {
+                  this.htmlOut = this.htmlOut+'<div class="guideComponentContainer"><div class="guideComponent" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImage" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitle">'+guide.name+'</div></div></div>';
+                }
+              })
+            }
+          )
+        }
       }
-    })
+    )
   }
 
-  newGuide($event)  {
-    this.dialog.open(guideAdminModal, {
-      data: {
-        animal: 'panda'
-      }
-    });
-    console.log(event);
+  getGuideOk(evt) {
+    console.log(evt);
   }
 }
 
@@ -95,15 +97,72 @@ export class GuidesAdminComponent implements OnInit {
 @Component({
   selector: 'app-guides-admin',
   templateUrl: 'guides-admin-modal.html',
+  styleUrls: ['./guides-admin.component.scss'],
 })
 export class guideAdminModal {
 
+  guideName = "";
+  guideId = "";
+  img="";
+  showImage = false;
+  guideIdRegex = false;
+  guideEmpty = false;
+  loaded = true;
+
   constructor(
     public dialogRef: MatDialogRef<guideAdminModal>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private mongoService:MongoService) { }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  onChangeName($event)  {
+    this.guideName = event.target["value"];
+    this.guideEmpty = false;
+  }
+
+  onChangeImg($event) {
+    this.img = event.target["value"];
+    this.guideEmpty = false;
+  }
+
+  onChangeID($event)  {
+    this.guideEmpty = false;
+    this.guideId = event.target["value"];
+    if(/^([a-zA-Z0-9]*)$/i.test(this.guideId))  {
+      this.guideIdRegex = false;
+    } else  {
+      this.guideIdRegex = true;
+    }
+  }
+
+  showHideImage($event) {
+    this.showImage = !this.showImage;
+  }
+
+  newGuideCreate($event)  {
+    if(this.guideId != "" && this.guideName != ""){
+      this.loaded = false;
+      this.mongoService.getGuidesOrderNumer()
+        .subscribe(order => {
+          console.log(order["data"]["order"]);
+          this.mongoService.addGuide({name:this.guideName,id:this.guideId,img:this.img,show:true,order:order["data"]["order"]+1,"html-healer":"","html-range":"","html-melee":"","html-tank":""})
+            .subscribe(res => {
+              console.log(res)
+              this.dialogRef.close(true);
+              this.loaded = false;
+            }
+          )
+        }
+      )
+    } else  {
+      this.guideEmpty = true;
+    }
+  }
+
+  quitModal($event) {
+    this.dialogRef.close();
+  }
 }

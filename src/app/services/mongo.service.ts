@@ -41,4 +41,12 @@ export class MongoService {
 	getGuide(guildData){
 		return this.http.post(environment.apiUrl + '/api/getGuide',guildData)
 	}
+
+	addGuide(data){
+		return this.http.post(environment.apiUrl + '/api/addGuide',data)
+	}
+
+	getGuidesOrderNumer(){
+		return this.http.get(environment.apiUrl + '/api/getGuidesOrderNumer')
+	}
 }

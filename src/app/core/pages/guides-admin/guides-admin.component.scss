@@ -75,3 +75,46 @@
 .inline {
     display: inline;
 }
+
+.modalInput {
+    width: 100%;
+}
+
+.modalWindow    {
+    width: 400px;
+}
+
+.modalLoading   {
+    width:30px;
+    height:30px;
+}
+
+.errorModal {
+    position: relative;
+    top: -15px;
+    font-size: 12px;
+}
+
+.modalButtonContainer   {
+    margin-top: 15px;
+}
+
+.modalButtonCreate    {
+    width: 120px;
+    margin-right: 10px;
+    float: right;
+}
+
+.modalButtonQuit    {
+    float: left;
+}
+
+.modalButtonImage   {
+    float: right;
+    margin-right: 15px;
+}
+
+.modalImgComponent  {
+    width:"128px";
+    height:"64px";
+}

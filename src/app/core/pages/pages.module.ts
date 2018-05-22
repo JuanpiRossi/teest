@@ -14,6 +14,7 @@ import { RosterMembersComponent } from './roster-members/roster-members.componen
 import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { GuidesComponent } from './guides/guides.component';
 import { SpecificGuideComponent } from './specific-guide/specific-guide.component';
@@ -35,8 +36,10 @@ import { QuillEditorModule } from 'ngx-quill-editor';
     MatButtonModule,
     MatDialogModule,
     BrowserAnimationsModule,
-    QuillEditorModule
+    QuillEditorModule,
+    MatInputModule
   ],
+  entryComponents: [ guideAdminModal ],
   providers:[DragulaService],
   declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent, SpecificGuideComponent, GuidesAdminComponent, SpecificGuideAdminComponent, guideAdminModal],
   exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, DragulaExtendedDirective]
