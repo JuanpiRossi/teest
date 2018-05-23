@@ -1,8 +1,8 @@
-.container{
+.specificAdminCnontainer{
     top: 0px;
     right: 15%;
     left: 15%;
-    margin-bottom: 150px;
+    margin-bottom: 200px;
     position: absolute;
 }
 
@@ -15,12 +15,14 @@
 }
 
 .htmlEditorContainer    {
+    margin-bottom: 50px;
 }
 
 .quill-editor{
     .dataplaceholder {
         color: #ffffff;
     }
+    background-color: #7f7f7f;
 }
 
 .ql-toolbar {
@@ -43,4 +45,23 @@
     position: relative;
     font-size:25px;
     margin: 20px;
+}
+
+.specificGuideAdminRoleButtonSave   {
+    position: relative;
+    float: right;
+    top: 10px;
+    right: 25px;
+}
+
+.specificGuideAdminButtonDelete {
+    position: relative;
+    float: left;
+    top: 50px;
+}
+
+.specificGuideAdminButtonSave   {
+    position: relative;
+    float: right;
+    top: 14px;
 }

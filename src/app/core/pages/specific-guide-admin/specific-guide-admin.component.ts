@@ -13,10 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class SpecificGuideAdminComponent implements OnInit {
 
   public editor;
-  public editorContentMelee = '';
-  public editorContentRange = '';
-  public editorContentHealer = '';
-  public editorContentTank = '';
+  public editorContent = {melee:"",range:"",tank:"",healer:""}
   public editorOptions = {
     placeholder: "insert content...",
     color:"#fff"
@@ -37,6 +34,7 @@ export class SpecificGuideAdminComponent implements OnInit {
       this.bossName = response["data"]["name"];
       this.res = response;
       this.loaded = true;
+      this.editorContent = {melee:response["data"]["html-melee"],range:response["data"]["html-range"],tank:response["data"]["html-tank"],healer:response["data"]["html-healer"]}
     })
   }
 
@@ -46,38 +44,50 @@ export class SpecificGuideAdminComponent implements OnInit {
       if(UL!=3) {
         this.router.navigate(["/unauthorized"]);
       }
-    }
-  )
-    // setTimeout(() => {
-    //   this.editorContent = '<h1>content changed!</h1>';
-    //   console.log('you can use the quill instance object to do something', this.editor);
-    //   // this.editor.disable();
-    // }, 2800)
-  }
-
-  updateValue($event) {
-    this.roleSelect = event.target["value"];
-    this._router.navigate(["/guide"], { queryParams: { boss: this.bossId, role: this.roleSelect } });
+    })
   }
 
   onEditorBlured(role,quill) {
-    console.log('editor blur!', quill);
   }
 
   onEditorFocused(role,quill) {
-    console.log('editor focus!', quill);
   }
 
   onEditorCreated(role,quill) {
     this.editor = quill;
-    console.log('quill is ready! this is current quill instance object', quill);
   }
 
   onContentChanged(role,{ quill, html, text }) {
-    console.log('quill content is changed!', quill, html, text);
   }
 
   radioChange($event) {
     this.roleSelect = {"mat-radio-2-input":"all","mat-radio-3-input":"melee dps","mat-radio-4-input":"range dps","mat-radio-5-input":"healer","mat-radio-6-input":"tank"}[event.target["id"]]
   }
+
+  deleteGuide($event) {
+    this.mongoService.updateGuide({"query":{"id":this.bossId},"update":{"$set":{"show":false}}})
+      .subscribe(r  =>  {
+        console.log(r)
+        this.router.navigate(["/guidesAdmin"]);
+      }
+    )
+  }
+
+  saveGuide($event) {
+    this.mongoService.updateGuide({"query":{"id":this.bossId},"update":{"$set":{"html-melee":this.editorContent['melee'],"html-range":this.editorContent['range'],"html-tank":this.editorContent['tank'],"html-healer":this.editorContent['healer']}}})
+      .subscribe(r  =>  {
+        console.log(r)
+      }
+    )
+  }
+
+  saveRoleGuide(role,$event) {
+    var htmlRole = "html-"+role
+    this.mongoService.updateGuide({"query":{"id":this.bossId},"update":{"$set":{[htmlRole]:this.editorContent[role]}}})
+      .subscribe(r  =>  {
+        console.log(r)
+      }
+    )
+  }
+
 }

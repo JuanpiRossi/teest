@@ -46,6 +46,10 @@ export class MongoService {
 		return this.http.post(environment.apiUrl + '/api/addGuide',data)
 	}
 
+	updateGuide(data){
+		return this.http.post(environment.apiUrl + '/api/updateGuide',data)
+	}
+
 	getGuidesOrderNumer(){
 		return this.http.get(environment.apiUrl + '/api/getGuidesOrderNumer')
 	}

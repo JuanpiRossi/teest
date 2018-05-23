@@ -115,6 +115,8 @@
 }
 
 .modalImgComponent  {
-    width:"128px";
-    height:"64px";
+    min-width:"128px";
+    min-height:"64px";
+    max-width:"128px";
+    max-height:"64px";
 }
