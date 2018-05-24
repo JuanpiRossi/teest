@@ -17,6 +17,13 @@ export class SpecificGuideComponent implements OnInit {
   @Input() res = {};
   @Input() roleSelect;
   loaded = false;
+  editorOptions = {
+    modules: {
+      toolbar: false
+    },
+    readOnly: true,
+    theme: 'snow'
+  };
 
   constructor(private _activatedRoute: ActivatedRoute, private _router:Router,private mongoService:MongoService, public sanitizer: DomSanitizer) { 
     var queryStrings = this._router.url.split("?")
