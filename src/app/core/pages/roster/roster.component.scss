@@ -5,6 +5,14 @@
     position: absolute;
 }
 
+.headerTitle {
+    color:#ffffff;
+    position: relative;
+    left: 25px;
+    top: -25px;
+    font-size:50px;
+}
+
 .gridContainer  {
     right: 15%;
     left: 15%;
@@ -24,14 +32,10 @@
 }
 
 .addButton {
-    width: 100px;
-    height: 25px;
     margin-right: 25px;
 }
 
 .saveButton {
-    width: 100px;
-    height: 25px;
 }
 
 .ngx-datatable{

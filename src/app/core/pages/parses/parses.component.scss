@@ -18,10 +18,9 @@
 
 .loadingDiv {
     color:#ffffff;
-    position: fixed;
-    left: 15%;
+    position: relative;
     margin-left: 75px;
-    top: 150px;
+    bottom: 10px;
 }
 
 .radioButtonsContainer {
@@ -36,7 +35,6 @@
 }
 
 .mainTableContainer {
-    margin-top: 50px;
 }
 
 .tableContainer {

@@ -1,4 +1,7 @@
 <div class="container" *ngIf="userLevelBool">
+  <div class="headerTitle">
+      Roster
+  </div>
   <div class="gridContainer">
     <ngx-datatable
       *ngIf="renderTable"
@@ -106,8 +109,8 @@
     *Don't use special characters on server
   </div>
   <div class="buttonsContainer">
-      <button class="addButton" (click)="addMember($event)" mat-raised-button>Add member</button>
-      <button class="saveButton" (click)="saveRoster($event)" mat-raised-button>Save roster</button>
+      <button mat-raised-button color="primary" class="addButton" (click)="addMember($event)" mat-raised-button>Add member</button>
+      <button mat-raised-button color="primary" class="saveButton" (click)="saveRoster($event)" mat-raised-button>Save roster</button>
   </div>
 </div>
 
