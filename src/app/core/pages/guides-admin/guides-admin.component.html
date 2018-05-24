@@ -1,13 +1,13 @@
-<div class="container" *ngIf="userLevelBool">
-    <div class="headerTitle">
+<div class="containerAdmin" *ngIf="userLevelBool">
+    <div class="headerTitleAdmin">
         Guides administrator
     </div>
-    <div class="guidesContainer">
-        <div class="guideGrids" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
+    <div class="guidesContainerAdmin">
+        <div class="guideGridsAdmin" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
         </div>
     </div>
-    <div class="buttonContainer">
-      <button mat-raised-button class="modalButton" (click)="newGuide($event)">
+    <div class="buttonContainerAdmin">
+      <button mat-raised-button class="modalButtonAdmin" (click)="newGuide($event)">
         New Guide
       </button>
     </div>

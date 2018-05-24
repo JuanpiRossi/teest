@@ -1,4 +1,4 @@
-.container{
+.containerAdmin{
     top: 0px;
     right: 15%;
     left: 15%;
@@ -6,7 +6,7 @@
     position: absolute;
 }
 
-.headerTitle {
+.headerTitleAdmin {
     color:#ffffff;
     position: relative;
     left: 25px;
@@ -14,17 +14,17 @@
     font-size:50px;
 }
 
-.guidesContainer{
+.guidesContainerAdmin{
 }
 
-.guideGrids  {
+.guideGridsAdmin  {
     bottom: 0%;
     position: relative;
     display: flex;
     flex-wrap: wrap;
 }
 
-.guideComponentContainer  {
+.guideComponentContainerAdmin  {
     padding: 1%;
     height: 100px;
     min-width: 22%;
@@ -33,7 +33,7 @@
 }
 
                                 
-.guideComponent  {
+.guideComponentAdmin  {
     border-style: solid;
     border-radius: 25px;
     border-color: #757575;
@@ -44,12 +44,12 @@
     position: relative;
 }
 
-.guideComponent:hover  {
+.guideComponentAdmin:hover  {
     border-color: #105010;
     background-color: #45a045;
 }
 
-.guideComponentTitle  {
+.guideComponentTitleAdmin  {
     font-family: "Verdana", Times, serif;
     font-weight: bold;
     font-size: 15px;
@@ -58,7 +58,7 @@
     position: relative;
 }
 
-.guideComponentImage  {
+.guideComponentImageAdmin  {
     width: 128px;
     height: 64px;
     padding-top: 15px;
@@ -67,7 +67,7 @@
     position: relative;
 }
 
-.buttonContainer    {
+.buttonContainerAdmin    {
     margin: 50px;
     float: right;
 }

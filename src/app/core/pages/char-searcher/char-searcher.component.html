@@ -12,7 +12,7 @@
       <p class="serverError" *ngIf="error.server.error">{{error.server.text}}</p>
     </div>
     <div class="searchButtonContainer">
-      <button class="searchButton" (click)="searchCharacter($event)" mat-raised-button>Search</button>
+      <button color="primary" class="searchButton" (click)="searchCharacter($event)" mat-raised-button>Search</button>
     </div>
     <div class="infoContainer">
       <img class="loadingIcon" src="assets/loadingGif.gif" *ngIf="loader">

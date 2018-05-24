@@ -60,7 +60,7 @@ export class GuidesAdminComponent implements OnInit {
       response["data"].forEach(guide =>{
         delete guide["_id"];
         if(guide["show"]) {
-          this.htmlOut = this.htmlOut+'<div class="guideComponentContainer"><div class="guideComponent" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImage" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitle">'+guide.name+'</div></div></div>';
+          this.htmlOut = this.htmlOut+'<div class="guideComponentContainerAdmin"><div class="guideComponentAdmin" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImageAdmin" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitleAdmin">'+guide.name+'</div></div></div>';
         }
       })
     })
@@ -78,7 +78,7 @@ export class GuidesAdminComponent implements OnInit {
               response["data"].forEach(guide =>{
                 delete guide["_id"];
                 if(guide["show"]) {
-                  this.htmlOut = this.htmlOut+'<div class="guideComponentContainer"><div class="guideComponent" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImage" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitle">'+guide.name+'</div></div></div>';
+                  this.htmlOut = this.htmlOut+'<div class="guideComponentContainerAdmin"><div class="guideComponentAdmin" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImageAdmin" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitleAdmin">'+guide.name+'</div></div></div>';
                 }
               })
             }
