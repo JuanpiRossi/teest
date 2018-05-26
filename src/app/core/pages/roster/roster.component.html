@@ -1,126 +1,249 @@
-<div class="container" *ngIf="userLevelBool">
-  <div class="headerTitle">
-      Roster
-  </div>
-  <div class="gridContainer">
-    <ngx-datatable
-      *ngIf="renderTable"
-      class='material'
-      [rows]="rows"
-      [columnMode]="'force'"
-      [headerHeight]="50"
-      [footerHeight]="0"
-      [columnMode]='"force"'
-      [rowHeight]="40"
-      [rowClass]="getRowClass"
-      [trackByProp]="name"
-      [dragulaName]="'bag'"
-      [dragulaModel]="dataModel2"
-      [dragulaVScroll]="true"
-      [classSelector]=""
-      (directiveDrop)="onDrop($event)"
-      (onRowsUpdate)='updateRows()'
-    >
-    <ngx-datatable-column name="name">
-        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-          <span
-            title="Double click to edit"
-            (dblclick)="editing[rowIndex+ '-name'] = true"
-            *ngIf="!editing[rowIndex+ '-name']">
-            {{value}}
-          </span>
-          <input
-            autofocus
-            (blur)="updateValue($event, 'name', rowIndex)"
-            *ngIf="editing[rowIndex+ '-name']"
-            type="text"
-            [value]="value"
-          />
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="server">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span
-              title="Double click to edit"
-              (dblclick)="editing[rowIndex+ '-server'] = true"
-              *ngIf="!editing[rowIndex+ '-server']">
-              {{value}}
-            </span>
-            <input
-              autofocus
-              (blur)="updateValue($event, 'server', rowIndex)"
-              *ngIf="editing[rowIndex+ '-server']"
-              type="text"
-              [value]="value"
-            />
-          </ng-template>
-        </ngx-datatable-column>
-      <ngx-datatable-column name="class">
-        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-           <span
-            title="Double click to edit"
-            (dblclick)="editing[rowIndex + '-class'] = true"
-            *ngIf="!editing[rowIndex + '-class']">
-            {{value}}
-          </span>
-          <select
-            *ngIf="editing[rowIndex + '-class']"
-            (blur)="editing[rowIndex + '-class'] = false"
-            (change)="updateValue($event, 'class', rowIndex)"
-            [value]="value">
-            <option value="Death Knight">Death Knight</option>
-            <option value="Demon Hunter">Demon Hunter</option>
-            <option value="Druid">Druid</option>
-            <option value="Hunter">Hunter</option>
-            <option value="Mage">Mage</option>
-            <option value="Monk">Monk</option>
-            <option value="Paladin">Paladin</option>
-            <option value="Priest">Priest</option>
-            <option value="Rogue">Rogue</option>
-            <option value="Shaman">Shaman</option>
-            <option value="Warlock">Warlock</option>
-            <option value="Warrior">Warrior</option>
-          </select>
-        </ng-template>
-      </ngx-datatable-column>
-      <ngx-datatable-column name="spec">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-             <span
-              title="Double click to edit"
-              (dblclick)="editing[rowIndex + '-spec'] = true"
-              *ngIf="!editing[rowIndex + '-spec']">
-              {{value}}
-            </span>
-            <select
-              *ngIf="editing[rowIndex + '-spec']"
-              (change)="updateValue($event, 'spec', rowIndex)"
-              [value]="value">
-              <option *ngFor="let i of specs[rowIndex]">{{i.name}}</option>
-            </select>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
-            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
-                <img src={{icons[rowIndex]}} width="20px" height="20px">
-                <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex)">
+<div class="containerRoster" *ngIf="userLevelBool">
+    <div class="headerTitleRoster">
+        Roster
+    </div>
+    <div class="mainRaidersContainerRoster">
+      <div class="subTitleRoster">
+          Main raiders
+      </div>
+      <div class="gridContainerRoster">
+        <ngx-datatable
+          *ngIf="renderTable"
+          class='material'
+          [rows]="rowsRoster"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="0"
+          [columnMode]='"force"'
+          [rowHeight]="40"
+          [rowClass]="getRowClass"
+          [trackByProp]="name"
+          [dragulaName]="'bagRoster'"
+          [dragulaModel]="dataModeRoster"
+          [dragulaVScroll]="true"
+          [classSelector]=""
+          (directiveDrop)="onDrop($event,'Roster')"
+          (onRowsUpdate)='updateRows()'
+        >
+        <ngx-datatable-column name="name">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <span
+                title="Double click to edit"
+                (dblclick)="editingRoster[rowIndex+ '-name'] = true"
+                *ngIf="!editingRoster[rowIndex+ '-name']">
+                {{value}}
+              </span>
+              <input
+                autofocus
+                (blur)="updateValue($event, 'name', rowIndex,'Roster')"
+                *ngIf="editingRoster[rowIndex+ '-name']"
+                type="text"
+                [value]="value"
+              />
             </ng-template>
           </ngx-datatable-column>
-    </ngx-datatable>
-    *Don't use special characters on server
+          <ngx-datatable-column name="server">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span
+                  title="Double click to edit"
+                  (dblclick)="editingRoster[rowIndex+ '-server'] = true"
+                  *ngIf="!editingRoster[rowIndex+ '-server']">
+                  {{value}}
+                </span>
+                <input
+                  autofocus
+                  (blur)="updateValue($event, 'server', rowIndex,'Roster')"
+                  *ngIf="editingRoster[rowIndex+ '-server']"
+                  type="text"
+                  [value]="value"
+                />
+              </ng-template>
+            </ngx-datatable-column>
+          <ngx-datatable-column name="class">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <span
+                title="Double click to edit"
+                (dblclick)="editingRoster[rowIndex + '-class'] = true"
+                *ngIf="!editingRoster[rowIndex + '-class']">
+                {{value}}
+              </span>
+              <select
+                *ngIf="editingRoster[rowIndex + '-class']"
+                (blur)="editingRoster[rowIndex + '-class'] = false"
+                (change)="updateValue($event, 'class', rowIndex,'Roster')"
+                [value]="value">
+                <option value="Death Knight">Death Knight</option>
+                <option value="Demon Hunter">Demon Hunter</option>
+                <option value="Druid">Druid</option>
+                <option value="Hunter">Hunter</option>
+                <option value="Mage">Mage</option>
+                <option value="Monk">Monk</option>
+                <option value="Paladin">Paladin</option>
+                <option value="Priest">Priest</option>
+                <option value="Rogue">Rogue</option>
+                <option value="Shaman">Shaman</option>
+                <option value="Warlock">Warlock</option>
+                <option value="Warrior">Warrior</option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="spec">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <span
+                  title="Double click to edit"
+                  (dblclick)="editingRoster[rowIndex + '-spec'] = true"
+                  *ngIf="!editingRoster[rowIndex + '-spec']">
+                  {{value}}
+                </span>
+                <select
+                  *ngIf="editingRoster[rowIndex + '-spec']"
+                  (change)="updateValue($event, 'spec', rowIndex,'Roster')"
+                  [value]="value">
+                  <option *ngFor="let i of specsRoster[rowIndex]">{{i.name}}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+                    <img src={{iconsRoster[rowIndex]}} width="20px" height="20px">
+                    <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex,'Roster')" title="Delete player">
+                </ng-template>
+              </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="buttonsContainerRoster">
+          <button mat-raised-button color="primary" class="addButtonRoster" (click)="addMember($event,'Roster')" mat-raised-button>Add member</button>
+          <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'Roster')" mat-raised-button>Save roster</button>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
+    <div class="trialRaidersContainerRoster">
+      <div class="subTitleRoster">
+          Trials
+      </div>
+      <div class="gridContainerRoster">
+        <ngx-datatable
+          *ngIf="renderTable"
+          class='material'
+          [rows]="rowsTrials"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="0"
+          [columnMode]='"force"'
+          [rowHeight]="40"
+          [rowClass]="getRowClass"
+          [trackByProp]="name"
+          [dragulaName]="'bagTrial'"
+          [dragulaModel]="dataModeTrials"
+          [dragulaVScroll]="true"
+          [classSelector]=""
+          (directiveDrop)="onDrop($event,'Trials')"
+          (onRowsUpdate)='updateRows()'
+        >
+        <ngx-datatable-column name="name">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <span
+                title="Double click to edit"
+                (dblclick)="editingTrials[rowIndex+ '-name'] = true"
+                *ngIf="!editingTrials[rowIndex+ '-name']">
+                {{value}}
+              </span>
+              <input
+                autofocus
+                (blur)="updateValue($event, 'name', rowIndex,'Trials')"
+                *ngIf="editingTrials[rowIndex+ '-name']"
+                type="text"
+                [value]="value"
+              />
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="server">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span
+                  title="Double click to edit"
+                  (dblclick)="editingTrials[rowIndex+ '-server'] = true"
+                  *ngIf="!editingTrials[rowIndex+ '-server']">
+                  {{value}}
+                </span>
+                <input
+                  autofocus
+                  (blur)="updateValue($event, 'server', rowIndex,'Trials')"
+                  *ngIf="editingTrials[rowIndex+ '-server']"
+                  type="text"
+                  [value]="value"
+                />
+              </ng-template>
+            </ngx-datatable-column>
+          <ngx-datatable-column name="class">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <span
+                title="Double click to edit"
+                (dblclick)="editingTrials[rowIndex + '-class'] = true"
+                *ngIf="!editingTrials[rowIndex + '-class']">
+                {{value}}
+              </span>
+              <select
+                *ngIf="editingTrials[rowIndex + '-class']"
+                (blur)="editingTrials[rowIndex + '-class'] = false"
+                (change)="updateValue($event, 'class', rowIndex,'Trials')"
+                [value]="value">
+                <option value="Death Knight">Death Knight</option>
+                <option value="Demon Hunter">Demon Hunter</option>
+                <option value="Druid">Druid</option>
+                <option value="Hunter">Hunter</option>
+                <option value="Mage">Mage</option>
+                <option value="Monk">Monk</option>
+                <option value="Paladin">Paladin</option>
+                <option value="Priest">Priest</option>
+                <option value="Rogue">Rogue</option>
+                <option value="Shaman">Shaman</option>
+                <option value="Warlock">Warlock</option>
+                <option value="Warrior">Warrior</option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="spec">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <span
+                  title="Double click to edit"
+                  (dblclick)="editingTrials[rowIndex + '-spec'] = true"
+                  *ngIf="!editingTrials[rowIndex + '-spec']">
+                  {{value}}
+                </span>
+                <select
+                  *ngIf="editingTrials[rowIndex + '-spec']"
+                  (change)="updateValue($event, 'spec', rowIndex,'Trials')"
+                  [value]="value">
+                  <option *ngFor="let i of specsTrials[rowIndex]">{{i.name}}</option>
+                </select>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+                    <img src={{iconsTrials[rowIndex]}} width="20px" height="20px">
+                    <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex,'Trials')" title="Delete player">
+                </ng-template>
+              </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+      <div style="clear: both;"></div>
+      <div class="buttonsContainerRoster">
+          <button mat-raised-button color="primary" class="addButtonRoster" (click)="addMember($event,'Trials')" mat-raised-button>Add member</button>
+          <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'Trials')" mat-raised-button>Save roster</button>
+      </div>
+      <div style="clear: both;"></div>
+    </div>
   </div>
-  <div class="buttonsContainer">
-      <button mat-raised-button color="primary" class="addButton" (click)="addMember($event)" mat-raised-button>Add member</button>
-      <button mat-raised-button color="primary" class="saveButton" (click)="saveRoster($event)" mat-raised-button>Save roster</button>
-  </div>
-</div>
-
-
-
-
-
-    
-
-
-
-
-
+  
+  
+  
+  
+  
+      
+  
+  
+  
+  
+  
+  

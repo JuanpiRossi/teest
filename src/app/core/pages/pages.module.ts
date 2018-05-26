@@ -4,7 +4,7 @@ import { PagesComponent } from './pages.component';
 import { HomeComponent } from './home/home.component';
 import { ParsesComponent } from './parses/parses.component';
 import { RouterModule } from '@angular/router';
-import { RosterComponent } from './roster/roster.component';
+import { RosterComponent,rosterModal } from './roster/roster.component';
 import { NgxDatatableModule,DatatableComponent } from '@swimlane/ngx-datatable';
 import { DragulaExtendedDirective } from '../../directives/dragula/dragula-extended.directive';
 import { DragulaModule, DragulaService } from 'ng2-dragula';
@@ -15,6 +15,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 import { GuidesComponent } from './guides/guides.component';
 import { SpecificGuideComponent } from './specific-guide/specific-guide.component';
@@ -37,11 +38,12 @@ import { QuillEditorModule } from 'ngx-quill-editor';
     MatDialogModule,
     BrowserAnimationsModule,
     QuillEditorModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule
   ],
-  entryComponents: [ guideAdminModal ],
+  entryComponents: [ guideAdminModal,rosterModal ],
   providers:[DragulaService],
-  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent, SpecificGuideComponent, GuidesAdminComponent, SpecificGuideAdminComponent, guideAdminModal],
+  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent, SpecificGuideComponent, GuidesAdminComponent, SpecificGuideAdminComponent, guideAdminModal,rosterModal],
   exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, DragulaExtendedDirective]
 })
 export class PagesModule { }

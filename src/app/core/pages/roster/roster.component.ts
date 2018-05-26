@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,Inject } from '@angular/core';
 import { MongoService } from '../../../services/mongo.service';
 import { specList } from '../../../../constants/class.specs';
 import { roleCheck } from '../../../../constants/specs.roles';
@@ -7,6 +7,7 @@ import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
 @Component({
   selector: 'app-roster',
@@ -14,17 +15,25 @@ import 'rxjs/add/operator/catch';
   styleUrls: ['./roster.component.scss']
 })
 export class RosterComponent implements OnInit {
-  @Input() rows = [];
+  @Input() rowsRoster = [];
+  @Input() rowsTrials = [];
   columns;
-  editing = {};
-  specs = []
-  icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
+  editingRoster = {};
+  editingTrials = {};
+  specsRoster = []
+  specsTrials = []
+  iconsRoster = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
+  iconsTrials = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
   mongoData;
-  newData;
   userLevelBool;
+  
+  dataModeRoster = this.rowsRoster;
+  dataModeTrials = this.rowsTrials;
+  renderTable = true;
 
-  constructor(private mongoService:MongoService, public _userData:userData,private router: Router) {
-    this.rows=[{}];
+  constructor(private mongoService:MongoService, public _userData:userData,private router: Router,public dialog: MatDialog) {
+    this.rowsRoster=[{}];
+    this.rowsTrials=[{}];
     this.columns= [
                     { name: 'name',prop: 'name' },
                     { name: 'server',prop: 'server' },
@@ -33,9 +42,6 @@ export class RosterComponent implements OnInit {
                     { name: 'role',prop: 'role' }
                   ];        
   }
-  
-  dataModel2 = this.rows;
-  renderTable = true;
 
   ngOnInit() {
     this._userData.userLevel.subscribe(UL=>{
@@ -69,61 +75,107 @@ export class RosterComponent implements OnInit {
     if(this.userLevelBool)  {
       this.mongoService.getGuild({"guildName":"Untamed"})
         .subscribe(res => {
-          this.rows = []
+          this.rowsRoster = []
+          this.rowsTrials = []
           this.mongoData = res["data"];
           delete this.mongoData._id
           if(this.mongoData.Roster!= undefined) {
             this.mongoData.Roster.forEach(element => {
-              this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+              this.rowsRoster.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
             });
           } else  {
-            this.rows = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+            this.rowsRoster = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+          }
+          if(this.mongoData.Trials!= undefined) {
+            this.mongoData.Trials.forEach(element => {
+              this.rowsTrials.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+            });
+          } else  {
+            this.rowsTrials = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
           }
           this.updateExtras();
-          this.newData = this.rows;
         });
     }
   }
 
-  addMember(event){
-    this.rows.push({name:"",server:"",class:"Priest",spec:"Holy"})
-    this.editing[this.rows.length-1+"-name"] = true
-    this.editing[this.rows.length-1+"-server"] = true
-    this.editing[this.rows.length-1+"-class"] = true
-    this.updateExtras();
-    this.rows = [...this.rows];
-    this.newData = this.rows;
+  addMember(event,dbDict){
+    let modal = this.dialog.open(rosterModal, {data:dbDict});
+
+    modal.afterClosed()
+      .subscribe(result => {
+        if(result!=undefined) {
+          if(dbDict=="Roster")  {
+            this.rowsRoster.push(result);
+            this.updateExtras();
+            this.mongoData.Roster = this.rowsRoster
+            this.rowsRoster = [...this.rowsRoster];
+          }
+          if(dbDict=="Trials")  {
+            this.rowsTrials.push(result);
+            this.updateExtras();
+            this.mongoData.Trials = this.rowsTrials
+            this.rowsTrials = [...this.rowsTrials];
+          }
+        }
+      }
+    )
   }
 
-  saveRoster($event){
-    console.log(this.newData)
-    this.mongoData["Roster"] = this.newData;
-    console.log(this.mongoData.Roster)
-    this.mongoService.updateGuild({data:this.mongoData,query:{guildName:"Untamed"}})
+  saveRoster($event,dbDict){
+    var updateData;
+    if(dbDict=="Roster")  {
+      updateData = {"$set":{"Roster":this.mongoData.Roster}};
+    }
+    if(dbDict=="Trials")  {
+      updateData = {"$set":{"Trials":this.mongoData.Trials}};
+    }
+    this.mongoService.updateGuild({data:updateData,query:{guildName:"Untamed"}})
       .subscribe(res => {
         console.log(res)
-      })
+      }
+    )
   }
 
-  deleteRow(rowIndex){
-    this.rows.splice(rowIndex,1)
-    this.rows = [...this.rows];
+  deleteRow(rowIndex,dbDict){
+    if(dbDict=="Roster")  {
+      this.rowsRoster.splice(rowIndex,1)
+      this.mongoData.Roster = this.rowsRoster
+      this.rowsRoster = [...this.rowsRoster];
+    }
+    if(dbDict=="Trials")  {
+      this.rowsTrials.splice(rowIndex,1)
+      this.mongoData.Trials = this.rowsTrials
+      this.rowsTrials = [...this.rowsTrials];
+    }
   }
   
   updateRows(){
     console.log("updateRow");
   }
 
-  updateValue(event, cell, rowIndex){
-    if(event.target.value != ""){
-      this.editing[rowIndex + '-' + cell] = false;
-      this.rows[rowIndex][cell] = event.target.value;
-      this.rows = [...this.rows];
-      this.updateExtras();
-      if(cell=="class")
-        this.rows[rowIndex].spec = this.specs[rowIndex][0].name;
-    }
-    
+  updateValue(event, cell, rowIndex,dbDict){
+    if(event.target.value != "")  {
+      if(dbDict=="Roster")  {
+        this.editingRoster[rowIndex + '-' + cell] = false;
+        this.rowsRoster[rowIndex][cell] = event.target.value;
+        this.rowsRoster = [...this.rowsRoster];
+        this.updateExtras();
+        if(cell=="class") {
+          this.rowsRoster[rowIndex].spec = this.specsRoster[rowIndex][0].name;
+        }
+        this.mongoData.Roster = this.rowsRoster
+      }
+      if(dbDict=="Trials")  {
+        this.editingTrials[rowIndex + '-' + cell] = false;
+        this.rowsTrials[rowIndex][cell] = event.target.value;
+        this.rowsTrials = [...this.rowsTrials];
+        this.updateExtras();
+        if(cell=="class") {
+          this.rowsTrials[rowIndex].spec = this.specsTrials[rowIndex][0].name;
+        }
+        this.mongoData.Trials = this.rowsTrials
+      }
+    }    
   }
 
   getRowClass(row) {
@@ -143,40 +195,116 @@ export class RosterComponent implements OnInit {
     }
   }
   
-  // DRAG and DROP - Virtual Scroll
-  onDrop(event){
-    // ngx-datatable recommends you force change detection
+  onDrop(event,dbDict){
     let listData = event.split("\n");
-    this.newData = [];
+    var newData = [];
     for(var i=0;i<(listData.length/5)-1;i++) {
       var saveData = {name: listData[i*5], server: listData[i*5+1], class: listData[i*5+2], spec: listData[i*5+3]};
-      this.newData.push(saveData);
-      }
+      newData.push(saveData);
+    }
+    if(dbDict=="Roster")  {
+      this.mongoData.Roster = newData;
+    }
+    if(dbDict=="Trials")  {
+      this.mongoData.Trials = newData;
+    }
   }
+
   ShowDebuger($event){
-    console.log(this.rows);
+    console.log(this.rowsRoster);
   }
 
   updateExtras(){
-    this.specs = [];
-    this.icons = [];
+    this.specsRoster = [];
+    this.specsTrials = [];
+    this.iconsRoster = [];
+    this.iconsTrials = [];
     let i=0;
-    this.rows.forEach(element => {
-      this.specs.push(specList[element.class])
+    this.rowsRoster.forEach(element => {
+      this.specsRoster.push(specList[element.class])
       if(roleCheck[element.spec] == "tank") {
         element["role"] = "tank";
-        this.icons.push("assets/tankIcon.png");
+        this.iconsRoster.push("assets/tankIcon.png");
       }
       else if(roleCheck[element.spec] == "healer")  {
         element["role"] = "healer";
-        this.icons.push("assets/healerIcon.png");
+        this.iconsRoster.push("assets/healerIcon.png");
       }
       else if(roleCheck[element.spec] == "dps") {
         element["role"] = "dps";
-        this.icons.push("assets/dpsIcon.png");
+        this.iconsRoster.push("assets/dpsIcon.png");
       }
       else
-        this.icons.push("");
+        this.iconsRoster.push("");
     });
+    this.rowsTrials.forEach(element => {
+      this.specsTrials.push(specList[element.class])
+      if(roleCheck[element.spec] == "tank") {
+        element["role"] = "tank";
+        this.iconsTrials.push("assets/tankIcon.png");
+      }
+      else if(roleCheck[element.spec] == "healer")  {
+        element["role"] = "healer";
+        this.iconsTrials.push("assets/healerIcon.png");
+      }
+      else if(roleCheck[element.spec] == "dps") {
+        element["role"] = "dps";
+        this.iconsTrials.push("assets/dpsIcon.png");
+      }
+      else
+        this.iconsTrials.push("");
+    });
+  }
+}
+
+
+
+@Component({
+  selector: 'app-roster',
+  templateUrl: './roster.modal.html',
+  styleUrls: ['./roster.component.scss']
+})
+export class rosterModal {
+  outData = {name:"",server:"",class:"",spec:""}
+  serverError = false;
+  modalEmpty = false;
+
+  specListSave = specList;
+
+  constructor(
+    public dialogRef: MatDialogRef<rosterModal>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private mongoService:MongoService) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onInput(event,tag)  {
+    this.modalEmpty = false;
+    if(tag == "name") {
+      this.outData.name = event.target["value"];
+    }
+    if(tag == "server") {
+      this.outData.server = event.target["value"];
+      if(/^([a-zA-Z0-9]*)$/i.test(this.outData.server))  {
+        this.serverError = false;
+      } else  {
+        this.serverError = true;
+      }
+    }
+  }
+
+  addPlayerButton(event)  {
+    console.log(this.outData)
+    if(this.outData.name!="" && this.outData.server!="" && this.outData.class!="" && this.outData.spec!="") {
+      this.dialogRef.close(this.outData);
+    } else  {
+      this.modalEmpty = true;
+    }
+  }
+
+  quitRosterModal(event)  {
+    this.dialogRef.close();
   }
 }

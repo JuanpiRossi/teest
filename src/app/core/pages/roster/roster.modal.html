@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>New player</h1>
+<div mat-dialog-content class="modalWindowRoster">
+  <mat-form-field class="modalInputRoster" (input)="onInput($event,'name')">
+    <input matInput placeholder="Name" value="">
+  </mat-form-field>
+  <mat-form-field class="modalInputRoster" (input)="onInput($event,'server')">
+    <input matInput placeholder="Server" value="">
+  </mat-form-field>
+  <mat-error *ngIf="serverError" class="errorModal">
+    *Don't use special characters on server
+  </mat-error>
+  <mat-select class="modalSelectRoster" placeholder="Class" [(value)]="outData.class">
+    <mat-option value="Death Knight">Death Knight</mat-option>
+    <mat-option value="Demon Hunter">Demon Hunter</mat-option>
+    <mat-option value="Druid">Druid</mat-option>
+    <mat-option value="Hunter">Hunter</mat-option>
+    <mat-option value="Mage">Mage</mat-option>
+    <mat-option value="Monk">Monk</mat-option>
+    <mat-option value="Paladin">Paladin</mat-option>
+    <mat-option value="Priest">Priest</mat-option>
+    <mat-option value="Rogue">Rogue</mat-option>
+    <mat-option value="Shaman">Shaman</mat-option>
+    <mat-option value="Warlock">Warlock</mat-option>
+    <mat-option value="Warrior">Warrior</mat-option>
+  </mat-select>
+  <mat-select class="modalSelectRoster" placeholder="Spec" [(value)]="outData.spec">
+    <mat-option *ngFor="let spec of specListSave[outData.class]" [value]="spec.name">
+      {{spec.name}}
+    </mat-option>
+  </mat-select>
+  <mat-error *ngIf="modalEmpty" class="errorModal">
+    Cannot leave a field empty
+  </mat-error>
+  <div class="modalButtonContainerRoster">
+    <button mat-raised-button [disabled]="serverError" color="primary" class="modalButtonCreateRoster" (click)="addPlayerButton($event)">
+      Add player
+    </button>
+    <button mat-raised-button color="warn" class="modalButtonQuitRoster" (click)="quitRosterModal($event)">
+      Cancel
+    </button>
+  </div>
+</div>
+

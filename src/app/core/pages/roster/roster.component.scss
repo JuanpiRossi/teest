@@ -1,11 +1,20 @@
-.container{
+.containerRoster{
     top: 0px;
     right: 15%;
     left: 15%;
     position: absolute;
+    margin-bottom: 100px;
 }
 
-.headerTitle {
+.mainRaidersContainerRoster   {
+
+}
+
+.trialRaidersContainerRoster    {
+
+}
+
+.headerTitleRoster {
     color:#ffffff;
     position: relative;
     left: 25px;
@@ -13,7 +22,15 @@
     font-size:50px;
 }
 
-.gridContainer  {
+.subTitleRoster   {
+    color:#ffffff;
+    position: relative;
+    left: 35px;
+    top: -10px;
+    font-size:20px;
+}
+
+.gridContainerRoster  {
     right: 15%;
     left: 15%;
     bottom: 0%;
@@ -24,21 +41,21 @@
 	height: 400px;
 }
 
-.buttonsContainer  {
-    padding-top: 30px;
-    position: absolute;
-    right: 0px;
-    margin-bottom: 150px;
+.buttonsContainerRoster  {
+    position: relative;
+    float: right;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
-.addButton {
+.addButtonRoster {
     margin-right: 25px;
 }
 
-.saveButton {
+.saveButtonRoster {
 }
 
-.ngx-datatable{
+.ngx-datatable {
     background-color: #303030;
 }
 
@@ -106,8 +123,31 @@
     font-family: cursive;
 }
 
+.modalWindowRoster  {
+    width: 300px;
+}
 
+.modalInputRoster {
+    width: 100%;
+}
 
+.modalSelectRoster  {
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
 
+.modalButtonContainerRoster   {
+    margin-top: 15px;
+}
 
+.modalButtonCreateRoster    {
+    width: 120px;
+    margin-right: 10px;
+    float: right;
+}
+
+.modalButtonQuitRoster    {
+    float: left;
+}
 
