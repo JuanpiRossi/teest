@@ -23,6 +23,9 @@ import { GuidesAdminComponent,guideAdminModal } from './guides-admin/guides-admi
 import { SpecificGuideAdminComponent } from './specific-guide-admin/specific-guide-admin.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillEditorModule } from 'ngx-quill-editor';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 
 
@@ -39,7 +42,9 @@ import { QuillEditorModule } from 'ngx-quill-editor';
     BrowserAnimationsModule,
     QuillEditorModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    SimpleNotificationsModule.forRoot(),
+    MatProgressSpinnerModule
   ],
   entryComponents: [ guideAdminModal,rosterModal ],
   providers:[DragulaService],

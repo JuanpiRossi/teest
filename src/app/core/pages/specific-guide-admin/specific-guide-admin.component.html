@@ -1,93 +1,92 @@
 <!-- index.html -->
 
-<div class="specificAdminCnontainer">
-    <div class="headerTitle">
-        {{bossName}} - Editor
-    </div>
-    <mat-radio-group class="radioButtonsContainer" [(ngModel)]="roleSelect" (change)="radioChange($event)">
-            <mat-radio-button color="primary" class="radio-button" *ngFor="let rol of role" [value]="rol">
-              {{rol}}
-            </mat-radio-button>
-    </mat-radio-group>
-    <div class="htmlEditorContainer" *ngIf="roleSelect=='all' || roleSelect=='melee dps'">
-      <div class="roleTitle">
+<div class="specificAdminCnontainerSGuideAdmin">
+  <div class="headerTitleSGuideAdmin">
+      {{bossName}} - Editor
+  </div>
+  <mat-radio-group autofocus class="radioButtonsContainerSGuideAdmin" [(ngModel)]="roleSelect" (change)="radioChange($event)">
+          <mat-radio-button color="primary" class="radio-buttonSGuideAdmin" *ngFor="let rol of role" [value]="rol">
+            {{rol}}
+          </mat-radio-button>
+  </mat-radio-group>
+  <mat-spinner class="loadingSpinnerSGuideAdmin" *ngIf="!loaded"></mat-spinner>
+  <div class="guidesContainerSGuideAdmin" *ngIf="loaded">
+    <div class="htmlEditorContainerSGuideAdmin" *ngIf="roleSelect=='all' || roleSelect=='melee dps'">
+      <div class="roleTitleSGuideAdmin">
         Melee dps
       </div>
       <quill-editor 
         [(ngModel)]="editorContent['melee']"
         [options]="editorOptions"
         (blur)="onEditorBlured('melee',$event)"
-        (focus)="onEditorFocused('melee',$event)"
         (ready)="onEditorCreated('melee',$event)"
         (change)="onContentChanged('melee',$event)">
       </quill-editor>
       <div style="clear: both;"></div>
-      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSave" (click)="saveRoleGuide('melee',$event)">
+      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSaveSGuideAdmin" (click)="saveRoleGuide('melee',$event)">
           Save melee
       </button>
       <div style="clear: both;"></div>
     </div>
-    <div class="htmlEditorContainer" *ngIf="roleSelect=='all' || roleSelect=='range dps'">
-      <div class="roleTitle">
+    <div class="htmlEditorContainerSGuideAdmin" *ngIf="roleSelect=='all' || roleSelect=='range dps'">
+      <div class="roleTitleSGuideAdmin">
         Range dps
       </div>
       <quill-editor 
         [(ngModel)]="editorContent['range']"
         [options]="editorOptions"
         (blur)="onEditorBlured('range',$event)"
-        (focus)="onEditorFocused('range',$event)"
         (ready)="onEditorCreated('range',$event)"
         (change)="onContentChanged('range',$event)">
       </quill-editor>
       <div style="clear: both;"></div>
-      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSave" (click)="saveRoleGuide('range',$event)">
+      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSaveSGuideAdmin" (click)="saveRoleGuide('range',$event)">
           Save range
       </button>
       <div style="clear: both;"></div>
     </div>
-    <div class="htmlEditorContainer" *ngIf="roleSelect=='all' || roleSelect=='healer'">
-      <div class="roleTitle">
+    <div class="htmlEditorContainerSGuideAdmin" *ngIf="roleSelect=='all' || roleSelect=='healer'">
+      <div class="roleTitleSGuideAdmin">
         Healer
       </div>
       <quill-editor 
         [(ngModel)]="editorContent['healer']"
         [options]="editorOptions"
         (blur)="onEditorBlured('healer',$event)"
-        (focus)="onEditorFocused('healer',$event)"
         (ready)="onEditorCreated('healer',$event)"
         (change)="onContentChanged('healer',$event)">
       </quill-editor>
       <div style="clear: both;"></div>
-      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSave" (click)="saveRoleGuide('healer',$event)">
+      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSaveSGuideAdmin" (click)="saveRoleGuide('healer',$event)">
           Save healer
       </button>
       <div style="clear: both;"></div>
     </div>
-    <div class="htmlEditorContainer" *ngIf="roleSelect=='all' || roleSelect=='tank'">
-      <div class="roleTitle">
+    <div class="htmlEditorContainerSGuideAdmin" *ngIf="roleSelect=='all' || roleSelect=='tank'">
+      <div class="roleTitleSGuideAdmin">
         Tank
       </div>
       <quill-editor 
         [(ngModel)]="editorContent['tank']"
         [options]="editorOptions"
         (blur)="onEditorBlured('tank',$event)"
-        (focus)="onEditorFocused('tank',$event)"
         (ready)="onEditorCreated('tank',$event)"
         (change)="onContentChanged('tank',$event)">
       </quill-editor>
       <div style="clear: both;"></div>
-      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSave" (click)="saveRoleGuide('tank',$event)">
+      <button mat-raised-button color="primary" class="specificGuideAdminRoleButtonSaveSGuideAdmin" (click)="saveRoleGuide('tank',$event)">
           Save tank
       </button>
       <div style="clear: both;"></div>
     </div>
     <div style="clear: both;"></div>
-    <button mat-raised-button color="warn" class="specificGuideAdminButtonDelete" (click)="deleteGuide($event)">
+    <button mat-raised-button color="warn" class="specificGuideAdminButtonDeleteSGuideAdmin" (click)="deleteGuide($event)">
         Delete guide
     </button>
     <div style="clear: both;"></div>
-    <button mat-raised-button color="primary" class="specificGuideAdminButtonSave" (click)="saveGuide($event)">
+    <button mat-raised-button color="primary" class="specificGuideAdminButtonSaveSGuideAdmin" (click)="saveGuide($event)">
         Save guide
     </button>
     <div style="clear: both;"></div>
+  </div>
 </div>

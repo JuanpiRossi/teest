@@ -1,4 +1,4 @@
-.container{
+.containerSGuide{
     top: 0px;
     right: 15%;
     left: 15%;
@@ -6,7 +6,7 @@
     position: absolute;
 }
 
-.headerTitle {
+.headerTitleSGuide {
     color:#ffffff;
     position: relative;
     left: 25px;
@@ -14,7 +14,7 @@
     font-size:50px;
 }
 
-.comboContainer {
+.comboContainerSGuide {
     position: relative;
     float: right;
     right: 10%;
@@ -22,18 +22,18 @@
     color:#fff;
 }
 
-.combo  {
+.comboSGuide {
 
 }
 
-.guidesContainer{
+.guidesContainerSGuide{
 }
 
-.guideSection   {
+.guideSectionSGuide   {
     
 }
 
-.guidesRoleTitle    {
+.guidesRoleTitleSGuide    {
     color:#ffffff;
     position: relative;
     font-size:25px;
@@ -41,6 +41,13 @@
     margin-top: 50px;
 }
 
-.guidePreview   {
-    background-color: #7f7f7f;
+.guidePreviewSGuide   {
+    background-color: #acacac;
+}
+
+.loadingSpinnerSGuide   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }

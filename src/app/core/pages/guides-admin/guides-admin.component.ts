@@ -22,6 +22,7 @@ export class GuidesAdminComponent implements OnInit {
   htmlOut = "";
   role = ["any","melee dps","range dps","healer","tank"];
   roleSelect = "any"
+  loaded = false;
 
   constructor(private wowApi:wowApiService, public sanitizer: DomSanitizer,public _userData:userData,private router: Router, private mongoService:MongoService,public dialog: MatDialog) { }
 
@@ -55,15 +56,17 @@ export class GuidesAdminComponent implements OnInit {
   )
 
     this.mongoService.getGuidesReduced()
-    .subscribe(response =>  {
-      this.htmlOut = ""
-      response["data"].forEach(guide =>{
-        delete guide["_id"];
-        if(guide["show"]) {
-          this.htmlOut = this.htmlOut+'<div class="guideComponentContainerAdmin"><div class="guideComponentAdmin" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImageAdmin" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitleAdmin">'+guide.name+'</div></div></div>';
-        }
-      })
-    })
+      .subscribe(response =>  {
+        this.htmlOut = ""
+        response["data"].forEach(guide =>{
+          delete guide["_id"];
+          if(guide["show"]) {
+            this.htmlOut = this.htmlOut+'<div class="guideComponentContainerAdmin"><div class="guideComponentAdmin" onclick="window.location=\'/#/guideAdmin?boss='+guide.id+'\';"><img class="guideComponentImageAdmin" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitleAdmin">'+guide.name+'</div></div></div>';
+          }
+        })
+        this.loaded = true;
+      }
+    )
   }
 
   newGuide($event)  {

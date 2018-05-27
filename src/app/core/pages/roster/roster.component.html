@@ -2,7 +2,8 @@
     <div class="headerTitleRoster">
         Roster
     </div>
-    <div class="mainRaidersContainerRoster">
+    <mat-spinner class="loadingSpinnerRoster" *ngIf="!loaded"></mat-spinner>
+    <div *ngIf="loaded" class="mainRaidersContainerRoster">
       <div class="subTitleRoster">
           Main raiders
       </div>
@@ -107,18 +108,19 @@
                 <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
                     <img src={{iconsRoster[rowIndex]}} width="20px" height="20px">
                     <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex,'Roster')" title="Delete player">
+                    <img src="assets/red_arrow_down.png" width="15px" height="15px" (click)="lowgradePlayer(rowIndex)" title="Move to trial">
                 </ng-template>
               </ngx-datatable-column>
         </ngx-datatable>
       </div>
       <div style="clear: both;"></div>
       <div class="buttonsContainerRoster">
-          <button mat-raised-button color="primary" class="addButtonRoster" (click)="addMember($event,'Roster')" mat-raised-button>Add member</button>
-          <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'Roster')" mat-raised-button>Save roster</button>
+          <button mat-raised-button color="primary" class="addButtonRoster" (click)="addMember($event,'Roster')" mat-raised-button>Add main raider</button>
+          <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'Roster')" mat-raised-button>Save main raiders</button>
       </div>
       <div style="clear: both;"></div>
     </div>
-    <div class="trialRaidersContainerRoster">
+    <div *ngIf="loaded" class="trialRaidersContainerRoster">
       <div class="subTitleRoster">
           Trials
       </div>
@@ -223,18 +225,23 @@
                 <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
                     <img src={{iconsTrials[rowIndex]}} width="20px" height="20px">
                     <img src="assets/trashIcon.png" width="35px" height="20px" (click)="deleteRow(rowIndex,'Trials')" title="Delete player">
+                    <img src="assets/green_arrow_up.png" width="15px" height="15px" (click)="upgradePlayer(rowIndex)" title="Move to main raider">
                 </ng-template>
               </ngx-datatable-column>
         </ngx-datatable>
       </div>
       <div style="clear: both;"></div>
       <div class="buttonsContainerRoster">
-          <button mat-raised-button color="primary" class="addButtonRoster" (click)="addMember($event,'Trials')" mat-raised-button>Add member</button>
-          <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'Trials')" mat-raised-button>Save roster</button>
+          <button mat-raised-button color="primary" class="addButtonRoster" (click)="addMember($event,'Trials')" mat-raised-button>Add trial</button>
+          <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'Trials')" mat-raised-button>Save trials</button>
       </div>
       <div style="clear: both;"></div>
     </div>
+    <div *ngIf="loaded" class="buttonsContainerRoster">
+        <button mat-raised-button color="primary" class="saveButtonRoster" (click)="saveRoster($event,'All')" mat-raised-button>Save all</button>
+    </div>
   </div>
+  <simple-notifications [options]="options"></simple-notifications>
   
   
   

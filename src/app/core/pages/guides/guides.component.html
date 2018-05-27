@@ -1,10 +1,10 @@
-<div class="container" *ngIf="userLevelBool">
-    <div class="headerTitle">
+<div class="containerGuides" *ngIf="userLevelBool">
+    <div class="headerTitleGuides">
         Guides
     </div>
-    <div class="comboContainer">
+    <div class="comboContainerGuides">
         Select role:
-        <div class="combo inline">
+        <div class="comboGuides inline">
             <select
             (change)="updateValue($event)">
             <option *ngFor="let i of role">{{i}}</option>
@@ -12,9 +12,10 @@
         </div>
     </div>
     <div style="clear: both;"></div>
-    <div class="guidesContainer">
-        <div class="guideGrids" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
+    <div class="guidesContainerGuides">
+        <div class="guideGridsGuides" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
         </div>
     </div>
     <div style="clear: both;"></div>
+    <mat-spinner class="loadingSpinnerGuides" *ngIf="!loaded"></mat-spinner>
 </div>

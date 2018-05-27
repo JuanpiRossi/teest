@@ -76,47 +76,54 @@
     display: inline;
 }
 
-.modalInput {
+.modalInputAdmin {
     width: 100%;
 }
 
-.modalWindow    {
+.modalWindowAdmin    {
     width: 400px;
 }
 
-.modalLoading   {
+.modalLoadingAdmin   {
     width:30px;
     height:30px;
 }
 
-.errorModal {
+.errorModalAdmin {
     position: relative;
     top: -15px;
     font-size: 12px;
 }
 
-.modalButtonContainer   {
+.modalButtonContainerAdmin   {
     margin-top: 15px;
 }
 
-.modalButtonCreate    {
+.modalButtonCreateAdmin    {
     width: 120px;
     margin-right: 10px;
     float: right;
 }
 
-.modalButtonQuit    {
+.modalButtonQuitAdmin    {
     float: left;
 }
 
-.modalButtonImage   {
+.modalButtonImageAdmin   {
     float: right;
     margin-right: 15px;
 }
 
-.modalImgComponent  {
+.modalImgComponentAdmin {
     min-width:"128px";
     min-height:"64px";
     max-width:"128px";
     max-height:"64px";
+}
+
+.loadingSpinnerAdmin   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }

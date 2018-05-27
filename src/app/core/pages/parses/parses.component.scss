@@ -1,6 +1,6 @@
 
 
-.container{
+.containerParses{
     top: 0px;
     right: 15%;
     left: 15%;
@@ -8,7 +8,7 @@
     position: absolute;
 }
 
-.headerTitle {
+.headerTitleParses {
     color:#ffffff;
     position: relative;
     left: 25px;
@@ -16,28 +16,28 @@
     font-size:50px;
 }
 
-.loadingDiv {
+.loadingDivParses {
     color:#ffffff;
     position: relative;
     margin-left: 75px;
     bottom: 10px;
 }
 
-.radioButtonsContainer {
-    position: fixed;
-    right: 15%;
-    top: 135px;
+.radioButtonsContainerParses {
+    position: relative;
+    top: -10px;
+    float: right;
 }
 
-.radio-button   {
+.radio-buttonParses   {
     margin-left: 30px;
     color:#fff;
 }
 
-.mainTableContainer {
+.mainTableContainerParses {
 }
 
-.tableContainer {
+.tableContainerParses {
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -161,4 +161,11 @@
 ::ng-deep .row-class-warrior  {
     background-color: #C79C6E;
     font-family: cursive;
+}
+
+.loadingSpinnerParses   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }

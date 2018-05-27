@@ -1,50 +1,111 @@
-<div class="container" *ngIf="userLevelBool">
-    <div class="gridContainer">
-      <ngx-datatable
-        *ngIf="renderTable"
-        class='material'
-        [rows]="rows"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="0"
-        [columnMode]='"force"'
-        [rowHeight]="40"
-        [rowClass]="getRowClass"
-      >
-      <ngx-datatable-column name="name">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-            <span>
-              {{value}}
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="server">
+<div class="containerRosterM" *ngIf="userLevelBool">
+    <div class="headerTitleRosterM">
+        Roster
+    </div>
+    <mat-spinner class="loadingSpinnerRosterM" *ngIf="!loaded"></mat-spinner>
+    <div *ngIf="loaded" class="mainRaidersContainerRosterM">
+      <div class="subTitleRosterM">
+          Main raiders
+      </div>
+      <div class="gridContainerRosterM">
+        <ngx-datatable
+          *ngIf="renderTable"
+          class='material'
+          [rows]="rowsRoster"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="0"
+          [columnMode]='"force"'
+          [rowHeight]="40"
+          [rowClass]="getRowClass"
+        >
+        <ngx-datatable-column name="name">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
               <span>
                 {{value}}
               </span>
             </ng-template>
           </ngx-datatable-column>
-        <ngx-datatable-column name="class">
-          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-             <span>
-              {{value}}
-            </span>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="spec">
+          <ngx-datatable-column name="server">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span>
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          <ngx-datatable-column name="class">
             <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
-               <span>
+              <span>
                 {{value}}
               </span>
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
-              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
-                  <img src={{icons[rowIndex]}} width="20px" height="20px">
+          <ngx-datatable-column name="spec">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <span>
+                  {{value}}
+                </span>
               </ng-template>
             </ngx-datatable-column>
-      </ngx-datatable>
+            <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+                    <img src={{iconsRoster[rowIndex]}} width="20px" height="20px">
+                </ng-template>
+              </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </div>
+    <div *ngIf="loaded" class="trialsContainerRosterM">
+      <div class="subTitleRosterM">
+          Trials
+      </div>
+      <div class="gridContainerRosterM">
+        <ngx-datatable
+          *ngIf="renderTable"
+          class='material'
+          [rows]="rowsTrials"
+          [columnMode]="'force'"
+          [headerHeight]="50"
+          [footerHeight]="0"
+          [columnMode]='"force"'
+          [rowHeight]="40"
+          [rowClass]="getRowClass"
+        >
+        <ngx-datatable-column name="name">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              <span>
+                {{value}}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="server">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                <span>
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          <ngx-datatable-column name="class">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <span>
+                {{value}}
+              </span>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="spec">
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <span>
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
+                <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex">
+                    <img src={{iconsTrials[rowIndex]}} width="20px" height="20px">
+                </ng-template>
+              </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
     </div>
   </div>
   

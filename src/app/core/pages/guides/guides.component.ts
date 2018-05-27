@@ -22,6 +22,7 @@ export class GuidesComponent implements OnInit {
   role = ["any","melee dps","range dps","healer","tank"];
   roleSelect = "any"
   responseSave;
+  loaded = false;
 
   constructor(private wowApi:wowApiService, public sanitizer: DomSanitizer,public _userData:userData,private router: Router, private mongoService:MongoService) { }
 
@@ -55,16 +56,18 @@ export class GuidesComponent implements OnInit {
   )
 
     this.mongoService.getGuidesReduced()
-    .subscribe(response =>  {
-      this.responseSave = response;
-      this.htmlOut = ""
-      response["data"].forEach(guide =>{
-        delete guide["_id"];
-        if(guide["show"]) {
-          this.htmlOut = this.htmlOut+'<div class="guideComponentContainer"><div class="guideComponent" onclick="window.location=\'/#/guide?boss='+guide.id+'&role='+this.roleSelect+'\';"><img class="guideComponentImage" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitle">'+guide.name+'</div></div></div>';
-        }
-      })
-    })
+      .subscribe(response =>  {
+        this.responseSave = response;
+        this.htmlOut = ""
+        response["data"].forEach(guide =>{
+          delete guide["_id"];
+          if(guide["show"]) {
+            this.htmlOut = this.htmlOut+'<div class="guideComponentContainerGuides"><div class="guideComponentGuides" onclick="window.location=\'/#/guide?boss='+guide.id+'&role='+this.roleSelect+'\';"><img class="guideComponentImageGuides" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitleGuides">'+guide.name+'</div></div></div>';
+          }
+        })
+        this.loaded = true;
+      }
+    )
   }
 
   updateValue($event) {
@@ -75,7 +78,7 @@ export class GuidesComponent implements OnInit {
     this.responseSave["data"].forEach(guide =>{
       delete guide["_id"];
       if(guide["show"]) {
-        this.htmlOut = this.htmlOut+'<div class="guideComponentContainer"><div class="guideComponent" onclick="window.location=\'/#/guide?boss='+guide.id+'&role='+this.roleSelect+'\';"><img class="guideComponentImage" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitle">'+guide.name+'</div></div></div>';
+        this.htmlOut = this.htmlOut+'<div class="guideComponentContainerGuides"><div class="guideComponentGuides" onclick="window.location=\'/#/guide?boss='+guide.id+'&role='+this.roleSelect+'\';"><img class="guideComponentImageGuides" src='+guide.img+' width="30px" height="30px"><div class="guideComponentTitleGuides">'+guide.name+'</div></div></div>';
       }
     })
   }

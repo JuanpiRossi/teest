@@ -3,6 +3,8 @@ import { userData } from '../../../services/userData.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import { MongoService } from '../../../services/mongo.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
+import { timeout } from 'rxjs/operators';
 
 @Component({
   selector: 'app-specific-guide-admin',
@@ -12,7 +14,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class SpecificGuideAdminComponent implements OnInit {
 
-  public editor;
+  public editor = {};
   public editorContent = {melee:"",range:"",tank:"",healer:""}
   public editorOptions = {
     placeholder: "insert content...",
@@ -22,6 +24,7 @@ export class SpecificGuideAdminComponent implements OnInit {
   role = ["all","melee dps","range dps","healer","tank"];
   @Input() bossName;
   bossId;
+  userLevelBool;
   @Input() res = {};
   @Input() roleSelect = "all";
   loaded = false;
@@ -33,28 +36,56 @@ export class SpecificGuideAdminComponent implements OnInit {
     .subscribe(response =>  {
       this.bossName = response["data"]["name"];
       this.res = response;
+      this.editorContent.range = response["data"]["html-range"];
+      this.editorContent.tank = response["data"]["html-tank"];
+      this.editorContent.healer = response["data"]["html-healer"];
+      this.editorContent.melee = response["data"]["html-melee"];
       this.loaded = true;
-      this.editorContent = {melee:response["data"]["html-melee"],range:response["data"]["html-range"],tank:response["data"]["html-tank"],healer:response["data"]["html-healer"]}
+      setTimeout(() => {
+        this.editor["melee"].enable();
+        this.editor["range"].enable();
+        this.editor["tank"].enable();
+        this.editor["healer"].enable();
+      }, 100);
     })
   }
 
   ngOnInit() {
     this._userData.userLevel.subscribe(UL=>{
       const componentRoute = "guidesAdmin";
-      if(UL!=3) {
+      this.userLevelBool=false;
+      if(UL==3) {
+        officerPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      } else if(UL==2)  {
+        memberPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      } else {
+        noMemberPageList.forEach(element => {
+          if(element.route==componentRoute) {
+            this.userLevelBool=true;
+          }
+        });
+      }
+      if(!this.userLevelBool)  {
         this.router.navigate(["/unauthorized"]);
       }
-    })
+    }
+  )
   }
 
   onEditorBlured(role,quill) {
   }
 
-  onEditorFocused(role,quill) {
-  }
-
   onEditorCreated(role,quill) {
-    this.editor = quill;
+    this.editor[role] = quill;
+    this.editor[role].disable();
   }
 
   onContentChanged(role,{ quill, html, text }) {

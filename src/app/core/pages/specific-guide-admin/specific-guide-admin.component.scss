@@ -1,4 +1,4 @@
-.specificAdminCnontainer{
+.specificAdminCnontainerSGuideAdmin{
     top: 0px;
     right: 15%;
     left: 15%;
@@ -6,7 +6,7 @@
     position: absolute;
 }
 
-.headerTitle {
+.headerTitleSGuideAdmin {
     color:#ffffff;
     position: relative;
     left: 25px;
@@ -14,7 +14,7 @@
     font-size:50px;
 }
 
-.htmlEditorContainer    {
+.htmlEditorContainerSGuideAdmin    {
     margin-bottom: 50px;
 }
 
@@ -22,46 +22,53 @@
     .dataplaceholder {
         color: #ffffff;
     }
-    background-color: #7f7f7f;
+    background-color: #acacac;
 }
 
 .ql-toolbar {
     background-color: #f0f0f0;
 }
 
-.radioButtonsContainer {
+.radioButtonsContainerSGuideAdmin {
     position: relative;
     float: right;
     top: -5px;
 }
 
-.radio-button   {
+.radio-buttonSGuideAdmin   {
     margin-left: 30px;
     color:#fff;
 }
 
-.roleTitle {
+.roleTitleSGuideAdmin {
     color:#ffffff;
     position: relative;
     font-size:25px;
     margin: 20px;
 }
 
-.specificGuideAdminRoleButtonSave   {
+.specificGuideAdminRoleButtonSaveSGuideAdmin   {
     position: relative;
     float: right;
     top: 10px;
     right: 25px;
 }
 
-.specificGuideAdminButtonDelete {
+.specificGuideAdminButtonDeleteSGuideAdmin {
     position: relative;
     float: left;
     top: 50px;
 }
 
-.specificGuideAdminButtonSave   {
+.specificGuideAdminButtonSaveSGuideAdmin   {
     position: relative;
     float: right;
     top: 14px;
+}
+
+.loadingSpinnerSGuideAdmin   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }

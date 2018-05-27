@@ -1,10 +1,10 @@
-<div class="container">
-    <div class="headerTitle">
+<div class="containerSGuide">
+    <div class="headerTitleSGuide">
         {{bossName}}
     </div>
-    <div class="comboContainer">
+    <div class="comboContainerSGuide">
         Select role:
-        <div class="combo inline">
+        <div class="comboSGuide inline">
             <select
             [(ngModel)]="roleSelect"
             (change)="updateValue($event)">
@@ -12,12 +12,13 @@
             </select>
         </div>
     </div>
-    <div class="guidesContainer" *ngIf="loaded">
-        <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='melee dps'">
-            <div class="guidesRoleTitle">
+    <mat-spinner class="loadingSpinnerSGuide" *ngIf="!loaded"></mat-spinner>
+    <div class="guidesContainerSGuide" *ngIf="loaded">
+        <div class="guideSectionSGuide" *ngIf="roleSelect=='any' || roleSelect=='melee dps'">
+            <div class="guidesRoleTitleSGuide">
                 Melee dps
             </div>
-            <div class="guidePreview">
+            <div class="guidePreviewSGuide">
                 <quill-editor
                     *ngIf="roleSelect=='any' || roleSelect=='melee dps'" 
                     [(ngModel)]="res['data']['html-melee']"
@@ -25,11 +26,11 @@
                 </quill-editor>
             </div>
         </div>
-        <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='range dps'">
-            <div class="guidesRoleTitle">
+        <div class="guideSectionSGuide" *ngIf="roleSelect=='any' || roleSelect=='range dps'">
+            <div class="guidesRoleTitleSGuide">
                 Range dps
             </div>
-            <div class="guidePreview">
+            <div class="guidePreviewSGuide">
                 <quill-editor
                     *ngIf="roleSelect=='any' || roleSelect=='range dps'"
                     [(ngModel)]="res['data']['html-range']"
@@ -37,11 +38,11 @@
                 </quill-editor>
             </div>
         </div>
-        <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='healer'">
-            <div class="guidesRoleTitle">
+        <div class="guideSectionSGuide" *ngIf="roleSelect=='any' || roleSelect=='healer'">
+            <div class="guidesRoleTitleSGuide">
                 Healer
             </div>
-            <div class="guidePreview">
+            <div class="guidePreviewSGuide">
                 <quill-editor
                     *ngIf="roleSelect=='any' || roleSelect=='healer'"
                     [(ngModel)]="res['data']['html-healer']"
@@ -49,11 +50,11 @@
                 </quill-editor>
             </div>
         </div>
-        <div class="guideSection" *ngIf="roleSelect=='any' || roleSelect=='tank'">
-            <div class="guidesRoleTitle">
+        <div class="guideSectionSGuide" *ngIf="roleSelect=='any' || roleSelect=='tank'">
+            <div class="guidesRoleTitleSGuide">
                 Tank
             </div>
-            <div class="guidePreview">
+            <div class="guidePreviewSGuide">
                 <quill-editor
                     *ngIf="roleSelect=='any' || roleSelect=='tank'"
                     [(ngModel)]="res['data']['html-tank']"

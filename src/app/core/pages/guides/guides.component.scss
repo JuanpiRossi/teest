@@ -1,4 +1,4 @@
-.container{
+.containerGuides{
     top: 0px;
     right: 15%;
     left: 15%;
@@ -6,7 +6,7 @@
     position: absolute;
 }
 
-.headerTitle {
+.headerTitleGuides {
     color:#ffffff;
     position: relative;
     left: 25px;
@@ -14,7 +14,7 @@
     font-size:50px;
 }
 
-.comboContainer {
+.comboContainerGuides {
     position: relative;
     float: right;
     right: 10%;
@@ -22,21 +22,21 @@
     color:#fff;
 }
 
-.combo  {
+.comboGuides  {
 
 }
 
-.guidesContainer{
+.guidesContainerGuides{
 }
 
-.guideGrids  {
+.guideGridsGuides  {
     bottom: 0%;
     position: relative;
     display: flex;
     flex-wrap: wrap;
 }
 
-.guideComponentContainer  {
+.guideComponentContainerGuides  {
     padding: 1%;
     height: 100px;
     min-width: 22%;
@@ -45,7 +45,7 @@
 }
 
                                 
-.guideComponent  {
+.guideComponentGuides  {
     border-style: solid;
     border-radius: 25px;
     border-color: #757575;
@@ -56,12 +56,12 @@
     position: relative;
 }
 
-.guideComponent:hover  {
+.guideComponentGuides:hover  {
     border-color: #105010;
     background-color: #45a045;
 }
 
-.guideComponentTitle  {
+.guideComponentTitleGuides  {
     font-family: "Verdana", Times, serif;
     font-weight: bold;
     font-size: 15px;
@@ -70,7 +70,7 @@
     position: relative;
 }
 
-.guideComponentImage  {
+.guideComponentImageGuides  {
     width: 128px;
     height: 64px;
     padding-top: 15px;
@@ -81,4 +81,11 @@
 
 .inline {
     display: inline;
+}
+
+.loadingSpinnerGuides   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
 }

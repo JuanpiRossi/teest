@@ -1,16 +1,19 @@
-<div class="container" *ngIf="userLevelBool">
-    <div class="headerTitle">
+<div class="containerParses" *ngIf="userLevelBool">
+    <div class="headerTitleParses">
         Parses
     </div>
-    <div class="loadingDiv" *ngIf="!loaded">
+    <div class="loadingDivParses" *ngIf="!loaded && loadedMongo">
         Loading data! ({{loadedCounter}}/{{totalToLoad}})
     </div>
-    <mat-radio-group class="radioButtonsContainer" *ngIf="loaded" [(ngModel)]="tableTypesSelection" (change)="radioChange($event)">
-            <mat-radio-button color="primary" class="radio-button" *ngFor="let tableType of tableTypes" [value]="tableType">
-              {{tableType}}
-            </mat-radio-button>
+    <mat-spinner class="loadingSpinnerParses" *ngIf="!loadedMongo"></mat-spinner>
+    <div style="clear: both;"></div>
+    <mat-radio-group class="radioButtonsContainerParses" *ngIf="loaded" [(ngModel)]="tableTypesSelection" (change)="radioChange($event)">
+        <mat-radio-button color="primary" class="radio-buttonParses" *ngFor="let tableType of tableTypes" [value]="tableType">
+        {{tableType}}
+        </mat-radio-button>
     </mat-radio-group>
-    <div class="mainTableContainer">
+    <div style="clear: both;"></div>
+    <div *ngIf="loadedMongo" class="mainTableContainerParses">
         <ngx-datatable
             #myTable
             class='material expandable'
@@ -24,7 +27,7 @@
         > 
             <ngx-datatable-row-detail [rowHeight]="detailsHeight" #myDetailRow (toggle)="onDetailToggle($event)">
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-                <div class="tableContainer">
+                <div class="tableContainerParses">
                     <ngx-datatable
                         class='material'
                         [rows]='detailedRows[row.name]'
@@ -147,3 +150,4 @@
         </ngx-datatable>
     </div>
 </div>
+<simple-notifications [options]="options"></simple-notifications>

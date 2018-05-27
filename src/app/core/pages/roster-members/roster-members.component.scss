@@ -1,16 +1,33 @@
-.container{
+.containerRosterM   {
     top: 0px;
     right: 15%;
     left: 15%;
     position: absolute;
+    margin-bottom: 100px;
 }
 
-.gridContainer  {
+.gridContainerRosterM   {
     right: 15%;
     left: 15%;
     bottom: 0%;
     color: #fff;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
+}
+
+.subTitleRosterM    {
+    color:#ffffff;
+    position: relative;
+    left: 35px;
+    top: -10px;
+    font-size:20px;
+}
+
+.headerTitleRosterM {
+    color:#ffffff;
+    position: relative;
+    left: 25px;
+    top: -25px;
+    font-size:50px;
 }
 
 ::ng-deep .datatable-body{
@@ -84,6 +101,14 @@
     background-color: #C79C6E;
     font-family: cursive;
 }
+
+.loadingSpinnerRosterM   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
 
 

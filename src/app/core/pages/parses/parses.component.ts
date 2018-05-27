@@ -9,6 +9,7 @@ import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-parses',
@@ -34,10 +35,12 @@ export class ParsesComponent implements OnInit {
   playersInfo = {};
   tableTypes = ["overall parse","item level parse"];
   tableTypesSelection = "overall parse";
+  loadedMongo = false;
+  options = {position: ["top", "right"]}
 
   @ViewChild('myTable') table: any;
 
-  constructor(private mongoService:MongoService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router) { }
+  constructor(private mongoService:MongoService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router,private _service: NotificationsService) { }
 
   ngOnInit() {
     this._userData.userLevel.subscribe(UL=>{
@@ -112,6 +115,9 @@ export class ParsesComponent implements OnInit {
             this.detailsHeight = 50 + this.bosses.length * 40;
           }
         )
+        this.loadedMongo = true;
+      },error =>  {
+        this._service.error("Servers are down");
       }
     );
     }

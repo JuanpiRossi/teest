@@ -53,7 +53,7 @@ export const memberPageList =[
 
 export const noMemberPageList =[
     {
-        route:"roster",
+        route:"rosterM",
         title:"Roster",
         description:"Guild roster list"
     },
@@ -71,5 +71,10 @@ export const noMemberPageList =[
         route:"guides",
         title:"Raid guides",
         description:"Learn how to raid"
+    },
+    {
+        route:"guidesAdmin",
+        title:"Raid guides administrator",
+        description:"Modify those guides"
     }
 ];

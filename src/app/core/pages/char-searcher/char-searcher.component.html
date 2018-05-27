@@ -1,152 +1,152 @@
-<div class="container" *ngIf="userLevelBool">
-  <div class="containerSearchInfo">
-    <div class="nameContainer">
-      <p class="textInput">Name:</p>
-      <input class="nameInput" type="text" (change)="nameChange($event)" value={{charName}} (keyup.enter)="searchCharacter($event)">
-      <input tabindex="-1" class="altCodesButton" (click)="altCodes($event)" type="button" value="altCodes">
-      <p class="nameError" *ngIf="error.name.error">{{error.name.text}}</p>
+<div class="containerCharSearch" *ngIf="userLevelBool">
+  <div class="containerSearchInfoCharSearch">
+    <div class="nameContainerCharSearch">
+      <p class="textInputCharSearch">Name:</p>
+      <input class="nameInputCharSearch" type="text" (change)="nameChange($event)" value={{charName}} (keyup.enter)="searchCharacter($event)">
+      <input tabindex="-1" class="altCodesButtonCharSearch" (click)="altCodes($event)" type="button" value="altCodes">
+      <p class="nameErrorCharSearch" *ngIf="error.name.error">{{error.name.text}}</p>
     </div>
-    <div class="serverContainer">
-      <p class="textInput">Server:</p>
-      <input class="serverInput" type="text" (change)="serverChange($event)" value={{serverName}} (keyup.enter)="searchCharacter($event)">
-      <p class="serverError" *ngIf="error.server.error">{{error.server.text}}</p>
+    <div class="serverContainerCharSearch">
+      <p class="textInputCharSearch">Server:</p>
+      <input class="serverInputCharSearch" type="text" (change)="serverChange($event)" value={{serverName}} (keyup.enter)="searchCharacter($event)">
+      <p class="serverErrorCharSearch" *ngIf="error.server.error">{{error.server.text}}</p>
     </div>
-    <div class="searchButtonContainer">
-      <button color="primary" class="searchButton" (click)="searchCharacter($event)" mat-raised-button>Search</button>
+    <div class="searchButtonContainerCharSearch">
+      <button color="primary" [disabled]="loader" class="searchButtonCharSearch" (click)="searchCharacter($event)" mat-raised-button>Search</button>
     </div>
-    <div class="infoContainer">
-      <img class="loadingIcon" src="assets/loadingGif.gif" *ngIf="loader">
-      <p class="textErrorSearch" *ngIf="error.webService.error">{{error.webService.text}}</p>
+    <div class="infoContainerCharSearch">
+      <p class="textErrorSearchCharSearch" *ngIf="error.webService.error">{{error.webService.text}}</p>
     </div>
-    <div class="altCodesWindow" *ngIf="altCode">
-      <div class="specialCharKeyboard">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="á">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="à">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="â">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ä">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="å">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ª">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="æ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ç">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="œ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="é">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="è">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ê">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ë">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ý">
+    <div class="altCodesWindowCharSearch" *ngIf="altCode">
+      <div class="specialCharKeyboardCharSearch">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="á">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="à">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="â">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ä">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="å">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ª">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="æ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ç">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="œ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="é">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="è">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ê">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ë">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ý">
       </div>
-      <div class="specialCharKeyboard">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Á">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="À">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Â">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ä">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Å">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ƒ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Æ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ç">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Œ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="É">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="È">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ê">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ë">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ý">
+      <div class="specialCharKeyboardCharSearch">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Á">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="À">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Â">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ä">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Å">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ƒ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Æ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ç">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Œ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="É">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="È">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ê">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ë">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ý">
       </div>
-      <div class="specialCharKeyboard">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="í">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ì">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="î">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ï">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ñ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ó">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ò">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ô">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ö">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="º">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ú">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ù">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="û">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="ÿ">
+      <div class="specialCharKeyboardCharSearch">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="í">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ì">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="î">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ï">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ñ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ó">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ò">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ô">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ö">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="º">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ú">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ù">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="û">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="ÿ">
       </div>
-      <div class="specialCharKeyboard">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Í">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ì">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Î">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ï">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ñ">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ó">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ò">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ô">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ö">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ü">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ú">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Ù">
-        <input class="specialCharButton" (click)="specialChar($event)" type="button" value="Û">
+      <div class="specialCharKeyboardCharSearch">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Í">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ì">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Î">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ï">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ñ">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ó">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ò">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ô">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ö">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ü">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ú">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Ù">
+        <input class="specialCharButtonCharSearch" (click)="specialChar($event)" type="button" value="Û">
         <input (click)="closeAltCode($event)" type="button" value="CLOSE" style="width:75px;height: 25px;">
       </div>
     </div>
   </div>
-  <div *ngIf="searchLoad">
-    <div class="characterInfoContainer">
-      <div class="avatarImage">
+  <mat-spinner class="loadingSpinnerCharSearch" *ngIf="loader"></mat-spinner>
+  <div *ngIf="searchLoad&&!loader">
+    <div class="characterInfoContainerCharSearch">
+      <div class="avatarImageCharSearch">
         <img src={{character.avatar}} width="230px" height="116px">
-        <div class="charLvl">
+        <div class="charLvlCharSearch">
           {{character.level}}
         </div>
-        <div class="charRace">
+        <div class="charRaceCharSearch">
           {{character.race}}
         </div>
       </div>
-      <div class="characterInfoRightContainer">
-        <div class="nameServerContainer">
-          <div class="nameServer">
+      <div class="characterInfoRightContainerCharSearch">
+        <div class="nameServerContainerCharSearch">
+          <div class="nameServerCharSearch">
             {{character.name}}@{{character.realm}}
           </div>
         </div>
-        <div class="guildNameContainer">
-          <div class="guildName">
+        <div class="guildNameContainerCharSearch">
+          <div class="guildNameCharSearch">
             Guild: {{character.guild.name}}
           </div>
         </div>
-        <div class="classSpecContainer">
-            <div class="filler">
+        <div class="classSpecContainerCharSearch">
+            <div class="fillerCharSearch">
             </div>
-          <img class="classIcon" src={{character.classIcon}} width="30px" height="30px">
-          <div class="class">
+          <img class="classIconCharSearch" src={{character.classIcon}} width="30px" height="30px">
+          <div class="classCharSearch">
             {{character.class}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
-          <img class="specIcon" src={{character.specIcon}} width="30px" height="30px">
-          <div class="spec">
+          <img class="specIconCharSearch" src={{character.specIcon}} width="30px" height="30px">
+          <div class="specCharSearch">
             {{character.spec}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
         </div>
-        <div class="ilvlInformationContainer">
-          <div class="filler">
+        <div class="ilvlInformationContainerCharSearch">
+          <div class="fillerCharSearch">
           </div>
-          <div class="equipedIlvl">
+          <div class="equipedIlvlCharSearch">
             Equiped: {{character.averageIlvlEquiped}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
-          <div class="bagIlvl">
+          <div class="bagIlvlCharSearch">
             Bags: {{character.averageIlvl}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
         </div>
       </div>
     </div>
-    <div class="moreInfoContainer">
-      <div class="progressContainer">
-        <div class="padding15px">
-          <div class="progressTitleText">
+    <div class="moreInfoContainerCharSearch">
+      <div class="progressContainerCharSearch">
+        <div class="padding15pxCharSearch">
+          <div class="progressTitleTextCharSearch">
             Progress (kills):
           </div>
           <ngx-datatable
-            class='material height400px'
+            class='material height400pxCharSearch'
             [rows]='rows'
             [columnMode]="'force'"
             [headerHeight]="40"
@@ -186,15 +186,15 @@
           </ngx-datatable>
         </div>
       </div>
-      <div class="filler">
+      <div class="fillerCharSearch">
       </div>
-      <div class="itemsContainer">
-        <div class="padding15px">
-          <div class="itemsTitleText">
+      <div class="itemsContainerCharSearch">
+        <div class="padding15pxCharSearch">
+          <div class="itemsTitleTextCharSearch">
             Items:
           </div>
           <ngx-datatable
-            class='material height400px'
+            class='material height400pxCharSearch'
             [rows]='items'
             [columnMode]="'force'"
             [headerHeight]="40"
@@ -228,63 +228,65 @@
         </div>
       </div>
     </div>
-    <div class="evenMoreInfoContainer">
-      <div class="profContainer">
-        <div class="profTitleText">
+    <div class="evenMoreInfoContainerCharSearch">
+      <div class="profContainerCharSearch">
+        <div class="profTitleTextCharSearch">
           Professions:
         </div>
-        <div class="profession">
-          <img class="profIcon" src="{{character.professions[0].icon}}" width="30px" height="30px">
+        <div class="professionCharSearch" *ngIf="character.professions[0]!=undefined">
+          <img class="profIconCharSearch" src="{{character.professions[0].icon}}" width="30px" height="30px">
           {{character.professions[0].name}} - {{character.professions[0].level}}
         </div>
-        <div class="profession">
-          <img class="profIcon" src="{{character.professions[1].icon}}" width="30px" height="30px">
+        <div class="professionCharSearch" *ngIf="character.professions[1]!=undefined">
+          <img class="profIconCharSearch" src="{{character.professions[1].icon}}" width="30px" height="30px">
           {{character.professions[1].name}} - {{character.professions[1].level}}
         </div>
       </div>
-      <div class="filler">
+      <div class="fillerCharSearch">
       </div>
-      <div class="pvpContainer">
-        <div class="pvpTitleText">
+      <div class="pvpContainerCharSearch">
+        <div class="pvpTitleTextCharSearch">
           PvP:
         </div>
-        <div class="displayFlex">
-          <div class="filler">
+        <div class="displayFlexCharSearch">
+          <div class="fillerCharSearch">
           </div>
-          <div class="honorableKills">
+          <div class="honorableKillsCharSearch">
             HK: {{character.pvp.honorKill}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
-          <div class="arena2v2">
+          <div class="arena2v2CharSearch">
             2v2: {{character.pvp.arena2v2}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
         </div>
-        <div class="displayFlex">
-          <div class="filler">
+        <div class="displayFlexCharSearch">
+          <div class="fillerCharSearch">
           </div>
-          <div class="arena3v3">
+          <div class="arena3v3CharSearch">
             3v3: {{character.pvp.arena3v3}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
-          <div class="rbg">
+          <div class="rbgCharSearch">
             RBG: {{character.pvp.rbg}}
           </div>
-          <div class="filler">
+          <div class="fillerCharSearch">
           </div>
         </div>
       </div>
-      <div class="filler">
+      <div class="fillerCharSearch">
       </div>
-      <div class="statsContainer">
-        <div class="statsTitleText">
+      <div style="clear: both;"></div>
+      <div class="statsContainerCharSearch">
+        <div class="statsTitleTextCharSearch">
           Stats:
         </div>
+        <div style="clear: both;"></div>
         <ngx-datatable
-          class='material statsTable'
+          class='material statsTableCharSearch'
           [rows]='stats'
           [columnMode]="'force'"
           [headerHeight]="30"
@@ -307,17 +309,19 @@
             </ng-template>
           </ngx-datatable-column>
         </ngx-datatable>
+        <div style="clear: both;"></div>
       </div>
+      <div style="clear: both;"></div>
     </div>
-    <div class="logsContainer">
-      <div class="overallContainer">
-        <div class="overallTitleText">
+    <div class="logsContainerCharSearch">
+      <div class="overallContainerCharSearch">
+        <div class="overallTitleTextCharSearch">
           Overall logs
         </div>
-        <div class="padding15px">
+        <div class="padding15pxCharSearch">
           <ngx-datatable
             #myTable
-            class='material expandable'
+            class='material expandableCharSearch'
             [rows]='overallParse'
             [columnMode]="'force'"
             [headerHeight]="40"
@@ -325,7 +329,7 @@
             [rowHeight]="55">
             <ngx-datatable-row-detail [rowHeight]="detailsHeight" #myDetailRow>
                 <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-                <div class="tableContainer">
+                <div class="tableContainerCharSearch">
                     <ngx-datatable
                         class='material'
                         [rows]='overallParseDetails[row.spec]'
@@ -412,16 +416,16 @@
           </ngx-datatable>
         </div>
       </div>
-      <div class="filler">
+      <div class="fillerCharSearch">
       </div>
-      <div class="ilvlContainer">
-        <div class="ilvlTitleText">
+      <div class="ilvlContainerCharSearch">
+        <div class="ilvlTitleTextCharSearch">
           Item level logs:
         </div>
-        <div class="padding15px">
+        <div class="padding15pxCharSearch">
             <ngx-datatable
               #myTable2
-              class='material expandable'
+              class='material expandableCharSearch'
               [rows]='ilvlParse'
               [columnMode]="'force'"
               [headerHeight]="40"
@@ -429,7 +433,7 @@
               [rowHeight]="55">
               <ngx-datatable-row-detail [rowHeight]="detailsHeight" #myDetailRow>
                   <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-                  <div class="tableContainer">
+                  <div class="tableContainerCharSearch">
                       <ngx-datatable
                           class='material'
                           [rows]='ilvlParseDetails[row.spec]'

@@ -1,35 +1,35 @@
 <h1 mat-dialog-title>New guide</h1>
-<div mat-dialog-content class="modalWindow">
-  <mat-form-field class="modalInput" (input)="onChangeName($event)">
+<div mat-dialog-content class="modalWindowAdmin">
+  <mat-form-field class="modalInputAdmin" (input)="onChangeName($event)">
     <input matInput placeholder="Guide name" value="">
   </mat-form-field>
-  <mat-form-field class="modalInput" (input)="onChangeID($event)">
+  <mat-form-field class="modalInputAdmin" (input)="onChangeID($event)">
     <input matInput placeholder="Guide id" value="">
   </mat-form-field>
-  <mat-error *ngIf="guideIdRegex" class="errorModal">
+  <mat-error *ngIf="guideIdRegex" class="errorModalAdmin">
     Only use letters or numbers (a-z A-Z 0-9)
   </mat-error>
-  <mat-form-field class="modalInput" (input)="onChangeImg($event)">
+  <mat-form-field class="modalInputAdmin" (input)="onChangeImg($event)">
     <input matInput placeholder="Image link" value="">
   </mat-form-field>
-  <mat-error *ngIf="guideEmpty" class="errorModal">
+  <mat-error *ngIf="guideEmpty" class="errorModalAdmin">
     Cannot leave a field empty
   </mat-error>
-  <img class="modalImgComponent" *ngIf='img!="" && showImage' src={{img}} >
-  <div class="modalButtonContainer">
-    <button mat-raised-button *ngIf='loaded' [disabled]="guideIdRegex" color="primary" class="modalButtonCreate" (click)="newGuideCreate($event)">
+  <img class="modalImgComponentAdmin" *ngIf='img!="" && showImage' src={{img}} >
+  <div class="modalButtonContainerAdmin">
+    <button mat-raised-button *ngIf='loaded' [disabled]="guideIdRegex" color="primary" class="modalButtonCreateAdmin" (click)="newGuideCreate($event)">
       Create guide
     </button>
-    <button mat-raised-button [disabled]="true" *ngIf='!loaded' color="primary" class="modalButtonCreate">
-        <img class="modalLoading" src='assets/loadingGif.gif' >
+    <button mat-raised-button [disabled]="true" *ngIf='!loaded' color="primary" class="modalButtonCreateAdmin">
+        <img class="modalLoadingAdmin" src='assets/loadingGif.gif' >
     </button>
-    <button mat-raised-button *ngIf='!showImage' color="primary" class="modalButtonImage" (click)="showHideImage($event)">
+    <button mat-raised-button *ngIf='!showImage' color="primary" class="modalButtonImageAdmin" (click)="showHideImage($event)">
       Show image
     </button>
-    <button mat-raised-button *ngIf='showImage' color="primary" class="modalButtonImage" (click)="showHideImage($event)">
+    <button mat-raised-button *ngIf='showImage' color="primary" class="modalButtonImageAdmin" (click)="showHideImage($event)">
       Hide image
     </button>
-    <button mat-raised-button color="warn" class="modalButtonQuit" (click)="quitModal($event)">
+    <button mat-raised-button color="warn" class="modalButtonQuitAdmin" (click)="quitModal($event)">
       Cancel
     </button>
   </div>

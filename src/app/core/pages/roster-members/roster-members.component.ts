@@ -7,6 +7,7 @@ import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-roster-members',
@@ -14,17 +15,20 @@ import 'rxjs/add/operator/catch';
   styleUrls: ['./roster-members.component.scss']
 })
 export class RosterMembersComponent implements OnInit {
-  @Input() rows = [];
+  @Input() rowsRoster = [];
+  @Input() rowsTrials = [];
   columns;
-  editing = {};
-  specs = []
-  icons = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
+  specsRoster = []
+  specsTrials = []
+  iconsRoster = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
+  iconsTrials = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
   mongoData;
   newData;
   userLevelBool;
+  loaded = false;
 
-  constructor(private mongoService:MongoService, public _userData:userData,private router: Router) {
-    this.rows=[{}];
+  constructor(private mongoService:MongoService, public _userData:userData,private router: Router,private _service: NotificationsService) {
+    this.rowsRoster=[{}];
     this.columns= [
                     { name: 'name',prop: 'name' },
                     { name: 'server',prop: 'server' },
@@ -34,7 +38,6 @@ export class RosterMembersComponent implements OnInit {
                   ];        
   }
   
-  dataModel2 = this.rows;
   renderTable = true;
 
   ngOnInit() {
@@ -69,18 +72,27 @@ export class RosterMembersComponent implements OnInit {
     if(this.userLevelBool)  {
       this.mongoService.getGuild({"guildName":"Untamed"})
         .subscribe(res => {
-          this.rows = []
+          this.rowsRoster = []
+          this.rowsTrials = []
           this.mongoData = res["data"];
           delete this.mongoData._id
           if(this.mongoData.Roster!= undefined) {
             this.mongoData.Roster.forEach(element => {
-              this.rows.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+              this.rowsRoster.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
+            });
+            this.mongoData.Trials.forEach(element => {
+              this.rowsTrials.push({name:element["name"],server:element["server"],class:element["class"],spec:element["spec"]})
             });
           } else  {
-            this.rows = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+            this.rowsRoster = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
+            this.rowsTrials = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
           }
           this.updateExtras();
-        });
+          this.loaded = true;
+        },error =>  {
+          this._service.error("Servers are down");
+        }
+      );
     }
   }
 
@@ -103,25 +115,44 @@ export class RosterMembersComponent implements OnInit {
   
 
   updateExtras(){
-    this.specs = [];
-    this.icons = [];
+    this.specsRoster = [];
+    this.specsTrials = [];
+    this.iconsRoster = [];
+    this.iconsTrials = [];
     let i=0;
-    this.rows.forEach(element => {
-      this.specs.push(specList[element.class])
+    this.rowsRoster.forEach(element => {
+      this.specsRoster.push(specList[element.class])
       if(roleCheck[element.spec] == "tank") {
         element["role"] = "tank";
-        this.icons.push("assets/tankIcon.png");
+        this.iconsRoster.push("assets/tankIcon.png");
       }
       else if(roleCheck[element.spec] == "healer")  {
         element["role"] = "healer";
-        this.icons.push("assets/healerIcon.png");
+        this.iconsRoster.push("assets/healerIcon.png");
       }
       else if(roleCheck[element.spec] == "dps") {
         element["role"] = "dps";
-        this.icons.push("assets/dpsIcon.png");
+        this.iconsRoster.push("assets/dpsIcon.png");
       }
       else
-        this.icons.push("");
+        this.iconsRoster.push("");
+    });
+    this.rowsTrials.forEach(element => {
+      this.specsTrials.push(specList[element.class])
+      if(roleCheck[element.spec] == "tank") {
+        element["role"] = "tank";
+        this.iconsTrials.push("assets/tankIcon.png");
+      }
+      else if(roleCheck[element.spec] == "healer")  {
+        element["role"] = "healer";
+        this.iconsTrials.push("assets/healerIcon.png");
+      }
+      else if(roleCheck[element.spec] == "dps") {
+        element["role"] = "dps";
+        this.iconsTrials.push("assets/dpsIcon.png");
+      }
+      else
+        this.iconsTrials.push("");
     });
   }
 }

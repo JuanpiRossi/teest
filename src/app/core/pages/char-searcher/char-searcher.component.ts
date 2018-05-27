@@ -265,7 +265,6 @@ export class CharSearcherComponent implements OnInit {
   getOveralParses() {
     var specs = specList[this.character.class];
     var bosses = [];
-    //overallParse
     this.rows.forEach(element => {
       bosses.push(element.boss);
     });

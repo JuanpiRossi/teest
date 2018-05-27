@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
   selector: 'app-roster',
@@ -26,12 +27,14 @@ export class RosterComponent implements OnInit {
   iconsTrials = ["assets/tankIcon.png","assets/tankIcon.png","assets/tankIcon.png"]
   mongoData;
   userLevelBool;
+  loaded = false;
+  options = {position: ["top", "right"]}
   
   dataModeRoster = this.rowsRoster;
   dataModeTrials = this.rowsTrials;
   renderTable = true;
 
-  constructor(private mongoService:MongoService, public _userData:userData,private router: Router,public dialog: MatDialog) {
+  constructor(private mongoService:MongoService, public _userData:userData,private router: Router,public dialog: MatDialog,private _service: NotificationsService) {
     this.rowsRoster=[{}];
     this.rowsTrials=[{}];
     this.columns= [
@@ -71,7 +74,7 @@ export class RosterComponent implements OnInit {
         }
       }
     )
-
+    
     if(this.userLevelBool)  {
       this.mongoService.getGuild({"guildName":"Untamed"})
         .subscribe(res => {
@@ -94,7 +97,11 @@ export class RosterComponent implements OnInit {
             this.rowsTrials = [{name:"name",server:"server",class:"Priest",spec:"Holy"}];
           }
           this.updateExtras();
-        });
+          this.loaded = true;
+        },error =>  {
+          this._service.error("Servers are down");
+        }
+      );
     }
   }
 
@@ -129,9 +136,32 @@ export class RosterComponent implements OnInit {
     if(dbDict=="Trials")  {
       updateData = {"$set":{"Trials":this.mongoData.Trials}};
     }
+    if(dbDict=="All")  {
+      updateData = {"$set":{"Trials":this.mongoData.Trials,"Roster":this.mongoData.Roster}};
+    }
     this.mongoService.updateGuild({data:updateData,query:{guildName:"Untamed"}})
       .subscribe(res => {
-        console.log(res)
+        console.log(res["status"]=="success")
+        if(dbDict=="Roster")  {
+          if(res["status"]=="success")
+            this._service.success("Main raiders saved succesfully");
+          else
+            this._service.error("Failed to execute action");
+        }
+        if(dbDict=="Trials")  {
+          if(res["status"]=="success")
+            this._service.success("Trials saved succesfully");
+          else
+            this._service.error("Failed to execute action");
+        }
+        if(dbDict=="All")  {
+          if(res["status"]=="success")
+            this._service.success("Roster saved succesfully");
+          else
+            this._service.error("Failed to execute action");
+        }
+      },error =>  {
+        this._service.error("Servers are down");
       }
     )
   }
@@ -254,6 +284,28 @@ export class RosterComponent implements OnInit {
       else
         this.iconsTrials.push("");
     });
+  }
+
+  upgradePlayer(rowIndex) {
+    let tmp;
+    tmp = this.rowsTrials.splice(rowIndex,1)[0];
+    this.mongoData.Trials = this.rowsTrials;
+    this.rowsRoster.push(tmp);
+    this.mongoData.Roster = this.rowsRoster;
+    this.updateExtras()
+    this.rowsRoster = [...this.rowsRoster];
+    this.rowsTrials = [...this.rowsTrials]
+  }
+
+  lowgradePlayer(rowIndex)  {
+    let tmp;
+    tmp = this.rowsRoster.splice(rowIndex,1)[0];
+    this.mongoData.Roster = this.rowsRoster;
+    this.rowsTrials.push(tmp);
+    this.mongoData.Trials = this.rowsTrials;
+    this.updateExtras()
+    this.rowsRoster = [...this.rowsRoster];
+    this.rowsTrials = [...this.rowsTrials]
   }
 }
 
