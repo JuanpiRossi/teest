@@ -71,10 +71,5 @@ export const noMemberPageList =[
         route:"guides",
         title:"Raid guides",
         description:"Learn how to raid"
-    },
-    {
-        route:"guidesAdmin",
-        title:"Raid guides administrator",
-        description:"Modify those guides"
     }
 ];
