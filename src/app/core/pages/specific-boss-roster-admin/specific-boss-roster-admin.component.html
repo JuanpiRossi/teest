@@ -1,0 +1,157 @@
+<div class="containerSBossRosterAdmin" *ngIf="userLevelBool">
+  <div class="headerTitleSBossRosterAdmin">
+    {{mongoData.name}}
+  </div>
+  <mat-spinner class="loadingSpinnerSBossRosterAdmin" *ngIf="!loaded"></mat-spinner>
+  <div *ngIf="loaded" class="mainRaidersContainerSBossRosterAdmin">
+    <div style="clear: both;"></div>
+    <div class="bossRosterResumenSBossRosterAdmin">
+        <img src="assets/redMark.png" width="40px" height="40px" title="More than 20 raid members">
+        <img src="assets/yellowMark.png" width="40px" height="40px" title="Less than 20 raid members">
+        <img src="assets/greenMark.png" width="40px" height="40px" title="Roster OK!">
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- ///////////////////////////////////FALTA LO DE ARRIBA Y ABAJO CON LOS NUMEROS ESTOS///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+        <span class="bossRosterResumeTextSBossRosterAdmin">&nbsp;20/20&nbsp;&nbsp;&nbsp;</span>
+        <img src="assets/tankIcon.png" width="40px" height="40px">
+        <span class="bossRosterResumeTextSBossRosterAdmin">&nbsp;2&nbsp;&nbsp;&nbsp;</span>
+        <img src="assets/healerIcon.png" width="40px" height="40px">
+        <span class="bossRosterResumeTextSBossRosterAdmin">&nbsp;4&nbsp;&nbsp;&nbsp;</span>
+        <img src="assets/dpsIcon.png" width="40px" height="40px">
+        <span class="bossRosterResumeTextSBossRosterAdmin">&nbsp;Range: 5 / Melee: 6&nbsp;</span>
+    </div>
+    <div style="clear: both;"></div>
+    <div class="subTitleSBossRosterAdmin">
+        Main boss roster
+    </div>
+    <div class="gridContainerSBossRosterAdmin">
+      <ngx-datatable
+        *ngIf="renderTable"
+        class='material'
+        [rows]="mainRoster"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="0"
+        [columnMode]='"force"'
+        [rowHeight]="40"
+        [rowClass]="getRowClass"
+        [trackByProp]="name"
+        [dragulaName]="'bagRoster'"
+        [dragulaModel]="dataModeRoster"
+        [dragulaVScroll]="true"
+        [classSelector]=""
+        (directiveDrop)="onDrop($event)"
+        (onRowsUpdate)='updateRows()'
+      >
+      <ngx-datatable-column name="name">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{value}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="rank">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+        <ngx-datatable-column name="class">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            {{value}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="spec">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <span
+                title="Double click to edit"
+                (dblclick)="editingRoster[rowIndex + '-spec'] = true"
+                *ngIf="!editingRoster[rowIndex + '-spec']">
+                {{value}}
+              </span>
+              <select
+                *ngIf="editingRoster[rowIndex + '-spec']"
+                (change)="updateValue($event, 'spec', rowIndex,'Roster')"
+                [value]="value">
+                <option *ngFor="let i of specsRoster[rowIndex]">{{i.name}}</option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <img src={{value}} width="20px" height="20px">
+              <img src="assets/red_arrow_down.png" style="position:relative;left:5px;" width="15px" height="15px" (click)="benchPlayer(rowIndex)" title="Move to bench">
+              <img src="assets/trashIcon.png" *ngIf="row['noExist']" style="position:relative;left:5px;" width="35px" height="20px" (click)="deletePlayer(rowIndex)" title="Delete player">
+              <img src="assets/red-alert.png" *ngIf="row['noExist']" width="20px" height="20px" title="Player is no longer in the guild roster">
+            </ng-template>
+          </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+  <div *ngIf="loaded" class="trialContainerSBossRosterAdmin">
+    <div class="subTitleSBossRosterAdmin">
+        Bench
+    </div>
+    <div class="gridContainerSBossRosterAdmin">
+      <ngx-datatable
+        *ngIf="renderTable"
+        class='material'
+        [rows]="benchRoster"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="0"
+        [columnMode]='"force"'
+        [rowHeight]="40"
+        [rowClass]="getRowClass"
+        [trackByProp]="name"
+      >
+      <ngx-datatable-column name="name">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            {{value}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="rank">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+              {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+        <ngx-datatable-column name="class">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            {{value}}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="spec">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+              <span
+                title="Double click to edit"
+                (dblclick)="editingTrials[rowIndex + '-spec'] = true"
+                *ngIf="!editingTrials[rowIndex + '-spec']">
+                {{value}}
+              </span>
+              <select
+                *ngIf="editingTrials[rowIndex + '-spec']"
+                (change)="updateValue($event, 'spec', rowIndex,'Trials')"
+                [value]="value">
+                <option *ngFor="let i of specsTrials[rowIndex]">{{i.name}}</option>
+              </select>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="role" [width]="1" [resizeable]="false">
+            <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value">
+              <img src={{value}} width="20px" height="20px">
+              <img src="assets/green_arrow_up.png" style="position:relative;left:5px;" width="15px" height="15px" (click)="upgradePlayer(rowIndex)" title="Move boss roster">
+            </ng-template>
+          </ngx-datatable-column>
+      </ngx-datatable>
+    </div>
+  </div>
+  <div *ngIf="loaded" class="buttonsContainerSBossRosterAdmin">
+      <button mat-raised-button color="primary" class="saveButtonSBossRosterAdmin" (click)="saveRoster($event)" mat-raised-button>Save all</button>
+  </div>
+</div>
+<simple-notifications [options]="options"></simple-notifications>

@@ -53,4 +53,16 @@ export class MongoService {
 	getGuidesOrderNumer(){
 		return this.http.get(environment.apiUrl + '/api/getGuidesOrderNumer')
 	}
+
+	getBossRoster(data){
+		return this.http.post(environment.apiUrl + '/api/getBossRoster',data)
+	}
+
+	saveBossRoster(data){
+		return this.http.post(environment.apiUrl + '/api/saveBossRoster',data)
+	}
+
+	updateBossRoster(data){
+		return this.http.post(environment.apiUrl + '/api/updateBossRoster',data)
+	}
 }

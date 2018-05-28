@@ -1,0 +1,10 @@
+<div class="containerBossRosterAdmin" *ngIf="userLevelBool">
+  <div class="headerTitleBossRosterAdmin">
+      Boss roster administrator
+  </div>
+  <mat-spinner class="loadingSpinnerBossRosterAdmin" *ngIf="!loaded"></mat-spinner>
+  <div class="guidesContainerBossRosterAdmin">
+      <div class="guideGridsBossRosterAdmin" [innerHTML]="sanitizer.bypassSecurityTrustHtml(htmlOut)">
+      </div>
+  </div>
+</div>

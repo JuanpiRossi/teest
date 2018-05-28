@@ -1,0 +1,137 @@
+.containerSBossRosterAdmin{
+    top: 0px;
+    right: 15%;
+    left: 15%;
+    position: absolute;
+    margin-bottom: 100px;
+}
+
+.headerTitleSBossRosterAdmin {
+    color:#ffffff;
+    position: relative;
+    left: 25px;
+    top: -25px;
+    font-size:50px;
+}
+
+.loadingSpinnerSBossRosterAdmin   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mainRaidersContainerSBossRosterAdmin   {
+    margin-bottom: 50px;
+}
+
+.bossRosterResumenSBossRosterAdmin  {
+    position: absolute;
+    top: 35px;
+    right: 0%;
+}
+
+.bossRosterResumeTextSBossRosterAdmin   {
+    position: relative;
+    color:#ffffff;
+    top: -16px;
+    vertical-align: middle;
+    font-size:20px;
+}
+
+.trialContainerSBossRosterAdmin {
+    margin-bottom: 50px;
+}
+
+.subTitleSBossRosterAdmin   {
+    color:#ffffff;
+    position: relative;
+    left: 35px;
+    top: -10px;
+    font-size:20px;
+}
+
+.gridContainerSBossRosterAdmin  {
+    right: 15%;
+    left: 15%;
+    bottom: 0%;
+    color: #fff;
+}
+
+.buttonsContainerSBossRosterAdmin  {
+    position: relative;
+    float: right;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.saveButtonSBossRosterAdmin {
+}
+
+.ngx-datatable {
+    background-color: #303030;
+}
+
+::ng-deep .fixed-header{
+    color: #303030;
+}
+
+::ng-deep .row-class-deathKnight  {
+    background-color: #C41F3B;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-demonHunter  {
+    background-color: #A330C9;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-druid  {
+    background-color: #FF7D0A;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-hunter  {
+    background-color: #ABD473;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-mage  {
+    background-color: #69CCF0;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-monk  {
+    background-color: #00FF96;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-paladin  {
+    background-color: #F58CBA;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-priest  {
+    background-color: #FFFFFF;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-rogue  {
+    background-color: #FFF569;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-shaman  {
+    background-color: #0070DE;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-warlock  {
+    background-color: #9482C9;
+    font-family: cursive;
+}
+
+::ng-deep .row-class-warrior  {
+    background-color: #C79C6E;
+    font-family: cursive;
+}

@@ -11,6 +11,7 @@ import { officerPageList,memberPageList,noMemberPageList } from '../pages.list';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import { utils } from '../../../services/functions';
 
 @Component({
   selector: 'app-char-searcher',
@@ -42,7 +43,7 @@ export class CharSearcherComponent implements OnInit {
   @ViewChild('myTable') table: any;
   @ViewChild('myTable2') table2: any;
   
-  constructor(private wowApi:wowApiService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router) { }
+  constructor(private wowApi:wowApiService, private warcraftService:WarcraftLogsService, public _userData:userData,private router: Router, private _utils:utils) { }
 
   ngOnInit() {
       this._userData.userLevel.subscribe(UL=>{
@@ -248,17 +249,7 @@ export class CharSearcherComponent implements OnInit {
 
   getBossesIcons()  {
     this.rows.forEach(element => {
-      element["bossIcon"] = element.boss.toLocaleLowerCase().split(" ");
-      element["bossIcon"] = element["bossIcon"].join("");
-      element["bossIcon"] = element["bossIcon"].split("'");
-      element["bossIcon"] = element["bossIcon"].join("");
-      element["bossIcon"] = element["bossIcon"].split("-");
-      element["bossIcon"] = element["bossIcon"].join("");
-      //EXCEPCIONES!!!!
-      if(element["bossIcon"]=="antoranhighcommand"){element["bossIcon"]="warcouncil"}
-        if(element["bossIcon"]=="eonarthelifebinder"){element["bossIcon"]="eonar"}
-      //FIN DE EXCEPCIONES
-      element["bossIcon"] = this.wowApi.retrieveBossImage(element["bossIcon"]);
+      element["bossIcon"] = this._utils.getBossesIcons(element.boss)
     });
   }
 

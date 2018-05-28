@@ -1,0 +1,79 @@
+.containerBossRosterAdmin{
+    top: 0px;
+    right: 15%;
+    left: 15%;
+    margin-bottom: 150px;
+    position: absolute;
+}
+
+.headerTitleBossRosterAdmin {
+    color:#ffffff;
+    position: relative;
+    left: 25px;
+    top: -25px;
+    font-size:50px;
+}
+
+.loadingSpinnerBossRosterAdmin   {
+    position: relative;
+    top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.guideComponentContainerBossRosterAdmin  {
+    padding: 1%;
+    height: 100px;
+    min-width: 22%;
+    max-width: 22%;
+    position: relative;
+}
+
+                                
+.guideComponentBossRosterAdmin  {
+    border-style: solid;
+    border-radius: 25px;
+    border-color: #757575;
+    background-color: #a0a0a0;
+    height: inherit;
+    width: inherit;
+    cursor: pointer;
+    position: relative;
+}
+
+.guideComponentBossRosterAdmin:hover  {
+    border-color: #105010;
+    background-color: #45a045;
+}
+
+.guideComponentImageBossRosterAdmin  {
+    width: 128px;
+    height: 64px;
+    padding-top: 15px;
+    padding-left: 15px;
+    float: left;
+    position: relative;
+}
+
+.guideComponentTitleBossRosterAdmin  {
+    font-family: "Verdana", Times, serif;
+    font-weight: bold;
+    font-size: 15px;
+    padding-top: 30px;
+    padding-left: 15px;
+    position: relative;
+}
+
+.guidesContainerBossRosterAdmin{
+}
+
+.guideGridsBossRosterAdmin  {
+    bottom: 0%;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+
+

@@ -25,6 +25,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuillEditorModule } from 'ngx-quill-editor';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BossRosterAdminComponent } from './boss-roster-admin/boss-roster-admin.component';
+import { BossRosterComponent } from './boss-roster/boss-roster.component';
+import { UsefulLinksComponent } from './useful-links/useful-links.component';
+import { SpecificBossRosterAdminComponent } from './specific-boss-roster-admin/specific-boss-roster-admin.component';
+import { SpecificBossRosterComponent } from './specific-boss-roster/specific-boss-roster.component';
 
 
 
@@ -48,7 +53,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   ],
   entryComponents: [ guideAdminModal,rosterModal ],
   providers:[DragulaService],
-  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent, SpecificGuideComponent, GuidesAdminComponent, SpecificGuideAdminComponent, guideAdminModal,rosterModal],
+  declarations: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent,DragulaExtendedDirective, CharSearcherComponent, UnauthorizedComponent, RosterMembersComponent, GuidesComponent, SpecificGuideComponent, GuidesAdminComponent, SpecificGuideAdminComponent, guideAdminModal,rosterModal, BossRosterAdminComponent, BossRosterComponent, UsefulLinksComponent, SpecificBossRosterAdminComponent, SpecificBossRosterComponent],
   exports: [PagesComponent, HomeComponent, ParsesComponent, RosterComponent, DragulaExtendedDirective]
 })
 export class PagesModule { }

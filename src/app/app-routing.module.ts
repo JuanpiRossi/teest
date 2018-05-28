@@ -12,6 +12,11 @@ import { GuidesComponent } from './core/pages/guides/guides.component'
 import { SpecificGuideComponent } from './core/pages/specific-guide/specific-guide.component'
 import { GuidesAdminComponent } from './core/pages/guides-admin/guides-admin.component'
 import { SpecificGuideAdminComponent } from './core/pages/specific-guide-admin/specific-guide-admin.component'
+import { BossRosterAdminComponent } from './core/pages/boss-roster-admin/boss-roster-admin.component'
+import { BossRosterComponent } from './core/pages/boss-roster/boss-roster.component'
+import { UsefulLinksComponent } from './core/pages/useful-links/useful-links.component'
+import { SpecificBossRosterComponent } from './core/pages/specific-boss-roster/specific-boss-roster.component'
+import { SpecificBossRosterAdminComponent } from './core/pages/specific-boss-roster-admin/specific-boss-roster-admin.component'
 
 const routes: Routes = [
   {
@@ -61,6 +66,26 @@ const routes: Routes = [
       {
         path: 'guideAdmin',
         component: SpecificGuideAdminComponent,
+      },
+      {
+        path: 'bossRoster',
+        component: BossRosterComponent,
+      },
+      {
+        path: 'bossRosterAdmin',
+        component: BossRosterAdminComponent,
+      },
+      {
+        path: 'usefulLinks',
+        component: UsefulLinksComponent,
+      },
+      {
+        path: 'specificBossRoster',
+        component: SpecificBossRosterComponent,
+      },
+      {
+        path: 'specificBossRosterAdmin',
+        component: SpecificBossRosterAdminComponent,
       }
       //{ path: 'error-500', component: Error500Component },
       //{ path: '**', component: NotFoundComponent }
