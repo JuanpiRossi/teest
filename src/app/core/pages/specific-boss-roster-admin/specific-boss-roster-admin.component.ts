@@ -9,6 +9,7 @@ import { zoneId } from '../../../../constants/config';
 import { NotificationsService } from 'angular2-notifications';
 import { utils } from '../../../services/functions';
 import { specList } from '../../../../constants/class.specs';
+import { roleCheckIntensive } from '../../../../constants/specs.roles';
 
 @Component({
   selector: 'app-specific-boss-roster-admin',
@@ -25,8 +26,13 @@ export class SpecificBossRosterAdminComponent implements OnInit {
   loaded = false;
   editingRoster = {};
   editingTrials = {};
-  specsRoster = []
-  specsTrials = []
+  specsRoster = [];
+  specsTrials = [];
+  rosterLenght = 0;
+  tanksLenght = 0;
+  healersLenght = 0;
+  meleeLenght = 0;
+  rangeLenght = 0;
   
   dataModeRoster = this.mainRoster;
   renderTable = true;
@@ -134,6 +140,7 @@ export class SpecificBossRosterAdminComponent implements OnInit {
           }
         });
         this.updateExtras();
+        this.getNumbers();
         this.loaded = true;
       }
     )
@@ -164,6 +171,7 @@ export class SpecificBossRosterAdminComponent implements OnInit {
     this.updateExtras();
     this.editingRoster = {};
     this.editingTrials = {};
+    this.getNumbers();
     this.mainRoster = [...this.mainRoster];
     this.benchRoster = [...this.benchRoster]
   }
@@ -176,6 +184,7 @@ export class SpecificBossRosterAdminComponent implements OnInit {
     this.updateExtras();
     this.editingRoster = {};
     this.editingTrials = {};
+    this.getNumbers();
     this.mainRoster = [...this.mainRoster];
     this.benchRoster = [...this.benchRoster]
   }
@@ -242,5 +251,34 @@ export class SpecificBossRosterAdminComponent implements OnInit {
     this.mainRoster.splice(rowIndex,1)
     this.mongoData["Roster"] = this.mainRoster
     this.mainRoster = [...this.mainRoster];
+  }
+
+  getNumbers()  {
+    this.tanksLenght = 0;
+    this.healersLenght = 0;
+    this.meleeLenght = 0;
+    this.rangeLenght = 0;
+    this.rosterLenght = this.mainRoster.length;
+    this.mainRoster.forEach(player => {
+      if(player["spec"]=="Frost") {
+        if(player["class"]=="Mage") {
+          this.rangeLenght = this.rangeLenght+1;
+        } else  {
+          this.meleeLenght = this.meleeLenght+1;
+        }
+      } else  {
+        if(roleCheckIntensive[player["spec"]]=="melee") {
+          this.meleeLenght = this.meleeLenght+1;
+        } else if(roleCheckIntensive[player["spec"]]=="healer")  {
+          this.healersLenght = this.healersLenght+1;
+        } else if(roleCheckIntensive[player["spec"]]=="range") {
+          this.rangeLenght = this.rangeLenght+1;
+        } else if(roleCheckIntensive[player["spec"]]=="tank") {
+          this.tanksLenght = this.tanksLenght+1;
+        } else  {
+          console.log("ERROR IN GETNUMBERS!!")
+        }
+      }
+    });
   }
 }

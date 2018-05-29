@@ -34,4 +34,41 @@ export const roleCheck = {
     "Holy":"healer",
     "Discipline":"healer"
 };
-  
+
+
+export const roleCheckIntensive = {
+    "Frost":"dps",
+    "Unholy":"melee",
+    "Havoc":"melee",
+    "Balance":"range",
+    "Feral":"melee",
+    "Marksmanship":"range",
+    "BeastMastery":"range",
+    "Survival":"melee",
+    "Fire":"range",
+    "Arcane":"range",
+    "Windwalker":"melee",
+    "Retribution":"melee",
+    "Shadow":"range",
+    "Assassination":"melee",
+    "Outlaw":"melee",
+    "Subtlety":"melee",
+    "Elemental":"range",
+    "Enhancement":"melee",
+    "Destruction":"range",
+    "Affliction":"range",
+    "Demonology":"range",
+    "Arms":"melee",
+    "Fury":"melee",
+    "Melee":"melee",
+    "Ranged":"range",
+    "Blood":"tank",
+    "Vengeance":"tank",
+    "Guardian":"tank",
+    "Brewmaster":"tank",
+    "Protection":"tank",
+    "Restoration":"healer",
+    "Mistweaver":"healer",
+    "Holy":"healer",
+    "Discipline":"healer"
+};
